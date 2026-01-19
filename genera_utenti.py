@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 OUTPUT_FILE = "centro_sportivo.csv"
 NUM_UTENTI = 1000
 
-# Liste per la generazione casuale
+# Liste per la generazione casuale kkkkk
 nomi = ["Marco", "Giulia", "Davide", "Sara", "Alessandro", "Elena", "Cristiano", "Chiara", "Matteo", "Valentina", "Riccardo", "Beatrice", "Simone", "Alice"]
 cognomi = ["Rossi", "Bianchi", "Verdi", "Ferrari", "Russo", "Piccoli", "Romano", "Gallo", "Conti", "Marino", "Zappa", "Ricci", "Moretti", "Colombo"]
 servizi = ["Piscina", "Palestra", "Tennis"]
