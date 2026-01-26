@@ -1,5 +1,6 @@
 #domanda per inviare la e-mail agli utenti con certificato scaduto
 #!/bin/bash
+sudo apt install sendmail
 oggi=$(date +%F)
 lim_data=$(date -d "+30 days" +%F)
 nuovo_limite_cerificato=$(date "9 days" +%F)

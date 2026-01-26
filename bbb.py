@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
+import subprocess
+
 
 class MenuGUI:
     def __init__(self, root):
@@ -26,7 +28,7 @@ class MenuGUI:
             "Opzione 1: chi può entrare",
             "Opzione 2: report accessi recenti",
             "Opzione 3: invio email certificati scaduti",
-            "Opzione 4",
+            "Opzione 4: crea un databease di utenti",
             "Opzione 5",
             "Opzione 6",
             "Opzione 7",
@@ -67,27 +69,36 @@ class MenuGUI:
         match option:
             case 1:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 1!\nEsecuzione azione 1...")
-
+                subprocess.run(["bash", "Domanda1.sh"])
 
             case 2:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 2!\nEsecuzione azione 2...")
-
+                subprocess.run(["bash", "Domanda2.sh"])
             case 3:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 3!\nEsecuzione azione 3...")
+                subprocess.run(["bash", "Domanda3.sh"])
             case 4:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 4!\nEsecuzione azione 4...")
+                subprocess.run(["bash", "script.sh"])
             case 5:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 5!\nEsecuzione azione 5...")
+                subprocess.run(["bash", "script.sh"])
             case 6:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 6!\nEsecuzione azione 6...")
+                subprocess.run(["bash", "script.sh"])
             case 7:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 7!\nEsecuzione azione 7...")
+                subprocess.run(["bash", "script.sh"])
             case 8:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 8!\nEsecuzione azione 8...")
+                subprocess.run(["bash", "script.sh"])
             case 9:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 9!\nEsecuzione azione 9...")
+                subprocess.run(["bash", "script.sh"])
+
             case 10:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 10!\nEsecuzione azione 10...")
+                subprocess.run(["bash", "script.sh"])
             case _:
                 messagebox.showerror("Errore", "Opzione non valida!")
 
