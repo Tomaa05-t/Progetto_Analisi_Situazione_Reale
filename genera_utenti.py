@@ -9,7 +9,7 @@ NUM_UTENTI = 1000
 nomi = ["Marco", "Giulia", "Davide", "Sara", "Alessandro", "Elena", "Cristiano", "Chiara", "Matteo", "Valentina", "Riccardo", "Beatrice", "Simone", "Alice"]
 cognomi = ["Rossi", "Bianchi", "Verdi", "Ferrari", "Russo", "Piccoli", "Romano", "Gallo", "Conti", "Marino", "Zappa", "Ricci", "Moretti", "Colombo"]
 servizi = ["Piscina", "Palestra", "Tennis"]
-abbonamenti = ["A_Consumo", "Mensile", "Annuale", "Corso_Annuale"]
+abbonamenti = [ "Mensile", "Trimestrale", "Semestrale", "Annuale", ]
 domini = ["gmail.com", "outlook.it", "yahoo.com", "icloud.com"]
 
 
@@ -29,7 +29,7 @@ print(f"Generazione di {NUM_UTENTI} utenti in corso...")
 
 with open(OUTPUT_FILE, mode="w", encoding="utf-8") as f:
     # Intestazione (Header)
-    f.write("ID,Nome,Cognome,Email,Servizio,Abbonamento,Scadenza_Certificato,Ultimo_Accesso\n")
+    f.write("ID,Nome,Cognome,Data_Nascita,Email,Servizio,Abbonamento,Scadenza_Certificato,Ultimo_Accesso,Scadenza_Abbonamento\n")
     
     for i in range(1, NUM_UTENTI + 1):
         nome = random.choice(nomi)
@@ -51,7 +51,11 @@ with open(OUTPUT_FILE, mode="w", encoding="utf-8") as f:
         # Generazione data di nascita
         data_nascita = genera_data_casuale(inizio_1946, fine_2015).strftime("%Y-%m-%d")
         
+        #generazione scadenxa abbonamento
+        scadenza_abbonamento = genera_data_casuale(inizio_2025, fine_2028).strftime("%Y-%m-%d")
+
+        
         # Scrittura riga
-        f.write(f"{i},{nome},{cognome},{data_nascita},{email},{servizio},{abbonamento},{scadenza_cert},{ultimo_acc}\n")
+        f.write(f"{i},{nome},{cognome},{data_nascita},{email},{servizio},{abbonamento},{scadenza_cert},{ultimo_acc},{scadenza_abbonamento}\n")
 
 print(f"Successo! Il file '{OUTPUT_FILE}' è stato creato.")
