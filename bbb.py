@@ -69,7 +69,9 @@ class MenuGUI:
         match option:
             case 1:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 1!\nEsecuzione azione 1...")
-                subprocess.run(["bash", "Domanda1.sh"])
+                subprocess.run(["bash", "Domanda1.sh"], check=True)
+                messagebox.showinfo("Accesso negato", "CSV generato: accessi_negati.csv")
+
 
             case 2:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 2!\nEsecuzione azione 2...")

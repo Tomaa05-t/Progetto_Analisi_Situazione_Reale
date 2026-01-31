@@ -1,16 +1,41 @@
 #!/bin/bash
-#chi può entrare
-oggi=$(date +%F)
-nuovo_limite_cerificato=$(date "9 days" +%F)
 
-awk -F, 'NR>1 {if ($8 >= "'"$nuovo_limite_cerificato"'") print ($2, $3 "non può accedere al centro sportivo )
+# data di oggi
+oggi=$(date +%Y-%m-%d)
 
-if $7 == "Mensile":
-            scadenza_abbonamento = (oggi + timedelta(days=30)).strftime("%Y-%m-%d")
-        elif $7 == "Trimestrale":
-            scadenza_abbonamento = (oggi + timedelta(days=90)).strftime("%Y-%m-%d")
-        elif $7 == "Semestrale":
-            scadenza_abbonamento = (oggi + timedelta(days=180)).strftime("%Y-%m-%d")
-        else:  # Annuale
-            scadenza_abbonamento = (oggi + timedelta(days=365)).strftime("%Y-%m-%d") }' centro_sportivo.csv > accessi_negati_certificato_scaduto.csv
+# limite certificato medico (certificati scaduti o in scadenza)
+limite_certificato=$(date -d "+9 days" +%Y-%m-%d)
 
+# file CSV di input e output
+input="centro_sportivo.csv"
+output="accessi_negati.csv"
+
+# pulisce il file precedente
+> "$output"
+
+awk -F',' -v oggi="$oggi" -v limite="$limite_certificato" '
+NR==1 { 
+    # intestazione nel file di output
+    print "Nome,Cognome,Abbonamento,Scadenza_Certificato,Scadenza_Abbonamento,Motivo" > "'$output'"
+    next
+}
+NR>1 {
+    certificato_scaduto = ($8 < limite)
+    abbonamento_scaduto = ($10 < oggi)
+    
+    if (certificato_scaduto || abbonamento_scaduto) {
+        motivo=""
+        if (certificato_scaduto) motivo="Certificato scaduto"
+        if (abbonamento_scaduto) {
+            if (motivo != "") motivo=motivo" e "
+            motivo=motivo"Abbonamento scaduto"
+        }
+        print $2","$3","$7","$8","$10","motivo >> "'$output'"
+    }
+}' "$input"
+
+# mostra riepilogo
+echo "Utenti con accesso negato:"
+cat "$output"
+echo "Totale utenti con accesso negato:"
+wc -l < "$output"
