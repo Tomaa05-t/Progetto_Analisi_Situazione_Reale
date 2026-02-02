@@ -7,7 +7,7 @@ class MenuGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Menu Opzioni")
-        self.root.geometry("500x800")
+        self.root.geometry("600x800")
         self.root.config(bg="#f0f0f0")
         
         
@@ -29,12 +29,12 @@ class MenuGUI:
             "Opzione 2: report accessi recenti",
             "Opzione 3: invio email certificati scaduti",
             "Opzione 4: crea un databease di utenti",
-            "Opzione 5",
-            "Opzione 6",
-            "Opzione 7",
-            "Opzione 8",
-            "Opzione 9",
-            "Opzione 10"
+            "Opzione 5: controllo termostrato",
+            "Opzione 6: allarme acqua",
+            "Opzione 7: backup dati giornalieri",
+            "Opzione 8: tenta login falliti",
+            "Opzione 9: Accesso remoto",
+            "Opzione 10: pulizia database utenti"
         ]
         
         for i, opzione in enumerate(opzioni, 1):
@@ -56,11 +56,11 @@ class MenuGUI:
             root,
             text="fine",
             command=root.quit,
-            font=("Arial", 11),
+            font=("Arial", 20),
             bg="#f44336",
             fg="white",
             padx=10,
-            pady=8
+            pady=10
         )
         btn_exit.pack(pady=10)
     
@@ -81,26 +81,25 @@ class MenuGUI:
                 subprocess.run(["bash", "Domanda3.sh"])
             case 4:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 4!\nEsecuzione azione 4...")
-                subprocess.run(["bash", "script.sh"])
+                subprocess.run(["python3", "genera_utenti.py"])
             case 5:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 5!\nEsecuzione azione 5...")
-                subprocess.run(["bash", "script.sh"])
+                subprocess.run(["bash", "Domanda5.sh"])
             case 6:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 6!\nEsecuzione azione 6...")
-                subprocess.run(["bash", "script.sh"])
+                subprocess.run(["bash", "Domanda6.sh"])
             case 7:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 7!\nEsecuzione azione 7...")
-                subprocess.run(["bash", "script.sh"])
+                subprocess.run(["bash", "Domanda7.sh"])
             case 8:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 8!\nEsecuzione azione 8...")
-                subprocess.run(["bash", "script.sh"])
+                subprocess.run(["bash", "Domanda8.sh"])
             case 9:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 9!\nEsecuzione azione 9...")
-                subprocess.run(["bash", "script.sh"])
-
+                subprocess.run(["bash", "Domanda9.sh"])
             case 10:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 10!\nEsecuzione azione 10...")
-                subprocess.run(["bash", "script.sh"])
+                subprocess.run(["bash", "Domanda10.sh"])
             case _:
                 messagebox.showerror("Errore", "Opzione non valida!")
 
