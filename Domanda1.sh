@@ -1,21 +1,18 @@
 #!/bin/bash
 
-# data di oggi
 oggi=$(date +%Y-%m-%d)
 
-# limite certificato medico (certificati scaduti o in scadenza)
+# limite certificato medico (certificati scaduti o in scadenza da 9 gior)
 limite_certificato=$(date -d "+9 days" +%Y-%m-%d)
 
-# file CSV di input e output
+
 input="centro_sportivo.csv"
 output="accessi_negati.csv"
 
-# pulisce il file precedente
 > "$output"
 
 awk -F',' -v oggi="$oggi" -v limite="$limite_certificato" '
 NR==1 { 
-    # intestazione nel file di output
     print "Nome,Cognome,Abbonamento,Scadenza_Certificato,Scadenza_Abbonamento,Motivo" > "'$output'"
     next
 }
@@ -34,8 +31,6 @@ NR>1 {
     }
 }' "$input"
 
-# mostra riepilogo
-echo "Utenti con accesso negato:"
-cat "$output"
+echo "Elenco degli utenti con accesso negato salvato in $output"
 echo "Totale utenti con accesso negato:"
 wc -l < "$output"
