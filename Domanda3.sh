@@ -1,9 +1,9 @@
 #domanda per inviare la e-mail agli utenti con certificato scaduto
 #!/bin/bash
 sudo apt install sendmail
-oggi=$(date +%F)
-lim_data=$(date -d "+30 days" +%F)
-nuovo_limite_cerificato=$(date "9 days" +%F)
+oggi=$(date +%Y-%m-%d)
+lim_data=$(date -d "+30 days" +%Y-%m-%d)
+nuovo_limite_cerificato=$(date -d "+9 days" +%Y-%m-%d)
 awk -F, 'NR>1 {if ($8 >= "'"$oggi"'" && $8 <= "'"$lim_data"'") print $5}' centro_sportivo.csv | while read email; do
   echo "Attenxione: Avviso di Scadenza del Certificato Medico
 To: $email
