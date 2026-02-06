@@ -2,13 +2,13 @@ import random
 from datetime import datetime, timedelta
 
 # Configurazione del file
-OUTPUT_FILE = "centro_sportivo.csv"
-NUM_UTENTI = 1000
+OUTPUT_FILE = "iscritti_piscina.csv"
+NUM_UTENTI = 400
 
 # Liste per la generazione casuale kkkkk
 nomi = ["Marco", "Giulia", "Davide", "Sara", "Alessandro", "Elena", "Cristiano", "Chiara", "Matteo", "Valentina", "Riccardo", "Beatrice", "Simone", "Alice"]
 cognomi = ["Rossi", "Bianchi", "Verdi", "Ferrari", "Russo", "Piccoli", "Romano", "Gallo", "Conti", "Marino", "Zappa", "Ricci", "Moretti", "Colombo"]
-servizi = ["Piscina", "Palestra", "Tennis"]
+servizi = ["Piscina"]
 abbonamenti = [ "Mensile", "Trimestrale", "Semestrale", "Annuale", ]
 domini = ["gmail.com", "outlook.it", "yahoo.com", "icloud.com"]
 
