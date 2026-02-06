@@ -1,0 +1,4 @@
+Fri, Feb  6, 2026 12:32:56 PM: Down totale 192.168.1.200 - Verificare cablaggio.
+Fri, Feb  6, 2026 12:34:53 PM: Down totale 192.168.1.200 - Verificare cablaggio.
+Fri, Feb  6, 2026 12:40:56 PM: Down totale 192.168.1.200 - Verificare cablaggio.
+Fri, Feb  6, 2026 12:42:46 PM: Errore Software su 162.120.188.34 - Richiesto riavvio forzato.

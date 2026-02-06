@@ -68,6 +68,8 @@ class MenuGUI:
     def handle_option(self, option):
         # 1. Definisci la variabile con il percorso REALE di Git Bash
         bash_path = r"C:\Program Files\Git\bin\bash.exe"
+        bash_exe = r"C:\Program Files\Git\bin\bash.exe"
+        
         """Gestisce le 10 opzioni con un case statement"""
         match option:
             case 1:
@@ -87,7 +89,7 @@ class MenuGUI:
                 subprocess.run(["bash", "Domanda4_generaDBcentro.sh"])
             case 5:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 5!\nEsecuzione azione 5...")
-                subprocess.run(["bash", "Domanda5.sh"])
+                subprocess.run([bash_exe, "Domanda5.sh"])
             case 6:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 6!\nEsecuzione azione 6...")
                 subprocess.run(["bash", "Domanda6.sh"])
