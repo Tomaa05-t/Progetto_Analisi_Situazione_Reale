@@ -63,8 +63,11 @@ class MenuGUI:
             pady=10
         )
         btn_exit.pack(pady=10)
+
     
     def handle_option(self, option):
+        # 1. Definisci la variabile con il percorso REALE di Git Bash
+        bash_path = r"C:\Program Files\Git\bin\bash.exe"
         """Gestisce le 10 opzioni con un case statement"""
         match option:
             case 1:
@@ -90,7 +93,7 @@ class MenuGUI:
                 subprocess.run(["bash", "Domanda6.sh"])
             case 7:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 7!\nEsecuzione azione 7...")
-                subprocess.run(["bash", "Domanda7.sh"])
+                subprocess.run([bash_path, "Domanda7.sh"])
             case 8:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 8!\nEsecuzione azione 8...")
                 subprocess.run(["bash", "Domanda8.sh"])
