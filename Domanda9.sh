@@ -22,7 +22,7 @@ LOG_FILE="${1:-./auth.log}"
 SOGLIA_ATTACCO="${2:-5}"
 
 # File di output per salvare gli IP sospetti
-OUTPUT_FILE="./ip_sospetti_$(date +%Y%m%d_%H%M%S).txt"
+OUTPUT_FILE="./salvataggi_ip_sospetti/ip_sospetti_$(date +%Y%m%d_%H%M%S).txt"
 
 # ============================================================================
 # VALIDAZIONE INPUT
