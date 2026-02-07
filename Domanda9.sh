@@ -108,26 +108,22 @@ done < /tmp/ip_analisi.txt
 echo "----------------------------------------"
 echo ""
 
-# ============================================================================
-# DETTAGLI ATTACCO PER OGNI IP
-# ============================================================================
-
-echo "Dettagli tentativi per IP:"
-echo ""
-
 while read -r count ip; do
-    echo "IP: $ip ($count tentativi)"
-    echo "Utenti tentati:"
+    # Stampa solo messaggio breve a schermo
+    echo "Analisi IP: $ip..."
     
-    # Estrae gli utenti usati dall'attaccante
-    grep "Failed password" "$LOG_FILE" | \
-        grep "from $ip" | \
-        awk '{for(i=1;i<=NF;i++) if($i=="for") print $(i+1)}' | \
-        sort | uniq -c | sort -rn | head -5
+    # Tutto il resto va solo nel file
+    {
+        echo ""
+        echo "IP: $ip ($count tentativi)"
+        echo "Utenti tentati:"
+        grep "Failed password" "$LOG_FILE" | \
+            grep "from $ip" | \
+            awk '{for(i=1;i<=NF;i++) if($i=="for") print $(i+1)}' | \
+            sort | uniq -c | sort -rn | head -5
+    } >> "$OUTPUT_FILE"
     
-    echo ""
 done < /tmp/ip_analisi.txt
-
 
 echo "Report salvato in: $OUTPUT_FILE"
 
