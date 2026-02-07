@@ -1,0 +1,6 @@
+ID,Nome,Cognome,Data_Nascita,Email,Servizio,Abbonamento,Scadenza_Certificato,Ultimo_Accesso,Scadenza_Abbonamento
+1,Mario,Rossi,1980-05-15,mario.rossi@email.com,Palestra,Mensile,2027-03-20,2025-06-10,2026-08-14
+2,Sara,Bianchi,1992-03-10,sara.bianchi@email.com,Piscina,Annuale,2028-01-15,2025-12-01,2027-09-30
+3,Luca,Verdi,1985-07-22,luca.verdi@email.com,Tennis,Semestrale,2027-06-18,2025-11-25,2026-12-20
+4,Anna,Russo,1990-11-05,anna.russo@email.com,Palestra,Trimestrale,2026-09-12,2025-10-15,2025-12-31
+5,Paolo,Neri,1988-04-18,paolo.neri@email.com,Tennis,Mensile,2027-11-05,2025-08-18,2026-05-22
