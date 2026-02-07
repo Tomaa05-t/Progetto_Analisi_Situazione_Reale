@@ -146,11 +146,11 @@ echo "Righe corrotte:          $REJECTED_COUNT"
 echo ""
 echo "File generati:"
 echo "----------------------------------------"
-echo "✓ Database pulito:       $OUTPUT_FILE"
+echo "Database pulito:       $OUTPUT_FILE"
 
 # Se ci sono righe scartate, mostra il file e un'anteprima
 if [ "$REJECTED_COUNT" -gt 0 ]; then
-    echo "⚠ Righe scartate:        $REJECTED_FILE"
+    echo "Righe scartate:        $REJECTED_FILE"
     echo ""
     echo "Anteprima righe scartate (prime 5):"
     echo "----------------------------------------"
@@ -160,7 +160,7 @@ if [ "$REJECTED_COUNT" -gt 0 ]; then
 else
     # Se non ci sono righe scartate, elimina il file rejected
     rm -f "$REJECTED_FILE"
-    echo "✓ Nessuna riga scartata - database già pulito!"
+    echo "Nessuna riga scartata - database già pulito!"
 fi
 
 echo ""

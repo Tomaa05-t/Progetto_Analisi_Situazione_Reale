@@ -72,7 +72,7 @@ grep "Failed password" "$LOG_FILE" | \
 
 # Verifica se sono stati trovati IP sospetti
 if [ ! -s /tmp/ip_analisi.txt ]; then
-    echo "✓ Nessun attacco rilevato!"
+    echo "Nessun attacco rilevato!"
     echo "  Tutti gli IP hanno meno di $SOGLIA_ATTACCO tentativi falliti."
     echo "========================================" 
     rm -f /tmp/ip_analisi.txt
