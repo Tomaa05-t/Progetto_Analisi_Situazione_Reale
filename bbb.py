@@ -92,19 +92,19 @@ class MenuGUI:
                 subprocess.run([bash_exe, "Domanda5.sh"])
             case 6:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 6!\nEsecuzione azione 6...")
-                subprocess.run(["bash", "Domanda6.sh"])
+                subprocess.run([bash_exe, "Domanda6.sh"])
             case 7:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 7!\nEsecuzione azione 7...")
                 subprocess.run([bash_path, "Domanda7.sh"])
             case 8:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 8!\nEsecuzione azione 8...")
-                subprocess.run(["bash", "Domanda8.sh"])
+                subprocess.run([bash_exe, "Domanda8.sh"])
             case 9:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 9!\nEsecuzione azione 9...")
-                subprocess.run(["bash", "Domanda9.sh"])
+                subprocess.run([bash_exe, "Domanda9.sh"])
             case 10:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 10!\nEsecuzione azione 10...")
-                subprocess.run(["bash", "Domanda10.sh"])
+                subprocess.run([bash_exe, "Domanda10.sh"])
             case _:
                 messagebox.showerror("Errore", "Opzione non valida!")
 
