@@ -15,3 +15,6 @@ tail -q -n +2 iscritti_tennis.csv >> "$OUTPUT"
 
 
 echo "Successo! Il file $OUTPUT è stato creato."
+
+
+#scelta di importazione, l'utente sceglie scvrivendo iscritti_piscina, e inserisco anche che sport fanno perchè è ovvio che piscina fanno piscina e creare un report di cosa non è andato bene, perchè questo mon è stato inserito?
