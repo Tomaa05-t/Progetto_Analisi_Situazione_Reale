@@ -19,7 +19,7 @@ NR==1 {
 NR>1 {
     certificato_scaduto = ($8 < limite)
     abbonamento_scaduto = ($10 < oggi)
-        ban = ($11 == "Sì")
+    ban = ($11 == "Sì")
     
     if (certificato_scaduto || abbonamento_scaduto || ban) {
         motivo=""
@@ -28,7 +28,7 @@ NR>1 {
             if (motivo != "") motivo=motivo" e "
             motivo=motivo"Abbonamento scaduto"
             else if ($11 == "Sì") {
-                if (motivo != "") motivo=motivo" e "
+                motivo=motivo" e "
                 motivo=motivo"Utente bannato"
         }
         print $2","$3","$7","$8","$10","motivo >> "'$output'"
