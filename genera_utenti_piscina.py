@@ -29,7 +29,7 @@ print(f"Generazione di {NUM_UTENTI} utenti in corso...")
 
 with open(OUTPUT_FILE, mode="w", encoding="utf-8") as f:
     # Intestazione (Header)
-    f.write("ID,Nome,Cognome,Data_Nascita,Email,Servizio,Abbonamento,Scadenza_Certificato,Ultimo_Accesso,Scadenza_Abbonamento, Ban\n")
+    f.write("ID,Nome,Cognome,Data_Nascita,Email,Abbonamento,Scadenza_Certificato,Ultimo_Accesso,Scadenza_Abbonamento\n")
     
     for i in range(1, NUM_UTENTI + 1):
         nome = random.choice(nomi)
@@ -54,9 +54,9 @@ with open(OUTPUT_FILE, mode="w", encoding="utf-8") as f:
         #generazione scadenxa abbonamento
         scadenza_abbonamento = genera_data_casuale(inizio_2025, fine_2028).strftime("%Y-%m-%d")
 
-        ban = random.random() < 0.05
+        #ban = random.random() < 0.05
 
         # Scrittura riga
-        f.write(f"{i},{nome},{cognome},{data_nascita},{email},{servizio},{abbonamento},{scadenza_cert},{ultimo_acc},{scadenza_abbonamento},{ban}\n")
+        f.write(f"{i},{nome},{cognome},{data_nascita},{email},{abbonamento},{scadenza_cert},{ultimo_acc},{scadenza_abbonamento}\n")
 
 print(f"Successo! Il file '{OUTPUT_FILE}' è stato creato.")
