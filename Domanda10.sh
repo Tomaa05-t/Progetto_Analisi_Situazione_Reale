@@ -22,7 +22,7 @@ INPUT_FILE="${1:-centro_sportivo.csv}"
 OUTPUT_FILE="${2:-centro_sportivo_pulito.csv}"
 
 # File di log con le righe scartate
-REJECTED_FILE="righe_corrotte_$(date +%Y%m%d_%H%M%S).csv"
+REJECTED_FILE="./deposito_righe_corrotte/righe_corrotte_$(date +%Y%m%d_%H%M%S).csv"
 
 # ============================================================================
 # VALIDAZIONE INPUT

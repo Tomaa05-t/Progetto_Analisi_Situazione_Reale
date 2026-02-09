@@ -1,4 +1,6 @@
 ID,Nome,Cognome,Data_Nascita,Email,Servizio,Abbonamento,Scadenza_Certificato,Ultimo_Accesso,Scadenza_Abbonamento
+4,Anna,Russo,1990-11-05,anna.russo@email.com,Palestra,Trimestrale,2026-09-12,2025-10-15,2025-12-31
+5,Paolo,Neri,1988-04-18,paolo.neri@email.com,Tennis,Mensile,2027-11-05,2025-08-18,2026-05-22
 1,Beatrice,Ferrari,1951-06-17,beatrice.ferrari49@gmail.com,Piscina,Annuale,2027-05-20,2025-04-03,2028-02-21
 2,Giulia,Russo,1966-02-19,giulia.russo68@yahoo.com,Piscina,Mensile,2028-06-28,2026-01-03,2025-04-01
 3,Davide,Ricci,2006-03-29,davide.ricci75@gmail.com,Piscina,Mensile,2027-03-24,2025-03-26,2028-08-20
