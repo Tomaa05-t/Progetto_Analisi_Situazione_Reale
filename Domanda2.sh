@@ -2,7 +2,7 @@
 # rilevamento accessi negli ultimi x giorni
 
 input="centro_sportivo.csv"
-output="accessi_recenti_di_settimana.csv"
+output="accessi_recenti.csv"
 
 read -p "Inserisci la data limite (YYYY-MM-DD): " limit
 

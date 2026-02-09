@@ -86,7 +86,7 @@ class MenuGUI:
                 subprocess.run(["bash", "Domanda3.sh"])
             case 4:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 4!\nEsecuzione azione 4...")
-                subprocess.run(["bash", "Domanda4_generaDBcentro.sh"])
+                subprocess.run([bash_exe, "Domanda4_generaDBcentro.sh"])
             case 5:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 5!\nEsecuzione azione 5...")
                 subprocess.run([bash_exe, "Domanda5.sh"])
