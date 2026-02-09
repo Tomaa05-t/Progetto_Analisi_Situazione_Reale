@@ -5,7 +5,7 @@
 # Esempio: ./Domanda10.sh centro_sportivo.csv centro_sportivo_pulito.csv
 
 # File CSV da pulire (può essere passato come primo parametro)
-INPUT_FILE="${1:-centro_sportivo.csv}"
+INPUT_FILE="${1:-centro_sportivo_corrotto.csv}"
 
 # File CSV pulito di output (può essere passato come secondo parametro)
 OUTPUT_FILE="${2:-centro_sportivo_pulito.csv}"
