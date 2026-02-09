@@ -1,296 +1,0 @@
-Nome,Cognome,Abbonamento,Scadenza_Certificato,Scadenza_Abbonamento,Motivo
-Giulia,Russo,Mensile,2028-06-28,2025-04-01,Abbonamento scaduto
-Alessandro,Marino,Annuale,2028-06-03,2025-06-15,Abbonamento scaduto
-Alice,Russo,Semestrale,2026-09-12,2025-06-18,Abbonamento scaduto
-Giulia,Conti,Mensile,2027-01-10,2025-08-09,Abbonamento scaduto
-Davide,Ricci,Mensile,2028-03-03,2025-04-02,Abbonamento scaduto
-Riccardo,Marino,Semestrale,2026-04-23,2025-05-09,Abbonamento scaduto
-Alessandro,Ricci,Annuale,2028-07-20,2025-07-18,Abbonamento scaduto
-Giulia,Ferrari,Semestrale,2026-06-24,2025-12-08,Abbonamento scaduto
-Marco,Zappa,Semestrale,2028-11-15,2025-08-17,Abbonamento scaduto
-Simone,Ferrari,Trimestrale,2027-12-10,2025-09-12,Abbonamento scaduto
-Beatrice,Romano,Annuale,2027-02-11,2026-01-27,Abbonamento scaduto
-Chiara,Rossi,Annuale,2026-06-01,2025-09-10,Abbonamento scaduto
-Alessandro,Marino,Semestrale,2027-03-22,2025-05-20,Abbonamento scaduto
-Matteo,Russo,Mensile,2026-02-19,2025-08-13,Abbonamento scaduto
-Davide,Romano,Trimestrale,2027-04-16,2025-07-21,Abbonamento scaduto
-Davide,Rossi,Semestrale,2026-06-05,2025-01-03,Abbonamento scaduto
-Valentina,Moretti,Trimestrale,2027-05-10,2025-05-30,Abbonamento scaduto
-Davide,Marino,Trimestrale,2027-08-18,2025-12-10,Abbonamento scaduto
-Davide,Romano,Annuale,2026-06-15,2025-09-06,Abbonamento scaduto
-Simone,Moretti,Semestrale,2026-06-26,2026-01-13,Abbonamento scaduto
-Giulia,Marino,Mensile,2027-08-13,2025-07-11,Abbonamento scaduto
-Alice,Marino,Mensile,2028-10-11,2025-01-19,Abbonamento scaduto
-Matteo,Romano,Trimestrale,2028-06-21,2025-06-20,Abbonamento scaduto
-Matteo,Russo,Trimestrale,2026-08-01,2025-12-13,Abbonamento scaduto
-Sara,Piccoli,Semestrale,2027-07-26,2025-05-13,Abbonamento scaduto
-Sara,Rossi,Trimestrale,2026-04-22,2025-03-30,Abbonamento scaduto
-Sara,Colombo,Semestrale,2028-12-01,2025-08-19,Abbonamento scaduto
-Riccardo,Moretti,Trimestrale,2026-08-29,2025-02-13,Abbonamento scaduto
-Marco,Marino,Semestrale,2027-08-17,2025-12-19,Abbonamento scaduto
-Alessandro,Moretti,Trimestrale,2026-04-08,2025-04-25,Abbonamento scaduto
-Alice,Russo,Semestrale,2028-05-13,2025-05-12,Abbonamento scaduto
-Chiara,Zappa,Annuale,2028-01-31,2025-05-24,Abbonamento scaduto
-Chiara,Colombo,Trimestrale,2027-05-12,2025-12-20,Abbonamento scaduto
-Marco,Colombo,Semestrale,2027-04-09,2025-10-23,Abbonamento scaduto
-Matteo,Ferrari,Annuale,2026-02-13,2026-01-07,Certificato scaduto e Abbonamento scaduto
-Sara,Ricci,Semestrale,2028-11-17,2026-01-27,Abbonamento scaduto
-Giulia,Romano,Mensile,2028-04-25,2025-08-15,Abbonamento scaduto
-Sara,Marino,Trimestrale,2028-01-22,2025-05-17,Abbonamento scaduto
-Beatrice,Verdi,Mensile,2026-03-19,2025-01-22,Abbonamento scaduto
-Chiara,Rossi,Semestrale,2026-07-23,2025-06-06,Abbonamento scaduto
-Matteo,Moretti,Trimestrale,2028-01-30,2025-09-05,Abbonamento scaduto
-Chiara,Colombo,Mensile,2026-04-16,2025-02-03,Abbonamento scaduto
-Beatrice,Moretti,Semestrale,2027-11-13,2025-05-06,Abbonamento scaduto
-Simone,Ferrari,Annuale,2027-12-28,2025-04-30,Abbonamento scaduto
-Chiara,Zappa,Trimestrale,2028-10-05,2025-06-16,Abbonamento scaduto
-Beatrice,Moretti,Mensile,2027-11-13,2025-06-10,Abbonamento scaduto
-Alice,Marino,Trimestrale,2026-02-13,2025-05-06,Certificato scaduto e Abbonamento scaduto
-Davide,Rossi,Mensile,2028-10-07,2025-10-20,Abbonamento scaduto
-Matteo,Conti,Semestrale,2028-06-27,2025-01-04,Abbonamento scaduto
-Giulia,Rossi,Trimestrale,2026-10-19,2025-10-05,Abbonamento scaduto
-Riccardo,Moretti,Mensile,2026-10-08,2025-06-13,Abbonamento scaduto
-Chiara,Romano,Semestrale,2026-11-12,2025-04-15,Abbonamento scaduto
-Chiara,Moretti,Annuale,2027-07-22,2025-10-12,Abbonamento scaduto
-Davide,Moretti,Annuale,2027-05-31,2025-12-12,Abbonamento scaduto
-Davide,Moretti,Semestrale,2028-01-05,2025-09-07,Abbonamento scaduto
-Alice,Moretti,Annuale,2027-07-29,2025-05-08,Abbonamento scaduto
-Cristiano,Romano,Semestrale,2026-12-07,2025-03-08,Abbonamento scaduto
-Elena,Gallo,Semestrale,2027-09-13,2025-11-22,Abbonamento scaduto
-Davide,Marino,Annuale,2026-07-13,2025-04-03,Abbonamento scaduto
-Sara,Verdi,Mensile,2027-01-20,2025-02-08,Abbonamento scaduto
-Chiara,Romano,Mensile,2026-05-10,2025-06-13,Abbonamento scaduto
-Beatrice,Ricci,Mensile,2028-08-04,2025-11-01,Abbonamento scaduto
-Giulia,Romano,Mensile,2027-01-26,2025-02-16,Abbonamento scaduto
-Beatrice,Piccoli,Semestrale,2026-02-08,2026-02-21,Certificato scaduto
-Chiara,Romano,Semestrale,2028-05-21,2025-05-25,Abbonamento scaduto
-Beatrice,Moretti,Trimestrale,2028-04-21,2025-05-31,Abbonamento scaduto
-Sara,Moretti,Annuale,2027-10-07,2025-02-10,Abbonamento scaduto
-Elena,Conti,Mensile,2027-09-01,2026-01-16,Abbonamento scaduto
-Valentina,Marino,Trimestrale,2027-07-13,2025-02-19,Abbonamento scaduto
-Davide,Gallo,Trimestrale,2028-05-21,2025-07-02,Abbonamento scaduto
-Chiara,Conti,Annuale,2026-04-09,2025-11-27,Abbonamento scaduto
-Cristiano,Ricci,Semestrale,2027-01-20,2025-02-11,Abbonamento scaduto
-Marco,Gallo,Mensile,2026-10-12,2025-09-06,Abbonamento scaduto
-Beatrice,Ferrari,Trimestrale,2027-07-19,2025-04-30,Abbonamento scaduto
-Simone,Verdi,Semestrale,2026-05-16,2025-09-01,Abbonamento scaduto
-Cristiano,Romano,Semestrale,2026-02-14,2025-01-28,Certificato scaduto e Abbonamento scaduto
-Davide,Conti,Semestrale,2028-05-28,2026-02-03,Abbonamento scaduto
-Alice,Gallo,Semestrale,2026-10-30,2025-10-30,Abbonamento scaduto
-Marco,Marino,Semestrale,2028-01-04,2025-06-20,Abbonamento scaduto
-Beatrice,Verdi,Semestrale,2028-01-04,2025-03-01,Abbonamento scaduto
-Matteo,Bianchi,Mensile,2028-05-06,2025-04-12,Abbonamento scaduto
-Alessandro,Bianchi,Annuale,2028-08-15,2025-06-23,Abbonamento scaduto
-Valentina,Verdi,Semestrale,2028-11-29,2025-07-08,Abbonamento scaduto
-Sara,Zappa,Semestrale,2028-06-20,2025-07-04,Abbonamento scaduto
-Simone,Verdi,Mensile,2028-12-16,2026-01-22,Abbonamento scaduto
-Alessandro,Ricci,Annuale,2026-10-29,2025-09-02,Abbonamento scaduto
-Beatrice,Bianchi,Annuale,2026-02-16,2026-07-08,Certificato scaduto
-Giulia,Romano,Annuale,2027-01-31,2025-01-24,Abbonamento scaduto
-Marco,Ricci,Semestrale,2026-04-23,2025-03-09,Abbonamento scaduto
-Davide,Conti,Mensile,2027-07-16,2025-12-21,Abbonamento scaduto
-Beatrice,Piccoli,Semestrale,2026-11-19,2025-09-16,Abbonamento scaduto
-Cristiano,Colombo,Mensile,2027-06-28,2025-06-22,Abbonamento scaduto
-Simone,Piccoli,Semestrale,2027-03-07,2025-11-06,Abbonamento scaduto
-Chiara,Zappa,Trimestrale,2028-07-28,2025-02-06,Abbonamento scaduto
-Chiara,Rossi,Trimestrale,2027-12-18,2026-01-27,Abbonamento scaduto
-Sara,Verdi,Annuale,2026-04-25,2025-05-09,Abbonamento scaduto
-Elena,Ferrari,Trimestrale,2028-11-03,2025-08-10,Abbonamento scaduto
-Elena,Bianchi,Mensile,2028-04-23,2025-01-10,Abbonamento scaduto
-Sara,Ferrari,Trimestrale,2026-07-01,2025-06-07,Abbonamento scaduto
-Valentina,Romano,Semestrale,2028-03-19,2026-01-27,Abbonamento scaduto
-Giulia,Piccoli,Annuale,2028-01-11,2026-01-27,Abbonamento scaduto
-Chiara,Romano,Semestrale,2027-04-26,2025-10-25,Abbonamento scaduto
-Simone,Conti,Trimestrale,2027-04-08,2025-03-21,Abbonamento scaduto
-Sara,Russo,Annuale,2028-09-01,2025-03-10,Abbonamento scaduto
-Alessandro,Verdi,Mensile,2027-02-07,2025-04-05,Abbonamento scaduto
-Cristiano,Piccoli,Annuale,2027-04-19,2026-02-01,Abbonamento scaduto
-Alessandro,Piccoli,Mensile,2028-12-07,2025-07-28,Abbonamento scaduto
-Alessandro,Rossi,Mensile,2028-01-02,2025-08-18,Abbonamento scaduto
-Simone,Colombo,Semestrale,2028-06-30,2025-10-27,Abbonamento scaduto
-Marco,Verdi,Semestrale,2026-12-21,2026-01-01,Abbonamento scaduto
-Alessandro,Ricci,Annuale,2027-08-14,2025-11-25,Abbonamento scaduto
-Davide,Verdi,Trimestrale,2027-11-29,2025-02-04,Abbonamento scaduto
-Sara,Conti,Annuale,2028-08-07,2025-04-11,Abbonamento scaduto
-Alessandro,Verdi,Trimestrale,2026-11-12,2025-11-24,Abbonamento scaduto
-Simone,Zappa,Semestrale,2026-09-20,2025-03-23,Abbonamento scaduto
-Chiara,Moretti,Trimestrale,2027-02-13,2025-05-10,Abbonamento scaduto
-Alice,Piccoli,Annuale,2026-06-03,2025-09-12,Abbonamento scaduto
-Cristiano,Romano,Trimestrale,2027-08-20,2025-11-11,Abbonamento scaduto
-Simone,Verdi,Mensile,2027-10-10,2025-12-12,Abbonamento scaduto
-Valentina,Ferrari,Annuale,2028-08-10,2025-01-27,Abbonamento scaduto
-Sara,Zappa,Trimestrale,2027-07-30,2025-10-21,Abbonamento scaduto
-Beatrice,Ferrari,Semestrale,2027-11-12,2026-01-26,Abbonamento scaduto
-Beatrice,Zappa,Mensile,2026-02-24,2025-04-25,Abbonamento scaduto
-Riccardo,Bianchi,Trimestrale,2027-05-26,2026-01-11,Abbonamento scaduto
-Riccardo,Piccoli,Semestrale,2026-02-15,2027-05-15,Certificato scaduto
-Valentina,Marino,Annuale,2026-05-02,2025-01-22,Abbonamento scaduto
-Alessandro,Romano,Trimestrale,2026-02-16,2028-02-05,Certificato scaduto
-Beatrice,Marino,Trimestrale,2026-03-21,2025-06-27,Abbonamento scaduto
-Valentina,Piccoli,Semestrale,2028-06-21,2025-04-29,Abbonamento scaduto
-Beatrice,Rossi,Mensile,2026-04-26,2025-06-21,Abbonamento scaduto
-Simone,Ricci,Annuale,2026-05-05,2025-04-20,Abbonamento scaduto
-Simone,Piccoli,Semestrale,2028-06-03,2025-09-30,Abbonamento scaduto
-Alessandro,Verdi,Semestrale,2028-04-27,2025-07-10,Abbonamento scaduto
-Alessandro,Gallo,Annuale,2026-11-06,2025-11-14,Abbonamento scaduto
-Giulia,Moretti,Annuale,2028-12-29,2025-01-04,Abbonamento scaduto
-Alice,Russo,Semestrale,2027-10-27,2025-01-28,Abbonamento scaduto
-Chiara,Rossi,Semestrale,2026-07-01,2025-12-10,Abbonamento scaduto
-Giulia,Ricci,Annuale,2027-11-21,2025-09-01,Abbonamento scaduto
-Beatrice,Romano,Semestrale,2026-08-28,2025-11-28,Abbonamento scaduto
-Simone,Gallo,Semestrale,2028-06-11,2026-01-06,Abbonamento scaduto
-Alessandro,Rossi,Trimestrale,2027-06-15,2025-11-19,Abbonamento scaduto
-Alice,Ferrari,Trimestrale,2026-09-25,2025-04-29,Abbonamento scaduto
-Cristiano,Marino,Annuale,2027-08-29,2025-08-20,Abbonamento scaduto
-Alice,Russo,Mensile,2028-05-30,2025-10-06,Abbonamento scaduto
-Giulia,Ferrari,Semestrale,2026-09-04,2025-01-11,Abbonamento scaduto
-Chiara,Moretti,Trimestrale,2027-10-21,2026-01-29,Abbonamento scaduto
-Marco,Rossi,Semestrale,2027-08-28,2025-02-20,Abbonamento scaduto
-Chiara,Zappa,Annuale,2027-06-16,2025-07-03,Abbonamento scaduto
-Sara,Russo,Semestrale,2027-08-09,2025-10-12,Abbonamento scaduto
-Matteo,Ricci,Trimestrale,2028-01-02,2025-05-06,Abbonamento scaduto
-Chiara,Bianchi,Semestrale,2027-05-07,2025-01-20,Abbonamento scaduto
-Beatrice,Marino,Semestrale,2026-12-30,2025-04-07,Abbonamento scaduto
-Marco,Gallo,Semestrale,2026-08-02,2025-05-06,Abbonamento scaduto
-Chiara,Ferrari,Mensile,2028-09-28,2025-04-11,Abbonamento scaduto
-Cristiano,Marino,Mensile,2027-12-11,2026-01-26,Abbonamento scaduto
-Alice,Romano,Trimestrale,2028-06-12,2025-01-21,Abbonamento scaduto
-Beatrice,Verdi,Mensile,2026-02-07,2026-10-03,Certificato scaduto
-Beatrice,Rossi,Annuale,2028-08-10,2025-06-05,Abbonamento scaduto
-Davide,Moretti,Semestrale,2027-06-05,2025-08-10,Abbonamento scaduto
-Beatrice,Piccoli,Mensile,2028-04-30,2025-09-23,Abbonamento scaduto
-Giulia,Moretti,Semestrale,2027-08-10,2025-04-13,Abbonamento scaduto
-Davide,Russo,Annuale,2026-07-07,2025-01-19,Abbonamento scaduto
-Marco,Zappa,Mensile,2027-08-26,2025-09-02,Abbonamento scaduto
-Beatrice,Colombo,Mensile,2028-05-18,2025-09-03,Abbonamento scaduto
-Sara,Gallo,Annuale,2028-03-25,2025-08-17,Abbonamento scaduto
-Davide,Piccoli,Annuale,2028-08-31,2025-12-16,Abbonamento scaduto
-Riccardo,Conti,Trimestrale,2026-09-07,2025-07-28,Abbonamento scaduto
-Riccardo,Piccoli,Annuale,2027-04-21,2025-09-18,Abbonamento scaduto
-Cristiano,Bianchi,Annuale,2027-02-13,2025-12-08,Abbonamento scaduto
-Alessandro,Ferrari,Semestrale,2026-05-18,2025-04-21,Abbonamento scaduto
-Matteo,Gallo,Mensile,2027-09-11,2025-09-17,Abbonamento scaduto
-Riccardo,Russo,Annuale,2026-07-27,2025-09-10,Abbonamento scaduto
-Alice,Ricci,Trimestrale,2028-07-12,2025-02-02,Abbonamento scaduto
-Alessandro,Colombo,Annuale,2026-04-15,2025-12-21,Abbonamento scaduto
-Giulia,Conti,Trimestrale,2026-07-29,2025-01-25,Abbonamento scaduto
-Beatrice,Zappa,Mensile,2028-12-08,2025-03-07,Abbonamento scaduto
-Alessandro,Gallo,Annuale,2026-12-14,2025-05-01,Abbonamento scaduto
-Sara,Gallo,Mensile,2026-10-19,2025-08-12,Abbonamento scaduto
-Elena,Russo,Semestrale,2028-02-15,2025-04-04,Abbonamento scaduto
-Matteo,Zappa,Annuale,2028-10-28,2025-03-31,Abbonamento scaduto
-Marco,Gallo,Mensile,2027-09-03,2025-01-05,Abbonamento scaduto
-Simone,Bianchi,Trimestrale,2028-08-15,2026-01-11,Abbonamento scaduto
-Valentina,Rossi,Semestrale,2027-09-15,2025-01-22,Abbonamento scaduto
-Simone,Marino,Annuale,2027-08-10,2025-07-13,Abbonamento scaduto
-Matteo,Bianchi,Mensile,2026-10-08,2025-09-02,Abbonamento scaduto
-Matteo,Rossi,Trimestrale,2028-05-15,2025-01-09,Abbonamento scaduto
-Elena,Conti,Semestrale,2026-10-16,2025-11-16,Abbonamento scaduto
-Cristiano,Ricci,Trimestrale,2028-09-18,2025-06-09,Abbonamento scaduto
-Davide,Moretti,Trimestrale,2027-05-03,2025-04-16,Abbonamento scaduto
-Giulia,Gallo,Semestrale,2026-12-15,2025-09-19,Abbonamento scaduto
-Riccardo,Ricci,Mensile,2026-06-29,2025-10-07,Abbonamento scaduto
-Elena,Gallo,Trimestrale,2027-02-12,2025-12-06,Abbonamento scaduto
-Beatrice,Moretti,Annuale,2026-12-06,2025-12-13,Abbonamento scaduto
-Chiara,Verdi,Mensile,2028-06-25,2025-03-18,Abbonamento scaduto
-Chiara,Colombo,Mensile,2028-03-15,2025-05-19,Abbonamento scaduto
-Alice,Ferrari,Annuale,2027-07-02,2025-06-25,Abbonamento scaduto
-Cristiano,Rossi,Trimestrale,2027-08-16,2025-11-22,Abbonamento scaduto
-Sara,Conti,Annuale,2028-12-11,2025-01-29,Abbonamento scaduto
-Davide,Moretti,Semestrale,2026-05-08,2025-02-09,Abbonamento scaduto
-Sara,Ferrari,Semestrale,2028-03-23,2025-11-15,Abbonamento scaduto
-Chiara,Conti,Annuale,2027-05-24,2025-06-21,Abbonamento scaduto
-Sara,Ferrari,Annuale,2027-11-26,2025-02-08,Abbonamento scaduto
-Sara,Ricci,Mensile,2026-12-31,2026-01-04,Abbonamento scaduto
-Alessandro,Romano,Mensile,2028-07-02,2025-03-08,Abbonamento scaduto
-Alessandro,Russo,Annuale,2028-03-12,2025-11-18,Abbonamento scaduto
-Riccardo,Marino,Semestrale,2028-01-26,2025-02-27,Abbonamento scaduto
-Beatrice,Colombo,Trimestrale,2028-12-18,2025-12-26,Abbonamento scaduto
-Davide,Bianchi,Trimestrale,2027-05-25,2025-03-14,Abbonamento scaduto
-Valentina,Rossi,Semestrale,2026-03-10,2025-10-14,Abbonamento scaduto
-Chiara,Piccoli,Annuale,2026-10-26,2025-06-05,Abbonamento scaduto
-Chiara,Colombo,Semestrale,2027-10-06,2025-02-26,Abbonamento scaduto
-Elena,Moretti,Mensile,2028-04-16,2025-04-30,Abbonamento scaduto
-Marco,Colombo,Semestrale,2026-12-29,2025-11-26,Abbonamento scaduto
-Elena,Colombo,Annuale,2028-06-03,2025-02-25,Abbonamento scaduto
-Riccardo,Zappa,Annuale,2028-06-10,2026-01-20,Abbonamento scaduto
-Cristiano,Ricci,Annuale,2027-05-27,2025-09-06,Abbonamento scaduto
-Valentina,Russo,Semestrale,2028-06-12,2025-08-25,Abbonamento scaduto
-Marco,Gallo,Annuale,2026-04-03,2025-12-09,Abbonamento scaduto
-Alessandro,Moretti,Trimestrale,2028-05-01,2025-08-06,Abbonamento scaduto
-Alice,Ferrari,Trimestrale,2027-04-20,2025-09-13,Abbonamento scaduto
-Giulia,Conti,Semestrale,2027-11-21,2025-01-01,Abbonamento scaduto
-Giulia,Bianchi,Mensile,2028-09-03,2025-09-29,Abbonamento scaduto
-Sara,Verdi,Mensile,2026-03-07,2026-01-16,Abbonamento scaduto
-Elena,Verdi,Annuale,2028-04-14,2025-04-01,Abbonamento scaduto
-Simone,Conti,Mensile,2027-01-14,2025-03-25,Abbonamento scaduto
-Alessandro,Ricci,Mensile,2027-10-13,2025-05-08,Abbonamento scaduto
-Giulia,Colombo,Trimestrale,2027-11-27,2025-04-26,Abbonamento scaduto
-Beatrice,Ferrari,Mensile,2027-06-18,2025-09-26,Abbonamento scaduto
-Sara,Bianchi,Semestrale,2028-01-14,2025-01-05,Abbonamento scaduto
-Elena,Romano,Annuale,2026-02-06,2026-10-27,Certificato scaduto
-Sara,Conti,Semestrale,2027-11-11,2025-06-08,Abbonamento scaduto
-Chiara,Bianchi,Semestrale,2028-02-28,2025-08-14,Abbonamento scaduto
-Valentina,Romano,Trimestrale,2027-04-19,2025-12-02,Abbonamento scaduto
-Matteo,Ferrari,Semestrale,2027-09-05,2025-07-04,Abbonamento scaduto
-Alice,Ferrari,Semestrale,2026-09-27,2026-01-28,Abbonamento scaduto
-Valentina,Ferrari,Semestrale,2026-07-06,2025-05-19,Abbonamento scaduto
-Riccardo,Bianchi,Annuale,2026-12-03,2025-10-01,Abbonamento scaduto
-Sara,Romano,Mensile,2026-04-26,2025-04-28,Abbonamento scaduto
-Davide,Zappa,Semestrale,2026-05-31,2025-06-26,Abbonamento scaduto
-Cristiano,Marino,Trimestrale,2027-06-07,2025-04-19,Abbonamento scaduto
-Valentina,Gallo,Annuale,2026-06-06,2025-06-13,Abbonamento scaduto
-Alessandro,Moretti,Annuale,2028-07-21,2025-09-10,Abbonamento scaduto
-Beatrice,Ricci,Annuale,2026-02-16,2028-05-13,Certificato scaduto
-Alice,Zappa,Semestrale,2026-05-05,2025-02-03,Abbonamento scaduto
-Matteo,Russo,Semestrale,2026-05-16,2025-03-26,Abbonamento scaduto
-Sara,Rossi,Semestrale,2026-07-17,2025-11-16,Abbonamento scaduto
-Marco,Zappa,Annuale,2028-05-24,2025-08-21,Abbonamento scaduto
-Giulia,Conti,Annuale,2027-07-24,2025-04-10,Abbonamento scaduto
-Matteo,Romano,Semestrale,2026-12-11,2025-12-29,Abbonamento scaduto
-Elena,Ferrari,Annuale,2028-07-30,2025-06-26,Abbonamento scaduto
-Matteo,Marino,Semestrale,2026-07-22,2025-01-24,Abbonamento scaduto
-Valentina,Piccoli,Annuale,2028-12-05,2025-06-01,Abbonamento scaduto
-Valentina,Marino,Annuale,2028-10-06,2025-11-22,Abbonamento scaduto
-Alice,Gallo,Annuale,2028-02-04,2025-08-21,Abbonamento scaduto
-Alice,Marino,Annuale,2027-03-11,2025-01-31,Abbonamento scaduto
-Cristiano,Marino,Annuale,2028-01-10,2025-12-02,Abbonamento scaduto
-Sara,Piccoli,Annuale,2027-09-14,2026-01-04,Abbonamento scaduto
-Matteo,Ricci,Semestrale,2028-06-26,2025-08-26,Abbonamento scaduto
-Valentina,Rossi,Semestrale,2026-04-09,2025-05-10,Abbonamento scaduto
-Cristiano,Zappa,Annuale,2026-04-01,2025-02-04,Abbonamento scaduto
-Davide,Rossi,Semestrale,2028-08-23,2026-02-08,Abbonamento scaduto
-Sara,Zappa,Semestrale,2026-08-31,2025-03-12,Abbonamento scaduto
-Beatrice,Verdi,Semestrale,2027-11-11,2025-01-27,Abbonamento scaduto
-Beatrice,Rossi,Annuale,2028-05-01,2025-08-24,Abbonamento scaduto
-Alessandro,Verdi,Annuale,2026-12-04,2025-07-18,Abbonamento scaduto
-Chiara,Gallo,Semestrale,2027-09-16,2025-01-30,Abbonamento scaduto
-Alessandro,Zappa,Annuale,2028-07-18,2025-05-21,Abbonamento scaduto
-Simone,Russo,Semestrale,2026-10-11,2025-10-11,Abbonamento scaduto
-Beatrice,Zappa,Annuale,2027-02-04,2025-05-07,Abbonamento scaduto
-Cristiano,Ricci,Semestrale,2028-05-11,2025-11-21,Abbonamento scaduto
-Alice,Piccoli,Semestrale,2027-09-11,2025-12-04,Abbonamento scaduto
-Davide,Russo,Annuale,2026-05-21,2025-05-15,Abbonamento scaduto
-Alessandro,Ricci,Semestrale,2026-06-28,2025-09-10,Abbonamento scaduto
-Davide,Conti,Semestrale,2027-02-15,2025-08-17,Abbonamento scaduto
-Matteo,Ricci,Semestrale,2026-11-17,2025-01-08,Abbonamento scaduto
-Valentina,Moretti,Semestrale,2026-07-18,2025-04-06,Abbonamento scaduto
-Cristiano,Colombo,Annuale,2027-07-14,2025-07-21,Abbonamento scaduto
-Sara,Zappa,Annuale,2028-08-01,2025-05-27,Abbonamento scaduto
-Beatrice,Marino,Semestrale,2026-11-28,2025-11-24,Abbonamento scaduto
-Elena,Piccoli,Semestrale,2028-07-30,2025-03-20,Abbonamento scaduto
-Beatrice,Rossi,Annuale,2027-05-16,2025-12-04,Abbonamento scaduto
-Elena,Romano,Semestrale,2027-02-25,2025-11-03,Abbonamento scaduto
-Beatrice,Piccoli,Semestrale,2027-11-20,2025-06-06,Abbonamento scaduto
-Marco,Colombo,Annuale,2026-05-11,2025-02-03,Abbonamento scaduto
-Alice,Bianchi,Annuale,2027-05-23,2025-04-29,Abbonamento scaduto
-Simone,Verdi,Annuale,2028-11-04,2025-12-14,Abbonamento scaduto
-Giulia,Moretti,Annuale,2027-01-03,2025-08-16,Abbonamento scaduto
-Valentina,Ferrari,Semestrale,2026-06-07,2025-07-31,Abbonamento scaduto
-Chiara,Romano,Semestrale,2026-03-27,2025-09-23,Abbonamento scaduto
-Valentina,Conti,Semestrale,2027-12-19,2025-11-01,Abbonamento scaduto
-Beatrice,Colombo,Annuale,2027-09-30,2025-06-05,Abbonamento scaduto
-Valentina,Piccoli,Annuale,2027-12-15,2025-11-26,Abbonamento scaduto
-Sara,Verdi,Annuale,2028-07-11,2025-09-01,Abbonamento scaduto
-Elena,Ferrari,Semestrale,2028-01-27,2025-05-10,Abbonamento scaduto
-Alice,Romano,Semestrale,2026-06-19,2025-01-04,Abbonamento scaduto

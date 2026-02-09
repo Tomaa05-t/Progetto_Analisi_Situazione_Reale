@@ -11,6 +11,7 @@ cognomi = ["Rossi", "Bianchi", "Verdi", "Ferrari", "Russo", "Piccoli", "Romano",
 servizi = ["Palestra"]
 abbonamenti = [ "Mensile", "Trimestrale", "Semestrale", "Annuale", ]
 domini = ["gmail.com", "outlook.it", "yahoo.com", "icloud.com"]
+ban = ["Sì", "No"]
 
 
 def genera_data_casuale(inizio, fine):
@@ -29,7 +30,7 @@ print(f"Generazione di {NUM_UTENTI} utenti in corso...")
 
 with open(OUTPUT_FILE, mode="w", encoding="utf-8") as f:
     # Intestazione (Header)
-    f.write("ID,Nome,Cognome,Data_Nascita,Email,Servizio,Abbonamento,Scadenza_Certificato,Ultimo_Accesso,Scadenza_Abbonamento\n")
+    f.write("ID,Nome,Cognome,Data_Nascita,Email,Servizio,Abbonamento,Scadenza_Certificato,Ultimo_Accesso,Scadenza_Abbonamento,ban\n")
     
     for i in range(1, NUM_UTENTI + 1):
         nome = random.choice(nomi)
@@ -37,6 +38,7 @@ with open(OUTPUT_FILE, mode="w", encoding="utf-8") as f:
         servizio = random.choice(servizi)
         abbonamento = random.choice(abbonamenti)
         dominio = random.choice(domini)
+    
 
         # Generazione Email (es: marco.rossi@gmail.com)
         # .lower() serve per avere tutto in minuscolo
@@ -54,8 +56,10 @@ with open(OUTPUT_FILE, mode="w", encoding="utf-8") as f:
         #generazione scadenxa abbonamento
         scadenza_abbonamento = genera_data_casuale(inizio_2025, fine_2028).strftime("%Y-%m-%d")
 
+        ban= random.random() < 0.05  # 5% di probabilità di essere bannato
+
         
         # Scrittura riga
-        f.write(f"{i},{nome},{cognome},{data_nascita},{email},{servizio},{abbonamento},{scadenza_cert},{ultimo_acc},{scadenza_abbonamento}\n")
+        f.write(f"{i},{nome},{cognome},{data_nascita},{email},{servizio},{abbonamento},{scadenza_cert},{ultimo_acc},{scadenza_abbonamento},{ban}\n")
 
 print(f"Successo! Il file '{OUTPUT_FILE}' è stato creato.")
