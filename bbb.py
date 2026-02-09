@@ -63,8 +63,13 @@ class MenuGUI:
             pady=10
         )
         btn_exit.pack(pady=10)
+
     
     def handle_option(self, option):
+        # 1. Definisci la variabile con il percorso REALE di Git Bash
+        bash_path = r"C:\Program Files\Git\bin\bash.exe"
+        bash_exe = r"C:\Program Files\Git\bin\bash.exe"
+        
         """Gestisce le 10 opzioni con un case statement"""
         match option:
             case 1:
@@ -84,22 +89,22 @@ class MenuGUI:
                 subprocess.run(["bash", "Domanda4_generaDBcentro.sh"])
             case 5:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 5!\nEsecuzione azione 5...")
-                subprocess.run(["bash", "Domanda5.sh"])
+                subprocess.run([bash_exe, "Domanda5.sh"])
             case 6:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 6!\nEsecuzione azione 6...")
-                subprocess.run(["bash", "Domanda6.sh"])
+                subprocess.run([bash_exe, "Domanda6.sh"])
             case 7:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 7!\nEsecuzione azione 7...")
-                subprocess.run(["bash", "Domanda7.sh"])
+                subprocess.run([bash_path, "Domanda7.sh"])
             case 8:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 8!\nEsecuzione azione 8...")
-                subprocess.run(["bash", "Domanda8.sh"])
+                subprocess.run([bash_exe, "Domanda8.sh"])
             case 9:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 9!\nEsecuzione azione 9...")
-                subprocess.run(["bash", "Domanda9.sh"])
+                subprocess.run([bash_exe, "Domanda9.sh"])
             case 10:
                 messagebox.showinfo("Risultato", "Hai scelto l'Opzione 10!\nEsecuzione azione 10...")
-                subprocess.run(["bash", "Domanda10.sh"])
+                subprocess.run([bash_exe, "Domanda10.sh"])
             case _:
                 messagebox.showerror("Errore", "Opzione non valida!")
 
