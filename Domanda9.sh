@@ -1,19 +1,14 @@
 #!/bin/bash
-#
 # Script: Domanda9.sh - Rilevamento Tentativi di Accesso SSH Falliti
-# Autore: Alessandro
 # Descrizione: Analizza i file di log del sistema per identificare potenziali
 #              attacchi brute-force SSH basati su tentativi di login falliti
-#
-# Uso: ./Domanda9.sh [file_log] [soglia_tentativi]
-#      Se non specificati, usa i valori predefiniti
-#
-# Esempio: ./Domanda9.sh /var/log/auth.log 5
-#
 
-# ============================================================================
+# Uso: ./Domanda9.sh [file_log] [soglia_tentativi]
+
+
+# Esempio: ./Domanda9.sh /var/log/auth.log 5
+
 # CONFIGURAZIONE PARAMETRI
-# ============================================================================
 
 # File di log da analizzare (può essere passato come primo parametro)
 LOG_FILE="${1:-./auth.log}"
@@ -24,9 +19,7 @@ SOGLIA_ATTACCO="${2:-5}"
 # File di output per salvare gli IP sospetti
 OUTPUT_FILE="./salvataggi_ip_sospetti/ip_sospetti_$(date +%Y%m%d_%H%M%S).txt"
 
-# ============================================================================
 # VALIDAZIONE INPUT
-# ============================================================================
 
 # Verifica che il file di log esista
 if [ ! -f "$LOG_FILE" ]; then
@@ -44,9 +37,7 @@ if ! [[ "$SOGLIA_ATTACCO" =~ ^[0-9]+$ ]]; then
     exit 2
 fi
 
-# ============================================================================
 # ANALISI LOG SSH
-# ============================================================================
 
 echo "========================================" 
 echo "ANALISI TENTATIVI ACCESSO SSH FALLITI"
@@ -79,11 +70,9 @@ if [ ! -s /tmp/ip_analisi.txt ]; then
     exit 0
 fi
 
-# ============================================================================
 # REPORT ATTACCHI
-# ============================================================================
 
-echo "⚠ ATTACCO IN CORSO - IP SOSPETTI RILEVATI!"
+echo "ATTACCO IN CORSO - IP SOSPETTI RILEVATI!"
 echo ""
 echo "IP Address          Tentativi  Status"
 echo "----------------------------------------"

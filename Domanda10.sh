@@ -2,10 +2,7 @@
 # Script: Domanda10.sh - Pulizia Dati Corrotti Centro Sportivo
 # Descrizione: Identifica e rimuove le righe corrotte dal database CSV
 #              (righe senza ID o senza email)
-# Uso: ./Domanda10.sh [file_csv_input] [file_csv_output]
-#      Se non specificati, usa i valori predefiniti
 # Esempio: ./Domanda10.sh centro_sportivo.csv centro_sportivo_pulito.csv
-
 
 # File CSV da pulire (può essere passato come primo parametro)
 INPUT_FILE="${1:-centro_sportivo.csv}"
@@ -39,9 +36,7 @@ fi
 
 # ANALISI E PULIZIA DATI
 
-echo "========================================" 
 echo "PULIZIA DATI CORROTTI"
-echo "========================================"
 echo "File input: $INPUT_FILE"
 echo "File output: $OUTPUT_FILE"
 echo "Data: $(date '+%d/%m/%Y %H:%M:%S')"
@@ -105,33 +100,25 @@ tail -n +2 "$INPUT_FILE" | while IFS= read -r line; do
     fi
 done
 
-
 # CALCOLO STATISTICHE
-
-
 # Conta le righe valide (escluso header)
 VALID_COUNT=$(tail -n +2 "$OUTPUT_FILE" | wc -l)
 
 # Conta le righe scartate (escluso header)
 REJECTED_COUNT=$(tail -n +2 "$REJECTED_FILE" | wc -l)
 
-
 # REPORT FINALE
 
 
 echo ""
-echo "========================================" 
 echo "REPORT PULIZIA COMPLETATO"
-echo "========================================"
 echo ""
 echo "Statistiche:"
-echo "----------------------------------------"
 echo "Righe analizzate:        $TOTAL_LINES"
 echo "Righe valide:            $VALID_COUNT"
 echo "Righe corrotte:          $REJECTED_COUNT"
 echo ""
 echo "File generati:"
-echo "----------------------------------------"
 echo "Database pulito:       $OUTPUT_FILE"
 
 # Se ci sono righe scartate, mostra il file e un'anteprima
@@ -149,17 +136,12 @@ else
     echo "Nessuna riga scartata - database già pulito!"
 fi
 
-echo ""
-echo "========================================" 
-
 # Calcola la percentuale di dati validi
 if [ "$TOTAL_LINES" -gt 0 ]; then
     # awk viene usato per fare calcoli in virgola mobile
     CLEAN_PERCENTAGE=$(awk "BEGIN {printf \"%.1f\", ($VALID_COUNT * 100) / $TOTAL_LINES}")
     echo "Qualità dati: ${CLEAN_PERCENTAGE}% validi"
 fi
-
-echo "========================================" 
-
+ 
 # Codice di uscita 0 = successo
 exit 0

@@ -1,17 +1,14 @@
 #!/bin/bash
-#
+
 # Script: Domanda8.sh - Backup Automatico Database Centro Sportivo
-# Autore: Alessandro
+
 # Descrizione: Crea un backup compresso del file CSV principale e lo salva
 #              in una cartella dedicata con timestamp
-#
+
 # Uso: ./Domanda8.sh [file_csv] [cartella_backup]
 #      Se non specificati, usa i valori predefiniti
-#
+
 # Esempio: ./Domanda8.sh centro_sportivo.csv ./backups
-#
-
-
 
 # File CSV da backuppare (può essere passato come primo parametro)
 CSV_FILE="${1:-centro_sportivo.csv}"
@@ -26,9 +23,9 @@ TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 # Nome del file di backup
 BACKUP_FILE="centro_sportivo_backup_${TIMESTAMP}.tar.gz"
 
-# ============================================================================
+
 # VALIDAZIONE INPUT
-# ============================================================================
+
 
 # Verifica che il file CSV esista
 if [ ! -f "$CSV_FILE" ]; then
@@ -37,9 +34,9 @@ if [ ! -f "$CSV_FILE" ]; then
     exit 1
 fi
 
-# ============================================================================
+
 # CREAZIONE DIRECTORY BACKUP
-# ============================================================================
+
 
 # Crea la cartella backup se non esiste
 # mkdir -p crea anche le directory parent se necessario
@@ -54,13 +51,8 @@ if [ ! -d "$BACKUP_DIR" ]; then
     fi
 fi
 
-# ============================================================================
 # CREAZIONE BACKUP
-# ============================================================================
-
-echo "========================================" 
 echo "BACKUP DATABASE CENTRO SPORTIVO"
-echo "========================================"
 echo "File sorgente: $CSV_FILE"
 echo "Dimensione: $(du -h "$CSV_FILE" | cut -f1)"
 echo "Destinazione: $BACKUP_DIR/$BACKUP_FILE"
@@ -75,7 +67,7 @@ tar -czf "$BACKUP_DIR/$BACKUP_FILE" "$CSV_FILE" 2>/dev/null
 
 # Verifica che il backup sia stato creato correttamente
 if [ $? -eq 0 ] && [ -f "$BACKUP_DIR/$BACKUP_FILE" ]; then
-    echo "✓ Backup completato con successo!"
+    echo "Backup completato con successo!"
     echo ""
     echo "Dettagli backup:"
     echo "- File backup: $BACKUP_FILE"
@@ -97,11 +89,7 @@ else
     echo "ERRORE: Backup fallito!"
     exit 3
 fi
-
-# ============================================================================
 # GESTIONE BACKUP VECCHI (OPZIONALE)
-# ============================================================================
-
 # Conta quanti backup esistono
 NUM_BACKUPS=$(ls -1 "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz 2>/dev/null | wc -l)
 echo "Backup totali presenti: $NUM_BACKUPS"
