@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # 1. Definiamo il file finale
 OUTPUT="centro_sportivo.csv"
 
