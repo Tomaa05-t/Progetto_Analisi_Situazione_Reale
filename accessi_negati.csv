@@ -1,400 +1,116 @@
 Nome,Cognome,Tipo_Abbonamento,Scadenza_Certificato,Scadenza_Abbonamento,Motivo
-Valentina,Colombo,2028-07-08,2025-02-10,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Marino,2027-11-03,2025-02-21,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Rossi,2028-12-18,2025-08-04,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Gallo,2026-06-29,2025-07-14,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Russo,2027-09-26,2026-01-19,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Ricci,2027-06-04,2025-08-03,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Marino,2028-02-22,2025-05-09,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Gallo,2028-02-09,2025-01-12,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Gallo,2028-05-23,2025-08-05,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Marino,2026-11-30,2025-07-04,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Gallo,2028-05-08,2025-12-27,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Colombo,2028-09-07,2025-11-24,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Verdi,2028-07-08,2025-01-27,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Conti,2027-11-10,2025-09-21,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Conti,2028-11-17,2025-06-20,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Rossi,2028-09-29,2025-04-07,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Moretti,2028-09-13,2025-06-30,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Colombo,2028-03-17,2025-05-21,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Conti,2028-05-04,2025-07-13,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Moretti,2027-12-11,2025-03-12,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Ricci,2027-12-18,2025-11-23,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Zappa,2028-09-06,2025-01-06,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Zappa,2028-07-14,2025-05-26,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Moretti,2028-09-21,2025-02-26,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Romano,2027-10-02,2025-10-30,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Conti,2028-05-28,2025-11-25,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Verdi,2026-04-04,2025-02-25,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Rossi,2028-12-01,2025-11-24,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Zappa,2027-11-15,2025-12-19,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Russo,2027-08-29,2025-12-14,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Piccoli,2028-02-05,2025-05-21,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Colombo,2026-02-16,2025-11-29,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Zappa,2027-06-23,2025-03-31,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Russo,2028-12-29,2025-11-18,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Piccoli,2028-05-04,2025-09-08,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Colombo,2028-08-31,2025-04-27,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Colombo,2026-11-14,2026-01-29,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Verdi,2026-03-04,2025-08-17,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Gallo,2027-01-07,2025-04-25,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Bianchi,2027-08-27,2025-03-02,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Verdi,2028-03-16,2026-02-07,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Zappa,2026-05-13,2025-07-26,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Zappa,2028-11-08,2025-04-04,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Ricci,2027-12-24,2025-11-18,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Rossi,2028-08-24,2025-03-20,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Gallo,2028-10-02,2025-01-14,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Gallo,2027-02-11,2025-04-11,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Ricci,2026-05-06,2025-10-10,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Conti,2026-04-20,2025-02-26,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Verdi,2028-10-16,2025-03-21,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Rossi,2026-06-05,2025-06-29,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Bianchi,2026-09-28,2026-01-10,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Russo,2028-12-20,2025-09-13,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Ricci,2028-01-03,2025-07-20,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Bianchi,2028-03-11,2025-06-11,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Moretti,2026-02-28,2025-10-02,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Romano,2027-11-08,2025-07-29,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Moretti,2026-05-05,2025-09-18,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Marino,2027-12-23,2025-07-23,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Russo,2026-08-12,2025-03-23,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Romano,2026-03-09,2025-05-08,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Gallo,2028-08-07,2025-06-10,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Zappa,2027-06-25,2025-03-28,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Zappa,2026-11-15,2025-11-01,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Rossi,2027-04-18,2025-10-17,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Verdi,2028-09-01,2025-04-09,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Ricci,2028-05-01,2025-06-13,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Romano,2026-11-13,2025-09-21,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Romano,2028-01-24,2025-09-29,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Zappa,2027-03-14,2025-07-28,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Marino,2028-10-17,2025-04-26,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Piccoli,2028-02-23,2025-05-25,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Bianchi,2028-02-02,2025-07-02,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Ricci,2028-10-21,2025-09-07,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Russo,2028-02-03,2025-10-05,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Gallo,2028-04-13,2025-02-12,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Piccoli,2026-08-09,2025-04-22,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Gallo,2026-12-31,2025-05-16,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Conti,2026-06-06,2025-09-27,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Russo,2027-07-06,2025-08-23,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Conti,2026-08-02,2025-02-23,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Colombo,2028-01-18,2025-12-06,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Zappa,2026-07-09,2025-09-05,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Moretti,2027-09-26,2025-04-15,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Gallo,2026-06-19,2025-02-19,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Gallo,2028-09-29,2025-01-15,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Gallo,2028-12-26,2025-12-07,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Verdi,2027-05-20,2025-08-10,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Russo,2027-02-01,2025-06-26,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Romano,2026-12-20,2025-08-05,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Rossi,2026-09-24,2025-10-03,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Ferrari,2027-12-31,2025-09-05,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Moretti,2026-11-08,2025-01-09,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Piccoli,2028-03-20,2025-08-18,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Zappa,2027-07-15,2025-05-22,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Colombo,2026-04-21,2025-02-10,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Zappa,2028-08-07,2025-09-22,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Ferrari,2028-08-30,2025-02-12,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Rossi,2026-12-23,2025-03-29,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Russo,2026-12-08,2025-05-27,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Marino,2026-08-29,2025-09-03,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Marino,2028-09-24,2025-09-25,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Conti,2026-12-01,2025-07-24,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Rossi,2026-02-13,2025-01-03,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Rossi,2028-07-20,2025-09-20,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Romano,2027-02-11,2025-07-15,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Colombo,2027-07-20,2025-05-22,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Bianchi,2028-01-03,2025-04-07,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Conti,2028-05-05,2025-04-19,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Bianchi,2026-02-27,2025-07-20,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Russo,2027-01-20,2025-08-20,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Ferrari,2028-09-04,2026-01-18,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Gallo,2028-09-08,2026-02-04,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Bianchi,2027-12-14,2026-01-06,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Romano,2027-04-25,2025-11-03,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Russo,2026-04-26,2025-12-21,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Colombo,2028-02-28,2025-03-29,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Rossi,2026-11-08,2025-06-10,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Ferrari,2026-08-06,2025-07-06,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Romano,2028-10-11,2025-06-15,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Russo,2027-04-30,2025-08-20,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Piccoli,2026-08-01,2025-05-13,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Colombo,2027-02-09,2026-01-04,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Ricci,2026-05-27,2025-01-21,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Zappa,2028-07-25,2025-03-05,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Zappa,2027-05-01,2026-01-06,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Moretti,2028-09-10,2026-01-24,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Russo,2027-09-05,2025-08-28,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Rossi,2026-11-02,2025-12-28,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Conti,2028-07-19,2025-04-18,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Romano,2027-07-17,2025-10-13,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Romano,2028-01-29,2025-04-14,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Colombo,2026-06-28,2025-07-09,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Ferrari,2026-10-14,2025-10-04,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Bianchi,2026-04-23,2025-03-16,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Colombo,2027-08-12,2025-05-07,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Zappa,2026-06-07,2025-11-14,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Gallo,2027-11-18,2025-12-25,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Moretti,2027-04-28,2025-08-10,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Colombo,2028-05-17,2026-02-07,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Ferrari,2027-01-27,2025-08-27,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Verdi,2028-11-13,2026-01-14,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Rossi,2026-03-16,2025-05-28,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Ferrari,2026-03-11,2025-04-01,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Zappa,2027-01-12,2025-05-27,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Colombo,2028-11-26,2025-07-29,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Ricci,2027-05-19,2025-03-30,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Colombo,2026-11-10,2025-11-29,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Conti,2027-12-09,2025-03-01,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Marino,2028-12-17,2025-06-13,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Russo,2027-07-14,2026-02-04,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Marino,2028-10-12,2025-12-24,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Piccoli,2026-04-07,2025-03-05,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Russo,2028-03-11,2025-05-10,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Moretti,2027-08-01,2025-01-03,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Conti,2026-10-02,2025-02-14,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Ricci,2027-03-21,2026-01-01,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Moretti,2028-09-03,2025-04-17,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Conti,2028-06-23,2025-10-09,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Russo,2028-09-22,2026-01-23,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Romano,2026-07-14,2025-10-17,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Conti,2027-08-10,2025-08-19,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Colombo,2027-07-25,2025-08-24,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Ferrari,2027-11-08,2025-04-13,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Zappa,2027-08-30,2026-01-09,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Bianchi,2028-06-24,2026-01-06,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Moretti,2028-03-09,2025-05-08,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Zappa,2026-05-27,2026-01-30,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Ricci,2027-05-25,2026-02-04,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Rossi,2026-07-21,2025-12-10,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Piccoli,2026-05-03,2025-11-28,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Colombo,2028-07-19,2025-08-13,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Marino,2028-10-10,2025-04-01,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Gallo,2027-08-30,2025-10-20,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Ricci,2026-02-20,2025-12-11,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Rossi,2028-01-05,2025-03-24,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Ricci,2026-07-17,2025-10-04,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Zappa,2026-06-09,2026-02-06,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Moretti,2027-07-02,2025-04-26,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Russo,2028-09-12,2025-10-17,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Verdi,2028-12-02,2025-08-25,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Rossi,2028-02-27,2025-07-24,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Ferrari,2026-08-26,2025-12-12,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Ferrari,2026-10-28,2026-01-12,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Moretti,2028-06-13,2025-04-29,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Moretti,2026-07-02,2026-01-23,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Conti,2026-02-10,2025-04-08,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Gallo,2028-04-06,2026-01-20,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Bianchi,2026-09-22,2025-04-02,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Rossi,2028-07-03,2025-05-28,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Marino,2026-02-25,2025-01-16,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Zappa,2027-09-05,2025-07-25,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Romano,2028-11-03,2025-03-23,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Moretti,2028-06-29,2025-07-16,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Moretti,2028-09-04,2025-05-17,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Piccoli,2027-09-15,2025-08-30,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Gallo,2028-11-14,2025-06-05,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Marino,2028-08-21,2025-09-18,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Ricci,2026-07-20,2025-02-11,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Gallo,2028-12-07,2025-06-17,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Piccoli,2027-03-10,2025-01-02,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Verdi,2028-09-27,2025-07-21,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Verdi,2026-12-08,2025-10-19,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Conti,2026-03-24,2025-11-01,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Colombo,2028-03-31,2025-04-21,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Romano,2026-04-19,2025-04-20,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Conti,2028-04-23,2026-01-20,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Zappa,2026-12-07,2025-08-28,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Romano,2026-06-28,2025-03-01,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Verdi,2026-04-25,2025-12-03,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Rossi,2028-09-17,2025-11-23,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Russo,2026-05-30,2025-10-11,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Moretti,2026-12-06,2025-11-10,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Rossi,2027-08-03,2026-01-11,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Moretti,2026-04-17,2026-01-23,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Gallo,2028-10-14,2025-12-04,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Russo,2028-11-09,2025-03-04,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Ricci,2028-01-01,2025-08-31,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Romano,2026-12-12,2025-04-17,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Russo,2028-08-06,2025-01-28,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Russo,2026-12-07,2025-10-03,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Marino,2027-05-14,2025-01-24,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Bianchi,2028-02-07,2025-01-12,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Colombo,2028-04-18,2025-02-02,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Conti,2027-06-02,2025-01-09,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Verdi,2027-12-01,2025-05-12,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Conti,2027-10-05,2025-12-29,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Romano,2026-05-24,2025-10-13,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Verdi,2028-12-20,2025-02-26,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Marino,2028-09-01,2025-01-17,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Russo,2027-07-15,2025-06-13,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Gallo,2027-10-09,2025-02-28,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Bianchi,2027-04-03,2025-03-09,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Bianchi,2027-07-17,2025-02-03,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Ferrari,2026-12-15,2025-08-27,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Romano,2026-09-21,2025-04-07,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Verdi,2026-11-12,2025-02-01,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Ricci,2026-05-26,2026-01-30,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Moretti,2027-04-21,2025-11-12,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Russo,2026-12-28,2026-01-31,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Marino,2026-07-18,2025-04-10,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Marino,2027-06-14,2025-08-12,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Ferrari,2027-07-17,2025-08-26,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Marino,2027-07-23,2025-01-14,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Romano,2026-03-30,2025-09-05,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Verdi,2028-02-07,2025-02-28,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Conti,2028-03-08,2025-09-25,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Marino,2028-04-28,2025-12-03,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Moretti,2028-11-18,2025-10-10,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Moretti,2027-11-02,2025-10-26,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Zappa,2028-10-21,2025-08-14,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Zappa,2027-01-31,2025-01-24,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Romano,2026-11-29,2025-07-18,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Ferrari,2027-05-07,2025-08-03,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Romano,2026-09-15,2025-09-27,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Bianchi,2027-03-15,2025-11-06,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Ricci,2027-03-07,2025-07-12,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Colombo,2027-10-08,2025-07-11,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Ferrari,2026-04-19,2025-02-26,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Ricci,2028-12-29,2025-07-16,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Rossi,2026-08-07,2025-01-15,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Romano,2027-05-02,2025-02-10,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Ferrari,2026-10-09,2025-03-21,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Conti,2028-03-22,2025-08-25,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Romano,2028-04-06,2025-05-14,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Zappa,2027-01-10,2026-02-08,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Verdi,2028-04-25,2025-02-23,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Verdi,2026-08-30,2025-05-09,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Moretti,2027-09-20,2025-07-07,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Conti,2026-05-29,2025-04-11,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Piccoli,2028-06-13,2025-09-18,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Romano,2027-08-08,2025-01-29,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Colombo,2026-03-15,2025-06-19,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Bianchi,2028-12-24,2025-09-10,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Gallo,2026-08-30,2025-06-27,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Russo,2028-02-14,2025-05-27,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Ricci,2028-07-01,2025-08-27,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Zappa,2027-05-23,2025-09-05,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Ferrari,2028-11-05,2026-01-09,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Marino,2028-06-03,2025-11-06,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Conti,2028-02-17,2025-06-26,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Colombo,2028-11-14,2025-06-26,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Gallo,2028-12-29,2026-01-24,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Rossi,2026-03-22,2025-07-19,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Ferrari,2028-12-27,2025-05-10,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Ferrari,2028-03-27,2025-03-18,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Moretti,2028-07-04,2025-11-10,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Ricci,2026-09-03,2025-12-08,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Colombo,2027-01-26,2025-06-11,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Bianchi,2028-05-15,2025-11-16,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Piccoli,2027-03-20,2025-03-31,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Conti,2027-05-11,2025-10-05,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Colombo,2027-05-23,2025-09-19,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Moretti,2027-05-28,2026-01-23,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Bianchi,2026-05-04,2025-05-21,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Moretti,2027-09-30,2025-07-08,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Piccoli,2027-04-04,2025-11-25,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Colombo,2028-10-05,2025-03-08,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Romano,2027-04-24,2025-12-05,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Russo,2028-09-11,2025-08-25,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Colombo,2028-05-14,2025-10-24,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Moretti,2028-08-28,2025-04-24,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Bianchi,2028-01-24,2026-01-17,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Rossi,2028-11-14,2026-02-07,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Zappa,2028-07-08,2025-11-28,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Romano,2026-10-05,2025-03-08,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Gallo,2028-08-17,2025-02-22,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Bianchi,2027-07-11,2025-12-21,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Marino,2028-09-30,2025-09-17,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Conti,2027-06-01,2025-04-14,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Conti,2026-06-27,2025-01-25,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Romano,2028-04-04,2025-10-17,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Romano,2028-05-02,2025-10-17,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Russo,2026-07-18,2025-10-31,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Marino,2026-09-15,2025-03-04,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Conti,2026-11-24,2025-06-17,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Ricci,2026-07-28,2025-12-17,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Moretti,2027-02-19,2025-04-12,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Marino,2026-11-25,2025-02-24,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Zappa,2026-03-17,2025-07-02,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Ricci,2028-03-01,2026-01-01,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Rossi,2026-10-19,2026-01-07,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Ferrari,2026-08-01,2025-11-03,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Ferrari,2027-05-25,2025-11-08,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Conti,2028-07-20,2025-01-06,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Ferrari,2026-04-30,2025-02-13,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Bianchi,2027-02-21,2025-11-02,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Zappa,2027-06-03,2025-08-27,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Gallo,2026-06-26,2025-06-25,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Rossi,2027-12-01,2025-08-16,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Verdi,2027-07-20,2025-09-20,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Zappa,2026-02-12,2025-10-14,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Zappa,2028-09-16,2025-04-23,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Moretti,2027-05-23,2026-01-18,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Colombo,2026-05-24,2025-01-22,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Colombo,2026-11-21,2025-07-23,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Rossi,2027-03-23,2025-01-04,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Romano,2028-03-04,2025-12-18,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Colombo,2026-07-18,2025-07-12,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Verdi,2028-08-21,2025-11-19,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Moretti,2028-02-17,2025-03-16,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Russo,2028-05-24,2025-06-04,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Ricci,2027-12-04,2025-02-22,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Marino,2027-08-07,2025-12-27,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Gallo,2027-07-31,2025-11-30,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Colombo,2026-08-28,2025-03-22,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Zappa,2028-06-12,2025-05-19,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Beatrice,Marino,2026-11-22,2025-03-23,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Russo,2026-05-06,2025-04-17,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Russo,2028-09-26,2025-02-15,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Marino,2028-03-11,2025-03-09,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Russo,2028-06-08,2026-01-12,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Zappa,2028-12-20,2025-11-07,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Colombo,2028-02-20,2025-06-17,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Piccoli,2027-09-21,2025-11-13,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Conti,2027-04-04,2025-05-31,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Moretti,2026-05-14,2025-08-27,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Bianchi,2026-11-25,2025-11-07,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Davide,Conti,2026-03-12,2025-10-05,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Gallo,2026-05-21,2025-06-28,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Marino,2026-07-05,2025-02-12,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Gallo,2027-10-16,2025-06-12,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Romano,2028-12-27,2025-12-01,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Conti,2027-11-06,2025-04-05,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Ricci,2027-07-19,2026-01-10,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Gallo,2026-08-13,2026-01-08,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Riccardo,Zappa,2026-06-20,2025-04-29,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Piccoli,2027-11-15,2025-03-29,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Moretti,2027-01-08,2026-01-21,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Conti,2027-04-08,2025-02-10,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Colombo,2027-11-04,2025-09-04,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Ferrari,2028-09-25,2025-08-02,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Bianchi,2027-03-18,2025-04-29,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Russo,2028-07-23,2025-04-22,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Conti,2028-06-24,2025-05-04,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Marino,2026-09-15,2025-05-16,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Ricci,2028-03-16,2025-05-15,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Piccoli,2028-04-17,2026-01-28,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Matteo,Gallo,2026-10-04,2025-11-05,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Conti,2026-08-10,2025-08-31,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Gallo,2027-01-16,2025-06-09,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Marino,2026-02-10,2025-03-06,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Chiara,Verdi,2026-07-09,2025-10-29,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Rossi,2027-01-05,2025-04-06,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Cristiano,Russo,2027-02-27,2025-07-01,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Elena,Piccoli,2028-11-22,2025-03-21,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Ricci,2028-03-17,2025-11-13,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Rossi,2028-07-14,2026-01-11,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Giulia,Colombo,2026-12-04,2025-06-19,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Conti,2028-12-09,2025-01-27,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Russo,2028-09-29,2025-08-06,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Marco,Conti,2027-10-20,2025-07-03,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Romano,2027-01-17,2025-06-30,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alice,Ferrari,2026-11-01,2025-01-29,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Alessandro,Moretti,2028-03-19,2026-01-27,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Simone,Gallo,2027-10-25,2025-09-01,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Russo,2027-02-13,2025-09-11,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Sara,Rossi,2027-11-08,2025-10-20,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
-Valentina,Piccoli,2027-05-15,2025-04-05,,Certificato medico scaduto o in scadenza e Abbonamento scaduto
+Chiara,Russo,Trimestrale,2027-02-17,2025-10-02,Abbonamento scaduto
+Valentina,Colombo,Semestrale,2028-08-18,2026-01-08,Abbonamento scaduto
+Valentina,Piccoli,Mensile,2028-10-11,2025-06-21,Abbonamento scaduto
+Alice,Ricci,Annuale,2028-02-16,2026-01-04,Abbonamento scaduto
+Alessandro,Russo,Trimestrale,2026-07-30,2025-11-05,Abbonamento scaduto
+Davide,Zappa,Mensile,2027-01-25,2025-11-01,Abbonamento scaduto
+Chiara,Ferrari,Semestrale,2027-12-30,2026-01-14,Abbonamento scaduto
+Cristiano,Piccoli,Trimestrale,2028-01-11,2025-11-24,Abbonamento scaduto
+Cristiano,Romano,Semestrale,2026-10-26,2025-02-23,Abbonamento scaduto
+Alice,Ferrari,Semestrale,2028-12-07,2026-01-09,Abbonamento scaduto
+Simone,Piccoli,Semestrale,2027-05-28,2025-06-22,Abbonamento scaduto
+Sara,Conti,Mensile,2028-12-02,2025-10-26,Abbonamento scaduto
+Elena,Ricci,Semestrale,2026-06-08,2025-09-25,Abbonamento scaduto
+Davide,Piccoli,Mensile,2028-04-20,2025-01-06,Abbonamento scaduto
+Davide,Ferrari,Mensile,2026-02-09,2027-09-20,Certificato medico scaduto o in scadenza
+Marco,Marino,Mensile,2026-08-06,2026-01-16,Abbonamento scaduto
+Simone,Gallo,Annuale,2028-11-23,2025-01-23,Abbonamento scaduto
+Cristiano,Zappa,Semestrale,2026-09-18,2025-11-29,Abbonamento scaduto
+Chiara,Rossi,Mensile,2027-10-13,2025-02-24,Abbonamento scaduto
+Elena,Conti,Trimestrale,2027-01-21,2025-11-04,Abbonamento scaduto
+Giulia,Piccoli,Mensile,2027-07-20,2026-01-22,Abbonamento scaduto
+Simone,Rossi,Trimestrale,2028-11-08,2025-12-02,Abbonamento scaduto
+Sara,Ricci,Semestrale,2028-01-08,2025-01-07,Abbonamento scaduto
+Matteo,Verdi,Trimestrale,2026-08-06,2025-05-20,Abbonamento scaduto
+Simone,Piccoli,Trimestrale,2026-08-13,2025-05-12,Abbonamento scaduto
+Sara,Gallo,Mensile,2027-12-23,2025-06-26,Abbonamento scaduto
+Beatrice,Ferrari,Mensile,2026-12-16,2025-07-08,Abbonamento scaduto
+Alessandro,Verdi,Semestrale,2026-08-12,2025-06-29,Abbonamento scaduto
+Giulia,Ricci,Annuale,2028-06-17,2025-01-03,Abbonamento scaduto
+Alessandro,Conti,Trimestrale,2026-04-03,2025-07-24,Abbonamento scaduto
+Alessandro,Ferrari,Mensile,2026-09-14,2025-11-06,Abbonamento scaduto
+Matteo,Moretti,Annuale,2028-01-16,2025-08-22,Abbonamento scaduto
+Alice,Colombo,Trimestrale,2027-01-29,2025-04-17,Abbonamento scaduto
+Riccardo,Bianchi,Mensile,2026-08-22,2025-05-21,Abbonamento scaduto
+Alice,Rossi,Annuale,2028-03-29,2025-07-13,Abbonamento scaduto
+Alice,Zappa,Semestrale,2027-04-29,2025-08-26,Abbonamento scaduto
+Matteo,Bianchi,Trimestrale,2027-08-23,2026-01-06,Abbonamento scaduto
+Marco,Ferrari,Annuale,2027-07-14,2025-03-29,Abbonamento scaduto
+Matteo,Ferrari,Mensile,2027-07-14,2026-01-04,Abbonamento scaduto
+Elena,Rossi,Semestrale,2026-03-23,2025-08-05,Abbonamento scaduto
+Sara,Romano,Semestrale,2027-01-10,2025-09-06,Abbonamento scaduto
+Riccardo,Gallo,Trimestrale,2026-02-13,2025-01-30,Certificato medico scaduto o in scadenza e Abbonamento scaduto
+Beatrice,Verdi,Mensile,2027-10-06,2025-08-20,Abbonamento scaduto
+Alessandro,Marino,Annuale,2026-07-06,2025-09-07,Abbonamento scaduto
+Simone,Gallo,Semestrale,2026-10-25,2025-02-02,Abbonamento scaduto
+Valentina,Marino,Trimestrale,2026-10-07,2025-09-27,Abbonamento scaduto
+Valentina,Verdi,Trimestrale,2027-03-19,2025-10-14,Abbonamento scaduto
+Cristiano,Conti,Mensile,2026-02-09,2026-10-31,Certificato medico scaduto o in scadenza
+Marco,Rossi,Trimestrale,2026-05-02,2025-07-15,Abbonamento scaduto
+Riccardo,Verdi,Trimestrale,2026-10-15,2025-07-07,Abbonamento scaduto
+Valentina,Verdi,Semestrale,2027-04-05,2025-08-28,Abbonamento scaduto
+Giulia,Russo,Mensile,2027-09-22,2026-01-23,Abbonamento scaduto
+Beatrice,Zappa,Mensile,2027-06-26,2025-08-31,Abbonamento scaduto
+Alessandro,Piccoli,Trimestrale,2028-06-27,2025-09-17,Abbonamento scaduto
+Matteo,Marino,Trimestrale,2027-09-09,2025-09-17,Abbonamento scaduto
+Elena,Ricci,Mensile,2027-10-11,2025-12-05,Abbonamento scaduto
+Matteo,Colombo,Mensile,2028-06-10,2025-05-31,Abbonamento scaduto
+Chiara,Ricci,Annuale,2027-11-27,2025-10-13,Abbonamento scaduto
+Elena,Gallo,Trimestrale,2027-02-16,2025-08-23,Abbonamento scaduto
+Alessandro,Marino,Annuale,2027-03-13,2025-06-20,Abbonamento scaduto
+Alessandro,Romano,Mensile,2027-09-22,2025-01-16,Abbonamento scaduto
+Elena,Russo,Trimestrale,2026-09-25,2025-08-31,Abbonamento scaduto
+Simone,Bianchi,Semestrale,2026-12-28,2025-12-30,Abbonamento scaduto
+Matteo,Rossi,Mensile,2027-09-12,2025-05-03,Abbonamento scaduto
+Alice,Marino,Mensile,2026-10-23,2025-09-06,Abbonamento scaduto
+Elena,Bianchi,Semestrale,2026-02-18,2028-06-21,Certificato medico scaduto o in scadenza
+Alessandro,Marino,Trimestrale,2026-10-25,2025-10-18,Abbonamento scaduto
+Sara,Bianchi,Annuale,2026-11-25,2025-03-14,Abbonamento scaduto
+Davide,Rossi,Mensile,2026-07-24,2025-08-08,Abbonamento scaduto
+Alessandro,Zappa,Annuale,2028-04-29,2025-08-24,Abbonamento scaduto
+Cristiano,Rossi,Mensile,2026-08-05,2025-04-10,Abbonamento scaduto
+Davide,Gallo,Annuale,2027-06-29,2025-12-30,Abbonamento scaduto
+Alessandro,Verdi,Trimestrale,2026-03-23,2025-10-30,Abbonamento scaduto
+Valentina,Verdi,Semestrale,2028-08-31,2025-05-05,Abbonamento scaduto
+Alessandro,Ricci,Semestrale,2028-12-04,2025-05-21,Abbonamento scaduto
+Alessandro,Ricci,Mensile,2027-11-11,2025-01-25,Abbonamento scaduto
+Valentina,Zappa,Semestrale,2026-03-05,2026-02-06,Abbonamento scaduto
+Davide,Bianchi,Semestrale,2026-07-29,2025-05-25,Abbonamento scaduto
+Davide,Ricci,Semestrale,2026-08-12,2025-01-09,Abbonamento scaduto
+Simone,Conti,Trimestrale,2028-12-09,2025-11-04,Abbonamento scaduto
+Alice,Moretti,Mensile,2027-01-31,2025-12-25,Abbonamento scaduto
+Alessandro,Conti,Semestrale,2028-07-30,2025-08-24,Abbonamento scaduto
+Alessandro,Romano,Mensile,2028-10-12,2025-03-19,Abbonamento scaduto
+Riccardo,Bianchi,Trimestrale,2028-07-20,2025-08-04,Abbonamento scaduto
+Matteo,Ricci,Mensile,2026-11-26,2025-11-28,Abbonamento scaduto
+Cristiano,Marino,Annuale,2027-02-01,2025-05-21,Abbonamento scaduto
+Simone,Ricci,Annuale,2028-05-23,2025-02-15,Abbonamento scaduto
+Sara,Zappa,Mensile,2028-06-26,2026-01-11,Abbonamento scaduto
+Elena,Moretti,Trimestrale,2026-12-21,2025-02-02,Abbonamento scaduto
+Alessandro,Conti,Trimestrale,2027-12-17,2025-12-29,Abbonamento scaduto
+Chiara,Piccoli,Semestrale,2026-04-21,2025-05-16,Abbonamento scaduto
+Elena,Zappa,Annuale,2028-06-13,2025-03-03,Abbonamento scaduto
+Chiara,Rossi,Trimestrale,2026-06-01,2025-10-01,Abbonamento scaduto
+Cristiano,Colombo,Semestrale,2028-03-04,2025-06-01,Abbonamento scaduto
+Elena,Zappa,Annuale,2026-02-16,2028-01-07,Certificato medico scaduto o in scadenza
+Chiara,Romano,Trimestrale,2026-03-28,2026-01-29,Abbonamento scaduto
+Simone,Ricci,Mensile,2026-11-27,2025-09-02,Abbonamento scaduto
+Elena,Romano,Trimestrale,2026-02-10,2028-07-03,Certificato medico scaduto o in scadenza
+Elena,Ferrari,Annuale,2026-02-17,2025-11-14,Certificato medico scaduto o in scadenza e Abbonamento scaduto
+Valentina,Conti,Annuale,2028-08-17,2025-01-29,Abbonamento scaduto
+Alice,Ferrari,Trimestrale,2027-04-03,2025-07-15,Abbonamento scaduto
+Alessandro,Conti,Annuale,2028-11-21,2025-06-03,Abbonamento scaduto
+Alice,Ferrari,Annuale,2028-05-15,2025-10-04,Abbonamento scaduto
+Valentina,Conti,Trimestrale,2026-12-03,2025-10-26,Abbonamento scaduto
+Riccardo,Ricci,Semestrale,2028-09-16,2025-06-24,Abbonamento scaduto
+Alice,Russo,Mensile,2028-11-07,2025-01-15,Abbonamento scaduto
+Sara,Romano,Trimestrale,2028-01-04,2025-07-18,Abbonamento scaduto
+Cristiano,Marino,Mensile,2028-11-23,2025-02-24,Abbonamento scaduto
+Chiara,Romano,Trimestrale,2026-07-07,2025-02-16,Abbonamento scaduto
+Alessandro,Verdi,Semestrale,2028-05-02,2025-12-02,Abbonamento scaduto
+Alessandro,Gallo,Annuale,2026-04-01,2025-07-01,Abbonamento scaduto
+Beatrice,Colombo,Semestrale,2028-02-19,2026-01-11,Abbonamento scaduto
+Alessandro,Ricci,Mensile,2027-10-15,2025-05-29,Abbonamento scaduto
+Alice,Marino,Semestrale,2028-04-17,2026-02-07,Abbonamento scaduto
+Chiara,Ferrari,Mensile,2028-05-23,2025-01-09,Abbonamento scaduto

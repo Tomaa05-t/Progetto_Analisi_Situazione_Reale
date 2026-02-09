@@ -13,20 +13,20 @@ output="accessi_negati.csv"
 
 echo "Nome,Cognome,Tipo_Abbonamento,Scadenza_Certificato,Scadenza_Abbonamento,Motivo" > "$output"
 
-awk -F',' -v oggi="$oggi" -v limite="$limite_certificato" '
+awk -F';' -v oggi="$oggi" -v limite="$limite_certificato" '
 NR > 1 {
 
     bannato = ($11 == "Sì")
     certificato_non_valido = ($8 <= limite)
     abbonamento_scaduto = ($10 < oggi)
 
-    # PRIORITÀ ASSOLUTA: UTENTE BANNATO
+    # PRIORITÀ ASSOLUTA UTENTE BANNATO
     if (bannato) {
         print $2 "," $3 "," $7 "," $8 "," $10 ",Utente bannato"
         next
     }
 
-    # Altri controlli
+    
     if (certificato_non_valido || abbonamento_scaduto) {
 
         motivo=""
