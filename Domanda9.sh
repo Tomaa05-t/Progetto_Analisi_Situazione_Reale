@@ -39,9 +39,7 @@ fi
 
 # ANALISI LOG SSH
 
-echo "========================================" 
 echo "ANALISI TENTATIVI ACCESSO SSH FALLITI"
-echo "========================================"
 echo "File log: $LOG_FILE"
 echo "Soglia attacco: $SOGLIA_ATTACCO tentativi"
 echo "Data analisi: $(date '+%d/%m/%Y %H:%M:%S')"
