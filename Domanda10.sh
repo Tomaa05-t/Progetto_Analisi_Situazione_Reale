@@ -1,19 +1,11 @@
 #!/bin/bash
-#
 # Script: Domanda10.sh - Pulizia Dati Corrotti Centro Sportivo
-# Autore: Alessandro
 # Descrizione: Identifica e rimuove le righe corrotte dal database CSV
 #              (righe senza ID o senza email)
-#
 # Uso: ./Domanda10.sh [file_csv_input] [file_csv_output]
 #      Se non specificati, usa i valori predefiniti
-#
 # Esempio: ./Domanda10.sh centro_sportivo.csv centro_sportivo_pulito.csv
-#
 
-# ============================================================================
-# CONFIGURAZIONE PARAMETRI
-# ============================================================================
 
 # File CSV da pulire (può essere passato come primo parametro)
 INPUT_FILE="${1:-centro_sportivo.csv}"
@@ -24,9 +16,7 @@ OUTPUT_FILE="${2:-centro_sportivo_pulito.csv}"
 # File di log con le righe scartate
 REJECTED_FILE="righe_corrotte_$(date +%Y%m%d_%H%M%S).csv"
 
-# ============================================================================
 # VALIDAZIONE INPUT
-# ============================================================================
 
 # Verifica che il file di input esista
 if [ ! -f "$INPUT_FILE" ]; then
@@ -47,9 +37,7 @@ if [ "$INPUT_FILE" == "$OUTPUT_FILE" ]; then
     fi
 fi
 
-# ============================================================================
 # ANALISI E PULIZIA DATI
-# ============================================================================
 
 echo "========================================" 
 echo "PULIZIA DATI CORROTTI"
@@ -59,8 +47,8 @@ echo "File output: $OUTPUT_FILE"
 echo "Data: $(date '+%d/%m/%Y %H:%M:%S')"
 echo ""
 
-# Conta le righe totali (escluso header)
-# tail -n +2 salta la prima riga (header)
+# Conta le righe totali 
+# tail -n +2 salta la prima riga 
 # wc -l conta le righe
 TOTAL_LINES=$(tail -n +2 "$INPUT_FILE" | wc -l)
 
@@ -74,9 +62,7 @@ head -n 1 "$INPUT_FILE" > "$REJECTED_FILE"
 
 echo "Analisi in corso..."
 
-# ============================================================================
 # PROCESSO DI VALIDAZIONE
-# ============================================================================
 
 # Legge il file CSV riga per riga (saltando l'header)
 # La variabile IFS= mantiene gli spazi
@@ -119,9 +105,9 @@ tail -n +2 "$INPUT_FILE" | while IFS= read -r line; do
     fi
 done
 
-# ============================================================================
+
 # CALCOLO STATISTICHE
-# ============================================================================
+
 
 # Conta le righe valide (escluso header)
 VALID_COUNT=$(tail -n +2 "$OUTPUT_FILE" | wc -l)
@@ -129,9 +115,9 @@ VALID_COUNT=$(tail -n +2 "$OUTPUT_FILE" | wc -l)
 # Conta le righe scartate (escluso header)
 REJECTED_COUNT=$(tail -n +2 "$REJECTED_FILE" | wc -l)
 
-# ============================================================================
+
 # REPORT FINALE
-# ============================================================================
+
 
 echo ""
 echo "========================================" 
