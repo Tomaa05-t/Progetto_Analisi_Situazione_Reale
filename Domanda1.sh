@@ -19,6 +19,7 @@ NR==1 {
 NR>1 {
     certificato_scaduto = ($8 < limite)
     abbonamento_scaduto = ($10 < oggi)
+        ban = ($11 == "Sì")
     
     if (certificato_scaduto || abbonamento_scaduto || ban) {
         motivo=""
