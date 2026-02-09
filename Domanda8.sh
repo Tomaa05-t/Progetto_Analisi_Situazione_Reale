@@ -1,12 +1,8 @@
 #!/bin/bash
-
 # Script: Domanda8.sh - Backup Automatico Database Centro Sportivo
 
 # Descrizione: Crea un backup compresso del file CSV principale e lo salva
 #              in una cartella dedicata con timestamp
-
-# Uso: ./Domanda8.sh [file_csv] [cartella_backup]
-#      Se non specificati, usa i valori predefiniti
 
 # Esempio: ./Domanda8.sh centro_sportivo.csv ./backups
 
@@ -23,9 +19,7 @@ TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 # Nome del file di backup
 BACKUP_FILE="centro_sportivo_backup_${TIMESTAMP}.tar.gz"
 
-
 # VALIDAZIONE INPUT
-
 
 # Verifica che il file CSV esista
 if [ ! -f "$CSV_FILE" ]; then
@@ -34,9 +28,7 @@ if [ ! -f "$CSV_FILE" ]; then
     exit 1
 fi
 
-
 # CREAZIONE DIRECTORY BACKUP
-
 
 # Crea la cartella backup se non esiste
 # mkdir -p crea anche le directory parent se necessario
