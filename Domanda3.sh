@@ -2,7 +2,7 @@
 # Avviso di scadenza certificato medico via email
 
 CSV_FILE="centro_sportivo.csv"
-DELIMITER=","
+DELIMITER=";"
 
 COL_NOME=2
 COL_COGNOME=3
