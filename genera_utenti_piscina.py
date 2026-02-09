@@ -11,7 +11,7 @@ cognomi = ["Rossi", "Bianchi", "Verdi", "Ferrari", "Russo", "Piccoli", "Romano",
 servizi = ["Piscina"]
 abbonamenti = [ "Mensile", "Trimestrale", "Semestrale", "Annuale", ]
 domini = ["gmail.com", "outlook.it", "yahoo.com", "icloud.com"]
-ban = ["sì", "no"]
+ban = "false"
 
 def genera_data_casuale(inizio, fine):
     delta = fine - inizio
@@ -29,7 +29,7 @@ print(f"Generazione di {NUM_UTENTI} utenti in corso...")
 
 with open(OUTPUT_FILE, mode="w", encoding="utf-8") as f:
     # Intestazione (Header)
-    f.write("ID,Nome,Cognome,Data_Nascita,Email,Abbonamento,Scadenza_Certificato,Ultimo_Accesso,Scadenza_Abbonamento\n")
+    f.write("ID;Nome;Cognome;Data_Nascita;Email;Abbonamento;Scadenza_Certificato;Ultimo_Accesso;Scadenza_Abbonamento;Ban\n")
     
     for i in range(1, NUM_UTENTI + 1):
         nome = random.choice(nomi)
@@ -57,6 +57,6 @@ with open(OUTPUT_FILE, mode="w", encoding="utf-8") as f:
         #ban = random.random() < 0.05
 
         # Scrittura riga
-        f.write(f"{i},{nome},{cognome},{data_nascita},{email},{abbonamento},{scadenza_cert},{ultimo_acc},{scadenza_abbonamento}\n")
+        f.write(f"{i},{nome},{cognome},{data_nascita},{email},{abbonamento},{scadenza_cert},{ultimo_acc},{scadenza_abbonamento},{ban}\n")
 
 print(f"Successo! Il file '{OUTPUT_FILE}' è stato creato.")
