@@ -16,7 +16,7 @@ fi
 oggi=$(date +%Y-%m-%d)
 lim_data=$(date -d "$limit" +%Y-%m-%d)
 
-awk -F, -v oggi="$oggi" -v lim_data="$lim_data" '
+awk -F';' -v oggi="$oggi" -v lim_data="$lim_data" '
 NR>1 {
     if ($9 < oggi && $9 > lim_data)
         print $2, $3 " ha fatto l ultimo accesso in data ", $9

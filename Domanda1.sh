@@ -1,49 +1,42 @@
 #!/bin/bash
-# =======================0==================================
-# Programma: controllo_accessi.sh
-# Descrizione:
-#   Il programma verifica la validità del certificato medico,
-#   dell’abbonamento e l’eventuale stato di ban degli utenti.
-#   Gli utenti non idonei all’accesso vengono salvati nel file
-#   accessi_negati.csv con il relativo motivo.
 # ==========================================================
-
+# Controllo accessi centro sportivo
+# Priorità assoluta allo stato di ban
+# ==========================================================
 
 oggi=$(date +%Y-%m-%d)
 giorni_preavviso=9
 limite_certificato=$(date -d "+$giorni_preavviso days" +%Y-%m-%d)
 
-
 input="centro_sportivo.csv"
 output="accessi_negati.csv"
 
-
 echo "Nome,Cognome,Tipo_Abbonamento,Scadenza_Certificato,Scadenza_Abbonamento,Motivo" > "$output"
 
-
-awk -F',' -v oggi="$oggi" -v limite="$limite_certificato" '
+awk -F';' -v oggi="$oggi" -v limite="$limite_certificato" '
 NR > 1 {
 
-    # Controlli
+    bannato = ($11 == "Sì")
     certificato_non_valido = ($8 <= limite)
-    abbonamento_scaduto   = ($10 < oggi)
-    bannato               = ($11 == "Sì")
+    abbonamento_scaduto = ($10 < oggi)
 
-    # Se almeno una condizione è vera → accesso negato
-    if (certificato_non_valido || abbonamento_scaduto || bannato) {
+    # PRIORITÀ ASSOLUTA UTENTE BANNATO
+    if (bannato) {
+        print $2 "," $3 "," $7 "," $8 "," $10 ",Utente bannato"
+        next
+    }
 
-        motivo = ""
+    
+    if (certificato_non_valido || abbonamento_scaduto) {
+
+        motivo=""
 
         if (certificato_non_valido)
-            motivo = "Certificato medico scaduto o in scadenza"
+            motivo="Certificato medico scaduto o in scadenza"
 
         if (abbonamento_scaduto) {
-            if (motivo != "") motivo = motivo " e "
-            motivo = motivo "Abbonamento scaduto"
-        }
-
-        if (bannato) { "
-            motivo = "Utente bannato"
+            if (motivo != "") motivo=motivo" e "
+            motivo=motivo"Abbonamento scaduto"
         }
 
         print $2 "," $3 "," $7 "," $8 "," $10 "," motivo
@@ -51,12 +44,10 @@ NR > 1 {
 }
 ' "$input" >> "$output"
 
-
 totale=$(tail -n +2 "$output" | wc -l)
 
-
 echo "------------------------------------------"
-echo "Controllo accessi completato con successo."
+echo "Controllo accessi completato"
 echo "File generato: $output"
 echo "Totale utenti con accesso negato: $totale"
 echo "------------------------------------------"
