@@ -109,5 +109,5 @@ echo "========================================"
 # Poi inserisci:
 # 0 22 * * * /path/to/Domanda8.sh /path/to/centro_sportivo.csv /path/to/backups
 # (Questo esegue lo script ogni giorno alle 22:00)
-
+#/workspaces/Progetto_Analisi_Situazione_Reale/Domanda8.sh /workspaces/Progetto_Analisi_Situazione_Reale/centro_sportivo.csv /workspaces/Progetto_Analisi_Situazione_Reale/backups
 exit 0
