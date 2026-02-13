@@ -1,0 +1,18 @@
+[2026-02-13 10:51:55] Dimensione: 44K - Righe: 401
+[2026-02-13 10:51:55] Creo il backup...
+[2026-02-13 10:51:55] OK! Backup creato: centro_sportivo_backup_20260213_105155.tar.gz (12K)
+[2026-02-13 10:51:55] Backup totali: 8
+[2026-02-13 10:51:55] Elimino i backup vecchi (tengo solo gli ultimi 7)
+[2026-02-13 10:51:55] Backup rimasti: 7
+[2026-02-13 10:51:55] ===== FINE BACKUP (OK) =====
+[2026-02-13 10:51:55] 
+[2026-02-13 11:12:36] ===== INIZIO BACKUP =====
+[2026-02-13 11:12:36] File: centro_sportivo.csv - 44K - 401 righe
+[2026-02-13 11:12:36] OK! Backup: centro_sportivo_backup_20260213_111236.tar.gz (12K)
+[2026-02-13 11:12:36] Eliminati backup vecchi
+[2026-02-13 11:12:36] ===== FINE BACKUP (OK) =====
+[2026-02-13 11:12:56] ===== INIZIO BACKUP =====
+[2026-02-13 11:12:56] File: centro_sportivo.csv - 44K - 401 righe
+[2026-02-13 11:12:56] OK! Backup: centro_sportivo_backup_20260213_111256.tar.gz (12K)
+[2026-02-13 11:12:56] Eliminati backup vecchi
+[2026-02-13 11:12:56] ===== FINE BACKUP (OK) =====

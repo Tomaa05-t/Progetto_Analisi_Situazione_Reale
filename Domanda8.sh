@@ -1,188 +1,373 @@
 #!/bin/bash
-# Script: Domanda8.sh - Backup e Ripristino Database Centro Sportivo
+################################################################################
+# Domanda8.sh - Backup database centro sportivo
+# Alessandro - 2026
+#
+# Uso: ./Domanda8.sh        -> menu interattivo
+#      ./Domanda8.sh auto   -> backup automatico (per cron)
+################################################################################
 
-# Descrizione: Crea backup compressi del file CSV principale oppure ripristina
-#              un backup precedente
+################################################################################
+# CONFIGURARE CRON (su Codespaces va reinstallato ogni riavvio):
+#   sudo apt-get update && sudo apt-get install -y cron
+#   sudo service cron start
+#   crontab -e
+#   Aggiungi: 0 22 * * * cd /workspaces/Progetto_Analisi_Situazione_Reale && ./Domanda8.sh auto
+################################################################################
 
-# Uso Backup: ./Domanda8.sh backup [file_csv] [cartella_backup]
-# Uso Ripristino: ./Domanda8.sh ripristino [file_backup.tar.gz]
-
-# Esempio Backup: ./Domanda8.sh backup centro_sportivo.csv ./backups
-# Esempio Ripristino: ./Domanda8.sh ripristino ./backups/centro_sportivo_backup_20260206_220000.tar.gz
-
-# ============================================================================
-# PARSING MODALITÀ
-# ============================================================================
-
-MODALITA="${1:-backup}"
-
-# ============================================================================
-# MODALITÀ RIPRISTINO
-# ============================================================================
-
-if [ "$MODALITA" == "ripristino" ] || [ "$MODALITA" == "restore" ]; then
-    BACKUP_FILE="$2"
+# MODALITÀ AUTO (chiamata da cron)
+if [ "$1" == "auto" ]; then
+    CSV_FILE="centro_sportivo.csv"
+    BACKUP_DIR="./backups"
+    LOG_DIR="./logs_backup"
+    TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+    BACKUP_FILE="centro_sportivo_backup_${TIMESTAMP}.tar.gz"
+    LOG_FILE="$LOG_DIR/backup_auto.log"
     
-    # Verifica che sia stato specificato un file
-    if [ -z "$BACKUP_FILE" ]; then
-        echo "ERRORE: Specifica il file di backup da ripristinare"
-        echo "Uso: $0 ripristino [file_backup.tar.gz]"
-        echo ""
-        echo "Backup disponibili:"
-        ls -1t ./backups/centro_sportivo_backup_*.tar.gz 2>/dev/null | head -10
+    # Funzione log
+    log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >> "$LOG_FILE"; }
+    
+    log "===== INIZIO BACKUP ====="
+    
+    # Verifica file esista
+    if [ ! -f "$CSV_FILE" ]; then
+        log "ERRORE: File $CSV_FILE non trovato"
+        log "===== FINE (ERRORE) ====="
         exit 1
     fi
     
-    # Verifica che il file di backup esista
-    if [ ! -f "$BACKUP_FILE" ]; then
-        echo "ERRORE: Il file di backup '$BACKUP_FILE' non esiste!"
-        exit 1
-    fi
+    mkdir -p "$BACKUP_DIR" "$LOG_DIR"
     
-    # Estrae la data dal nome del file (formato: centro_sportivo_backup_20260206_220000.tar.gz)
-    FILENAME=$(basename "$BACKUP_FILE")
+    ORIG_SIZE=$(du -h "$CSV_FILE" | cut -f1)
+    NUM_RIGHE=$(wc -l < "$CSV_FILE")
+    log "File: $CSV_FILE - $ORIG_SIZE - $NUM_RIGHE righe"
     
-    # Estrae timestamp dal nome file (es: 20260206_220000)
-    if [[ "$FILENAME" =~ centro_sportivo_backup_([0-9]{8}_[0-9]{6})\.tar\.gz ]]; then
-        TIMESTAMP="${BASH_REMATCH[1]}"
-        DATA="${TIMESTAMP:0:8}"  # Primi 8 caratteri: YYYYMMDD
-        ORA="${TIMESTAMP:9:6}"   # Ultimi 6 caratteri: HHMMSS
+    # Crea backup compresso
+    tar -czf "$BACKUP_DIR/$BACKUP_FILE" "$CSV_FILE" 2>/dev/null
+    
+    if [ $? -eq 0 ]; then
+        BACKUP_SIZE=$(du -h "$BACKUP_DIR/$BACKUP_FILE" | cut -f1)
+        log "OK! Backup: $BACKUP_FILE ($BACKUP_SIZE)"
         
-        # Formatta data leggibile
-        ANNO="${DATA:0:4}"
-        MESE="${DATA:4:2}"
-        GIORNO="${DATA:6:2}"
-        DATA_LEGGIBILE="${GIORNO}/${MESE}/${ANNO}"
+        # Rotazione: mantiene ultimi 7
+        NUM_BACKUPS=$(ls -1 "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz 2>/dev/null | wc -l)
+        if [ "$NUM_BACKUPS" -gt 7 ]; then
+            ls -t "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz | tail -n +8 | xargs rm -f
+            log "Eliminati backup vecchi"
+        fi
         
-        # Formatta ora leggibile
-        ORE="${ORA:0:2}"
-        MINUTI="${ORA:2:2}"
-        SECONDI="${ORA:4:2}"
-        ORA_LEGGIBILE="${ORE}:${MINUTI}:${SECONDI}"
+        # Log giornaliero
+        echo "$(date '+%H:%M:%S') - $BACKUP_FILE - $BACKUP_SIZE" >> "$LOG_DIR/backup_$(date +"%Y-%m-%d").log"
+        
+        log "===== FINE BACKUP (OK) ====="
+        exit 0
     else
-        echo "ERRORE: Formato nome file non valido!"
-        echo "Atteso: centro_sportivo_backup_YYYYMMDD_HHMMSS.tar.gz"
+        log "ERRORE: Backup fallito!"
+        log "===== FINE (ERRORE) ====="
         exit 1
     fi
-    
-    # Nome del file ripristinato
-    OUTPUT_FILE="centro_sportivo_ripristino_${DATA}.csv"
-    
+fi
+
+################################################################################
+# MODALITÀ INTERATTIVA
+################################################################################
+
+# Colori
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+CSV_FILE="centro_sportivo.csv"
+BACKUP_DIR="./backups"
+
+# Mostra menu
+mostra_menu() {
+    clear
     echo "========================================"
-    echo "RIPRISTINO BACKUP CENTRO SPORTIVO"
+    echo "  BACKUP DATABASE CENTRO SPORTIVO"
     echo "========================================"
-    echo "File backup: $FILENAME"
-    echo "Data backup: $DATA_LEGGIBILE alle $ORA_LEGGIBILE"
-    echo "File output: $OUTPUT_FILE"
+    echo ""
+    echo "1. Crea backup"
+    echo "2. Vedi backup disponibili"
+    echo "3. Ripristina backup completo"
+    echo "4. Cerca utente nel backup"
+    echo "5. Esci"
+    echo ""
+    echo -n "Scegli [1-5]: "
+}
+
+# 1. Crea backup
+crea_backup() {
+    echo ""
+    echo "========================================"
+    echo "  CREAZIONE BACKUP"
+    echo "========================================"
     echo ""
     
-    # Estrae il file dal backup
-    tar -xzf "$BACKUP_FILE" -O > "$OUTPUT_FILE" 2>/dev/null
-    
-    # Verifica che il ripristino sia riuscito
-    if [ $? -eq 0 ] && [ -f "$OUTPUT_FILE" ]; then
-        echo "✓ Ripristino completato con successo!"
-        echo ""
-        echo "Dettagli file ripristinato:"
-        echo "- Nome: $OUTPUT_FILE"
-        echo "- Dimensione: $(du -h "$OUTPUT_FILE" | cut -f1)"
-        echo "- Righe: $(wc -l < "$OUTPUT_FILE")"
-        echo ""
-        echo "Puoi ora usare questo file o sostituire l'originale:"
-        echo "  cp $OUTPUT_FILE centro_sportivo.csv"
-        echo "========================================"
-    else
-        echo "✗ ERRORE: Ripristino fallito!"
-        exit 3
+    if [ ! -f "$CSV_FILE" ]; then
+        echo -e "${RED}Errore: File $CSV_FILE non trovato${NC}"
+        read -p "Premi Invio..."
+        return
     fi
     
-    exit 0
-fi
-
-# ============================================================================
-# MODALITÀ BACKUP (codice originale)
-# ============================================================================
-
-# File CSV da backuppare
-CSV_FILE="${2:-centro_sportivo.csv}"
-
-# Cartella dove salvare i backup
-BACKUP_DIR="${3:-./backups}"
-
-# Timestamp
-TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-
-# Nome del file di backup
-BACKUP_FILE="centro_sportivo_backup_${TIMESTAMP}.tar.gz"
-
-# VALIDAZIONE INPUT
-if [ ! -f "$CSV_FILE" ]; then
-    echo "ERRORE: Il file '$CSV_FILE' non esiste!"
-    echo "Uso: $0 backup [file_csv] [cartella_backup]"
-    exit 1
-fi
-
-# CREAZIONE DIRECTORY BACKUP
-if [ ! -d "$BACKUP_DIR" ]; then
-    echo "Creazione cartella backup: $BACKUP_DIR"
+    TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+    BACKUP_FILE="centro_sportivo_backup_${TIMESTAMP}.tar.gz"
     mkdir -p "$BACKUP_DIR"
     
-    if [ $? -ne 0 ]; then
-        echo "ERRORE: Impossibile creare la cartella $BACKUP_DIR"
-        exit 2
-    fi
-fi
-
-# CREAZIONE BACKUP
-echo "========================================"
-echo "BACKUP DATABASE CENTRO SPORTIVO"
-echo "========================================"
-echo "File sorgente: $CSV_FILE"
-echo "Dimensione: $(du -h "$CSV_FILE" | cut -f1)"
-echo "Destinazione: $BACKUP_DIR/$BACKUP_FILE"
-echo "Timestamp: $(date '+%d/%m/%Y %H:%M:%S')"
-echo ""
-
-tar -czf "$BACKUP_DIR/$BACKUP_FILE" "$CSV_FILE" 2>/dev/null
-
-if [ $? -eq 0 ] && [ -f "$BACKUP_DIR/$BACKUP_FILE" ]; then
-    echo "✓ Backup completato con successo!"
-    echo ""
-    echo "Dettagli backup:"
-    echo "- File backup: $BACKUP_FILE"
-    echo "- Dimensione compressa: $(du -h "$BACKUP_DIR/$BACKUP_FILE" | cut -f1)"
-    echo "- Posizione: $BACKUP_DIR/"
+    echo "File: $CSV_FILE ($(du -h "$CSV_FILE" | cut -f1))"
+    echo "Creazione backup..."
     
-    ORIG_SIZE=$(stat -c%s "$CSV_FILE" 2>/dev/null)
-    BACKUP_SIZE=$(stat -c%s "$BACKUP_DIR/$BACKUP_FILE" 2>/dev/null)
+    tar -czf "$BACKUP_DIR/$BACKUP_FILE" "$CSV_FILE" 2>/dev/null
     
-    if [ -n "$ORIG_SIZE" ] && [ -n "$BACKUP_SIZE" ] && [ "$ORIG_SIZE" -gt 0 ]; then
-        COMPRESSION_RATIO=$(awk "BEGIN {printf \"%.1f\", ($ORIG_SIZE - $BACKUP_SIZE) * 100 / $ORIG_SIZE}")
-        echo "- Compressione: ${COMPRESSION_RATIO}%"
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✓ Backup creato${NC}"
+        echo "File: $BACKUP_FILE ($(du -h "$BACKUP_DIR/$BACKUP_FILE" | cut -f1))"
+        
+        # Rotazione
+        NUM_BACKUPS=$(ls -1 "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz 2>/dev/null | wc -l)
+        if [ "$NUM_BACKUPS" -gt 7 ]; then
+            echo "Elimino backup vecchi..."
+            ls -t "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz | tail -n +8 | xargs rm -f
+        fi
+    else
+        echo -e "${RED}✗ Errore${NC}"
     fi
     
     echo ""
-else
-    echo "✗ ERRORE: Backup fallito!"
-    exit 3
-fi
+    read -p "Premi Invio..."
+}
 
-# GESTIONE BACKUP VECCHI
-NUM_BACKUPS=$(ls -1 "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz 2>/dev/null | wc -l)
-echo "Backup totali presenti: $NUM_BACKUPS"
-
-MAX_BACKUPS=7
-
-if [ "$NUM_BACKUPS" -gt "$MAX_BACKUPS" ]; then
+# 2. Lista backup
+vedi_backup() {
     echo ""
-    echo "Pulizia backup vecchi (mantengo gli ultimi $MAX_BACKUPS)..."
-    ls -t "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz | tail -n +$((MAX_BACKUPS + 1)) | xargs rm -f
-    echo "✓ Backup vecchi eliminati"
-fi
+    echo "========================================"
+    echo "  BACKUP DISPONIBILI"
+    echo "========================================"
+    echo ""
+    
+    BACKUPS=($(ls -t "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz 2>/dev/null))
+    
+    if [ ${#BACKUPS[@]} -eq 0 ]; then
+        echo -e "${YELLOW}Nessun backup trovato${NC}"
+        echo ""
+        read -p "Premi Invio..."
+        return
+    fi
+    
+    for i in "${!BACKUPS[@]}"; do
+        FILENAME=$(basename "${BACKUPS[$i]}")
+        SIZE=$(du -h "${BACKUPS[$i]}" | cut -f1)
+        
+        # Estrae data/ora dal nome: centro_sportivo_backup_YYYYMMDD_HHMMSS.tar.gz
+        if [[ "$FILENAME" =~ centro_sportivo_backup_([0-9]{8})_([0-9]{6})\.tar\.gz ]]; then
+            DATA="${BASH_REMATCH[1]}"
+            ORA="${BASH_REMATCH[2]}"
+            echo "$((i+1)). ${DATA:6:2}/${DATA:4:2}/${DATA:0:4} alle ${ORA:0:2}:${ORA:2:2} - $SIZE"
+        else
+            echo "$((i+1)). $FILENAME - $SIZE"
+        fi
+    done
+    
+    echo ""
+    read -p "Premi Invio..."
+}
 
-echo "========================================"
-echo ""
-echo "Per ripristinare un backup usa:"
-echo "  $0 ripristino $BACKUP_DIR/$BACKUP_FILE"
+# 3. Ripristino completo
+ripristino_completo() {
+    echo ""
+    echo "========================================"
+    echo "  RIPRISTINO COMPLETO"
+    echo "========================================"
+    echo ""
+    
+    BACKUPS=($(ls -t "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz 2>/dev/null))
+    
+    if [ ${#BACKUPS[@]} -eq 0 ]; then
+        echo -e "${YELLOW}Nessun backup disponibile${NC}"
+        read -p "Premi Invio..."
+        return
+    fi
+    
+    echo "Backup disponibili:"
+    echo ""
+    
+    for i in "${!BACKUPS[@]}"; do
+        FILENAME=$(basename "${BACKUPS[$i]}")
+        if [[ "$FILENAME" =~ centro_sportivo_backup_([0-9]{8})_([0-9]{6})\.tar\.gz ]]; then
+            DATA="${BASH_REMATCH[1]}"
+            ORA="${BASH_REMATCH[2]}"
+            echo "$((i+1)). ${DATA:6:2}/${DATA:4:2}/${DATA:0:4} alle ${ORA:0:2}:${ORA:2:2}"
+        fi
+    done
+    
+    echo ""
+    echo -n "Quale backup? [1-${#BACKUPS[@]}] (0=annulla): "
+    read SCELTA
+    
+    if [ "$SCELTA" == "0" ]; then return; fi
+    if [ "$SCELTA" -lt 1 ] || [ "$SCELTA" -gt ${#BACKUPS[@]} ]; then
+        echo -e "${RED}Scelta non valida${NC}"
+        read -p "Premi Invio..."
+        return
+    fi
+    
+    BACKUP_SCELTO="${BACKUPS[$((SCELTA-1))]}"
+    FILENAME=$(basename "$BACKUP_SCELTO")
+    
+    # Estrae data per nome output
+    if [[ "$FILENAME" =~ centro_sportivo_backup_([0-9]{8})_([0-9]{6})\.tar\.gz ]]; then
+        DATA="${BASH_REMATCH[1]}"
+    else
+        DATA=$(date +"%Y%m%d")
+    fi
+    
+    OUTPUT_FILE="centro_sportivo_ripristino_${DATA}.csv"
+    
+    echo ""
+    echo "Ripristino in corso..."
+    
+    # Estrae il backup (tar -xzf estrae, -O manda su stdout, > salva in file)
+    tar -xzf "$BACKUP_SCELTO" -O > "$OUTPUT_FILE" 2>/dev/null
+    
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✓ Ripristino OK!${NC}"
+        echo ""
+        echo "File: $OUTPUT_FILE"
+        echo "Righe: $(wc -l < "$OUTPUT_FILE")"
+        echo "Dimensione: $(du -h "$OUTPUT_FILE" | cut -f1)"
+        echo ""
+        echo "NOTA: L'originale non è stato toccato!"
+        echo "Per sostituire: cp $OUTPUT_FILE centro_sportivo.csv"
+    else
+        echo -e "${RED}✗ Errore durante ripristino${NC}"
+    fi
+    
+    echo ""
+    read -p "Premi Invio..."
+}
 
-exit 0
+# 4. Cerca utente
+cerca_utente() {
+    echo ""
+    echo "========================================"
+    echo "  CERCA UTENTE NEL BACKUP"
+    echo "========================================"
+    echo ""
+    
+    BACKUPS=($(ls -t "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz 2>/dev/null))
+    
+    if [ ${#BACKUPS[@]} -eq 0 ]; then
+        echo -e "${YELLOW}Nessun backup${NC}"
+        read -p "Premi Invio..."
+        return
+    fi
+    
+    echo "Backup disponibili:"
+    for i in "${!BACKUPS[@]}"; do
+        FILENAME=$(basename "${BACKUPS[$i]}")
+        if [[ "$FILENAME" =~ centro_sportivo_backup_([0-9]{8})_([0-9]{6})\.tar\.gz ]]; then
+            DATA="${BASH_REMATCH[1]}"
+            ORA="${BASH_REMATCH[2]}"
+            echo "$((i+1)). ${DATA:6:2}/${DATA:4:2}/${DATA:0:4} alle ${ORA:0:2}:${ORA:2:2}"
+        fi
+    done
+    
+    echo ""
+    echo -n "Quale backup? [1-${#BACKUPS[@]}] (0=annulla): "
+    read SCELTA_BACKUP
+    
+    if [ "$SCELTA_BACKUP" == "0" ]; then return; fi
+    if [ "$SCELTA_BACKUP" -lt 1 ] || [ "$SCELTA_BACKUP" -gt ${#BACKUPS[@]} ]; then
+        echo -e "${RED}Scelta non valida${NC}"
+        read -p "Premi Invio..."
+        return
+    fi
+    
+    BACKUP_SCELTO="${BACKUPS[$((SCELTA_BACKUP-1))]}"
+    
+    echo ""
+    echo "Cerca per: 1.ID  2.Nome  3.Cognome  4.Email  5.Sport"
+    echo -n "Scegli [1-5]: "
+    read TIPO_RICERCA
+    
+    echo -n "Valore: "
+    read VALORE
+    
+    echo "Cerco..."
+    
+    # CSV usa ; come separatore
+    HEADER=$(tar -xzf "$BACKUP_SCELTO" -O | head -n 1)
+    
+    # awk cerca nelle colonne (1=ID, 2=Nome, 3=Cognome, 5=Email, 6=Sport)
+    case $TIPO_RICERCA in
+        1) RISULTATI=$(tar -xzf "$BACKUP_SCELTO" -O | awk -F';' -v val="$VALORE" 'NR>1 && $1==val {print}') ;;
+        2) RISULTATI=$(tar -xzf "$BACKUP_SCELTO" -O | awk -F';' -v val="$VALORE" 'NR>1 && $2==val {print}') ;;
+        3) RISULTATI=$(tar -xzf "$BACKUP_SCELTO" -O | awk -F';' -v val="$VALORE" 'NR>1 && $3==val {print}') ;;
+        4) RISULTATI=$(tar -xzf "$BACKUP_SCELTO" -O | awk -F';' -v val="$VALORE" 'NR>1 && $5==val {print}') ;;
+        5) RISULTATI=$(tar -xzf "$BACKUP_SCELTO" -O | awk -F';' -v val="$VALORE" 'NR>1 && $6==val {print}') ;;
+        *)
+            echo -e "${RED}Scelta non valida${NC}"
+            read -p "Premi Invio..."
+            return
+            ;;
+    esac
+    
+    if [ -z "$RISULTATI" ]; then
+        echo -e "${YELLOW}Nessun risultato${NC}"
+        read -p "Premi Invio..."
+        return
+    fi
+    
+    NUM_RISULTATI=$(echo "$RISULTATI" | wc -l)
+    FILENAME=$(basename "$BACKUP_SCELTO")
+    [[ "$FILENAME" =~ centro_sportivo_backup_([0-9]{8})_([0-9]{6})\.tar\.gz ]] && DATA="${BASH_REMATCH[1]}" || DATA=$(date +"%Y%m%d")
+    
+    if [ "$NUM_RISULTATI" -eq 1 ]; then
+        # 1 utente trovato
+        OUTPUT_FILE="utente_ripristinato_${DATA}.csv"
+        echo "$HEADER" > "$OUTPUT_FILE"
+        echo "$RISULTATI" >> "$OUTPUT_FILE"
+        
+        echo -e "${GREEN}✓ Trovato!${NC}"
+        echo ""
+        echo "$RISULTATI" | awk -F';' '{
+            print "ID:      " $1
+            print "Nome:    " $2 " " $3
+            print "Email:   " $5
+            print "Sport:   " $6
+        }'
+        echo ""
+        echo "Salvato: $OUTPUT_FILE"
+    else
+        # Più utenti trovati
+        OUTPUT_FILE="utenti_trovati_${DATA}.csv"
+        
+        echo -e "${GREEN}✓ Trovati $NUM_RISULTATI utenti:${NC}"
+        echo ""
+        echo "$RISULTATI" | awk -F';' '{printf "%s | %s %s | %s | %s\n", $1, $2, $3, $5, $6}' | nl
+        
+        echo "$HEADER" > "$OUTPUT_FILE"
+        echo "$RISULTATI" >> "$OUTPUT_FILE"
+        echo ""
+        echo "Salvati: $OUTPUT_FILE"
+    fi
+    
+    echo ""
+    read -p "Premi Invio..."
+}
+
+# Loop menu principale
+while true; do
+    mostra_menu
+    read SCELTA
+    
+    case $SCELTA in
+        1) crea_backup ;;
+        2) vedi_backup ;;
+        3) ripristino_completo ;;
+        4) cerca_utente ;;
+        5) echo ""; echo "Ciao!"; exit 0 ;;
+        *) echo ""; echo -e "${RED}Scelta non valida${NC}"; sleep 1 ;;
+    esac
+done
