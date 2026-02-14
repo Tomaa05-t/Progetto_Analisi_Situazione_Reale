@@ -8,7 +8,6 @@ NUM_UTENTI = 400
 # Liste per la generazione casuale kkkkk
 nomi = ["Marco", "Giulia", "Davide", "Sara", "Alessandro", "Elena", "Cristiano", "Chiara", "Matteo", "Valentina", "Riccardo", "Beatrice", "Simone", "Alice"]
 cognomi = ["Rossi", "Bianchi", "Verdi", "Ferrari", "Russo", "Piccoli", "Romano", "Gallo", "Conti", "Marino", "Zappa", "Ricci", "Moretti", "Colombo"]
-servizi = ["Palestra"]
 abbonamenti = [ "Mensile", "Trimestrale", "Semestrale", "Annuale", ]
 domini = ["gmail.com", "outlook.it", "yahoo.com", "icloud.com"]
 ban = ["Sì", "No"]
@@ -30,12 +29,11 @@ print(f"Generazione di {NUM_UTENTI} utenti in corso...")
 
 with open(OUTPUT_FILE, mode="w", encoding="utf-8") as f:
     # Intestazione (Header)
-    f.write("ID,Nome,Cognome,Data_Nascita,Email,Servizio,Abbonamento,Scadenza_Certificato,Ultimo_Accesso,Scadenza_Abbonamento,ban\n")
+    f.write("ID;Nome;Cognome;Data_Nascita;Email;Abbonamento;Scadenza_Certificato;Ultimo_Accesso;Scadenza_Abbonamento;Ban\n")
     
     for i in range(1, NUM_UTENTI + 1):
         nome = random.choice(nomi)
         cognome = random.choice(cognomi)
-        servizio = random.choice(servizi)
         abbonamento = random.choice(abbonamenti)
         dominio = random.choice(domini)
     
@@ -60,6 +58,6 @@ with open(OUTPUT_FILE, mode="w", encoding="utf-8") as f:
 
         
         # Scrittura riga
-        f.write(f"{i},{nome},{cognome},{data_nascita},{email},{servizio},{abbonamento},{scadenza_cert},{ultimo_acc},{scadenza_abbonamento},{ban}\n")
+        f.write(f"{i},{nome},{cognome},{data_nascita},{email},{abbonamento},{scadenza_cert},{ultimo_acc},{scadenza_abbonamento},{ban}\n")
 
 print(f"Successo! Il file '{OUTPUT_FILE}' è stato creato.")
