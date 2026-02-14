@@ -1,8 +1,9 @@
 #!/bin/bash
-# ==========================================================
+
 # Controllo accessi centro sportivo
 # Priorità assoluta allo stato di ban
-# ==========================================================
+# inserire accesso da tornello
+
 
 oggi=$(date +%Y-%m-%d)
 giorni_preavviso=9
@@ -46,8 +47,8 @@ NR > 1 {
 
 totale=$(tail -n +2 "$output" | wc -l)
 
-echo "------------------------------------------"
+
 echo "Controllo accessi completato"
 echo "File generato: $output"
 echo "Totale utenti con accesso negato: $totale"
-echo "------------------------------------------"
+
