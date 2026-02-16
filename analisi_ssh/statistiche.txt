@@ -1,0 +1,36 @@
+=========================================
+ STATISTICHE ANALISI SSH
+=========================================
+Data: 2026-02-16 12:32:57
+
+RIEPILOGO:
+  Righe totali: 51
+  Tentativi falliti: 39
+  Accessi riusciti: 6
+  IP sospetti: 5
+
+TOP 10 IP ATTACCANTI:
+      9 192.0.2.67
+      8 91.203.5.146
+      7 203.0.113.45
+      6 198.51.100.23
+      5 185.220.101.42
+
+TOP 10 UTENTI ATTACCATI:
+     10 root
+      4 admin
+      3 test
+      3 oracle
+      2 user
+      2 ubuntu
+      2 postgres
+      2 pi
+      2 mysql
+      2 guest
+
+IP SOSPETTI (>3 tentativi):
+9 tentativi - IP: 192.0.2.67
+8 tentativi - IP: 91.203.5.146
+7 tentativi - IP: 203.0.113.45
+6 tentativi - IP: 198.51.100.23
+5 tentativi - IP: 185.220.101.42

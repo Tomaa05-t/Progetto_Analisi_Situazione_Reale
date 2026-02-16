@@ -1,147 +1,206 @@
 #!/bin/bash
-# Script: Domanda10.sh - Pulizia Dati Corrotti Centro Sportivo
-# Descrizione: Identifica e rimuove le righe corrotte dal database CSV
-#              (righe senza ID o senza email)
-# Esempio: ./Domanda10.sh centro_sportivo.csv centro_sportivo_pulito.csv
+# Domanda10.sh - Pulizia e recupero dati corrotti
+# Alessandro - 2026
+#
+# Controlla il CSV e trova righe corrotte (qualsiasi campo mancante)
+# Prova a recuperarle dai backup se esistono
+#
+# Uso: ./Domanda10.sh
 
-# File CSV da pulire (può essere passato come primo parametro)
-INPUT_FILE="${1:-centro_sportivo.csv}"
+# File da controllare
+INPUT_CSV="centro_sportivo.csv"
+OUTPUT_CORROTTE="righe_corrotte.csv"
+OUTPUT_PULITO="centro_sportivo_pulito.csv"
+BACKUP_DIR="./backups"
 
-# File CSV pulito di output (può essere passato come secondo parametro)
-OUTPUT_FILE="${2:-centro_sportivo_pulito.csv}"
-
-# File di log con le righe scartate
-REJECTED_FILE="./deposito_righe_corrotte/righe_corrotte_$(date +%Y%m%d_%H%M%S).csv"
-
-# VALIDAZIONE INPUT
-
-# Verifica che il file di input esista
-if [ ! -f "$INPUT_FILE" ]; then
-    echo "ERRORE: Il file '$INPUT_FILE' non esiste!"
-    echo "Uso: $0 [file_csv_input] [file_csv_output]"
+# Controllo che il CSV esista
+if [ ! -f "$INPUT_CSV" ]; then
+    echo "Errore: File $INPUT_CSV non trovato"
     exit 1
 fi
 
-# Verifica che il file di output non sia uguale all'input
-if [ "$INPUT_FILE" == "$OUTPUT_FILE" ]; then
-    echo "ATTENZIONE: Il file di output è uguale all'input!"
-    echo "I dati originali verranno sovrascritti."
-    read -p "Continuare? (s/n) " -n 1 -r
-    echo
-    if [[ ! $REPLY =~ ^[Ss]$ ]]; then
-        echo "Operazione annullata."
-        exit 0
+echo "Controllo dati corrotti nel CSV..."
+echo ""
+
+# Prendo l'header (prima riga) per sapere quanti campi ci devono essere
+HEADER=$(head -n 1 "$INPUT_CSV")
+
+# Conto quanti campi ci sono nell'header
+NUM_CAMPI=$(echo "$HEADER" | awk -F';' '{print NF}')
+
+echo "Il CSV deve avere $NUM_CAMPI campi per riga"
+echo ""
+
+# Creo i file di output con l'header
+echo "$HEADER" > "$OUTPUT_CORROTTE"
+echo "$HEADER" > "$OUTPUT_PULITO"
+
+# Contatori
+TOTALI=0
+CORROTTE=0
+RECUPERATE=0
+
+# Leggo il CSV riga per riga (salto l'header)
+tail -n +2 "$INPUT_CSV" | while IFS= read -r line; do
+    TOTALI=$((TOTALI + 1))
+    
+    # Conto quanti campi ha questa riga
+    CAMPI_RIGA=$(echo "$line" | awk -F';' '{print NF}')
+    
+    # Estraggo i primi campi per vedere cosa manca
+    ID=$(echo "$line" | cut -d';' -f1)
+    NOME=$(echo "$line" | cut -d';' -f2)
+    COGNOME=$(echo "$line" | cut -d';' -f3)
+    EMAIL=$(echo "$line" | cut -d';' -f5)
+    
+    # Variabile per tracciare se la riga è corrotta
+    CORROTTA=false
+    MOTIVO=""
+    
+    # Controllo 1: Numero di campi sbagliato
+    if [ "$CAMPI_RIGA" -ne "$NUM_CAMPI" ]; then
+        CORROTTA=true
+        MOTIVO="Campi: $CAMPI_RIGA invece di $NUM_CAMPI"
     fi
-fi
-
-# ANALISI E PULIZIA DATI
-
-echo "PULIZIA DATI CORROTTI"
-echo "File input: $INPUT_FILE"
-echo "File output: $OUTPUT_FILE"
-echo "Data: $(date '+%d/%m/%Y %H:%M:%S')"
-echo ""
-
-# Conta le righe totali 
-# tail -n +2 salta la prima riga 
-# wc -l conta le righe
-TOTAL_LINES=$(tail -n +2 "$INPUT_FILE" | wc -l)
-
-echo "Righe totali da analizzare: $TOTAL_LINES"
-echo ""
-
-# Copia l'header nel file di output e nel file rejected
-# head -n 1 prende solo la prima riga
-head -n 1 "$INPUT_FILE" > "$OUTPUT_FILE"
-head -n 1 "$INPUT_FILE" > "$REJECTED_FILE"
-
-echo "Analisi in corso..."
-
-# PROCESSO DI VALIDAZIONE
-
-# Legge il file CSV riga per riga (saltando l'header)
-# La variabile IFS= mantiene gli spazi
-tail -n +2 "$INPUT_FILE" | while IFS= read -r line; do
-    # Estrae il primo campo (ID) usando cut
-    # -d',' specifica il delimitatore (virgola)
-    # -f1 seleziona il primo campo
-    ID=$(echo "$line" | cut -d',' -f1)
     
-    # Estrae il quinto campo (Email)
-    # Nel CSV: ID,Nome,Cognome,Data_Nascita,Email,...
-    EMAIL=$(echo "$line" | cut -d',' -f5)
+    # Controllo 2: ID vuoto
+    if [ -z "$ID" ]; then
+        CORROTTA=true
+        MOTIVO="${MOTIVO:+$MOTIVO, }ID mancante"
+    fi
     
-    # Determina se la riga è valida
-    VALID=true
-    REASON=""
+    # Controllo 3: Nome vuoto
+    if [ -z "$NOME" ]; then
+        CORROTTA=true
+        MOTIVO="${MOTIVO:+$MOTIVO, }Nome mancante"
+    fi
     
-    # Controlla se ENTRAMBI i campi sono vuoti
-    # [ -z "$VAR" ] controlla se la variabile è vuota
-    if [ -z "$ID" ] && [ -z "$EMAIL" ]; then
-        VALID=false
-        REASON="ID e Email mancanti"
-        echo "$line,SCARTATA: $REASON" >> "$REJECTED_FILE"
+    # Controllo 4: Cognome vuoto
+    if [ -z "$COGNOME" ]; then
+        CORROTTA=true
+        MOTIVO="${MOTIVO:+$MOTIVO, }Cognome mancante"
+    fi
+    
+    # Controllo 5: Email vuota
+    if [ -z "$EMAIL" ]; then
+        CORROTTA=true
+        MOTIVO="${MOTIVO:+$MOTIVO, }Email mancante"
+    fi
+    
+    # Controllo 6: Campi vuoti in mezzo (es: ;;)
+    if echo "$line" | grep -q ';;'; then
+        CORROTTA=true
+        MOTIVO="${MOTIVO:+$MOTIVO, }Campo vuoto rilevato"
+    fi
+    
+    # Se la riga è corrotta
+    if [ "$CORROTTA" = true ]; then
+        # La salvo nel file corrotte
+        echo "$line" >> "$OUTPUT_CORROTTE"
+        CORROTTE=$((CORROTTE + 1))
         
-    # Controlla se solo l'ID è vuoto
-    elif [ -z "$ID" ]; then
-        VALID=false
-        REASON="ID mancante"
-        echo "$line,SCARTATA: $REASON" >> "$REJECTED_FILE"
+        echo "Riga corrotta #$TOTALI:"
+        echo "  Motivo: $MOTIVO"
+        echo "  ID: ${ID:-[VUOTO]}"
+        echo "  Nome: ${NOME:-[VUOTO]} ${COGNOME:-[VUOTO]}"
+        echo "  Email: ${EMAIL:-[VUOTO]}"
         
-    # Controlla se solo l'Email è vuota
-    elif [ -z "$EMAIL" ]; then
-        VALID=false
-        REASON="Email mancante"
-        echo "$line,SCARTATA: $REASON" >> "$REJECTED_FILE"
-        
-    # La riga è valida, salvala nel file pulito
+        # Provo a recuperare dai backup
+        # Basta avere ALMENO Nome O Cognome (o entrambi) per cercare
+        if ([ -n "$NOME" ] || [ -n "$COGNOME" ]) && [ -d "$BACKUP_DIR" ]; then
+            # Costruisco il pattern di ricerca in base a cosa ho
+            if [ -n "$NOME" ] && [ -n "$COGNOME" ]; then
+                PATTERN=";$NOME;$COGNOME;"
+                echo "  Cerco nei backup usando: $NOME $COGNOME"
+            elif [ -n "$NOME" ]; then
+                PATTERN=";$NOME;"
+                echo "  Cerco nei backup usando solo: $NOME"
+            else
+                PATTERN=";$COGNOME;"
+                echo "  Cerco nei backup usando solo: $COGNOME"
+            fi
+            
+            # Prendo il backup più recente
+            ULTIMO_BACKUP=$(ls -t "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz 2>/dev/null | head -n 1)
+            
+            if [ -n "$ULTIMO_BACKUP" ]; then
+                # Estraggo il CSV dal backup e cerco la riga
+                TROVATO=$(tar -xzf "$ULTIMO_BACKUP" -O 2>/dev/null | \
+                    grep -F "$PATTERN" | head -n 1)
+                
+                if [ -n "$TROVATO" ]; then
+                    # Verifico che la riga trovata sia completa
+                    CAMPI_TROVATA=$(echo "$TROVATO" | awk -F';' '{print NF}')
+                    
+                    if [ "$CAMPI_TROVATA" -eq "$NUM_CAMPI" ]; then
+                        # Verifico che non abbia campi vuoti
+                        if ! echo "$TROVATO" | grep -q ';;'; then
+                            # Ho trovato una riga completa e valida!
+                            echo "$TROVATO" >> "$OUTPUT_PULITO"
+                            echo "  ✓ Recuperata dai backup (completa e valida)!"
+                            RECUPERATE=$((RECUPERATE + 1))
+                        else
+                            echo "  ✗ Trovata nei backup ma ha campi vuoti"
+                        fi
+                    else
+                        echo "  ✗ Trovata nei backup ma anche lì è corrotta"
+                    fi
+                else
+                    echo "  ✗ Non trovata nei backup"
+                fi
+            else
+                echo "  Nessun backup disponibile"
+            fi
+        else
+            echo "  ✗ Impossibile cercare (Nome E Cognome entrambi mancanti)"
+        fi
+        echo ""
     else
-        echo "$line" >> "$OUTPUT_FILE"
+        # Riga valida, la salvo nel file pulito
+        echo "$line" >> "$OUTPUT_PULITO"
     fi
 done
 
-# CALCOLO STATISTICHE
-# Conta le righe valide (escluso header)
-VALID_COUNT=$(tail -n +2 "$OUTPUT_FILE" | wc -l)
+# Conto le righe nei file generati (escluso header)
+NUM_CORROTTE=$(tail -n +2 "$OUTPUT_CORROTTE" 2>/dev/null | wc -l)
+NUM_PULITE=$(tail -n +2 "$OUTPUT_PULITO" 2>/dev/null | wc -l)
+NUM_TOTALI=$(tail -n +2 "$INPUT_CSV" | wc -l)
 
-# Conta le righe scartate (escluso header)
-REJECTED_COUNT=$(tail -n +2 "$REJECTED_FILE" | wc -l)
+# Calcolo percentuale dati validi
+if [ "$NUM_TOTALI" -gt 0 ]; then
+    PERCENTUALE=$(awk "BEGIN {printf \"%.1f\", ($NUM_PULITE * 100) / $NUM_TOTALI}")
+fi
 
-# REPORT FINALE
-
-
+# Mostro i risultati
+echo "Analisi completata!"
 echo ""
-echo "REPORT PULIZIA COMPLETATO"
-echo ""
-echo "Statistiche:"
-echo "Righe analizzate:        $TOTAL_LINES"
-echo "Righe valide:            $VALID_COUNT"
-echo "Righe corrotte:          $REJECTED_COUNT"
-echo ""
-echo "File generati:"
-echo "Database pulito:       $OUTPUT_FILE"
+echo "RISULTATI:"
+echo "  Righe totali:         $NUM_TOTALI"
+echo "  Righe valide:         $NUM_PULITE ($PERCENTUALE%)"
+echo "  Righe corrotte:       $NUM_CORROTTE"
 
-# Se ci sono righe scartate, mostra il file e un'anteprima
-if [ "$REJECTED_COUNT" -gt 0 ]; then
-    echo "Righe scartate:        $REJECTED_FILE"
+if [ "$NUM_CORROTTE" -gt 0 ]; then
+    echo "  Righe recuperate:     $RECUPERATE"
     echo ""
-    echo "Anteprima righe scartate (prime 5):"
-    echo "----------------------------------------"
-    # head -n 6 prende le prime 6 righe (header + 5 dati)
-    # tail -n 5 prende le ultime 5 (esclude l'header)
-    head -n 6 "$REJECTED_FILE" | tail -n 5
+    echo "File generati:"
+    echo "  Dati puliti:          $OUTPUT_PULITO"
+    echo "  Dati corrotti:        $OUTPUT_CORROTTE"
+    
+    # Se ho recuperato qualcosa dai backup
+    if [ "$RECUPERATE" -gt 0 ]; then
+        echo ""
+        echo "✓ Ho recuperato $RECUPERATE righe dai backup!"
+        echo "  Sono state aggiunte al file pulito"
+    fi
+    
+    echo ""
+    echo "Prime 5 righe corrotte:"
+    head -n 6 "$OUTPUT_CORROTTE" | tail -n 5
 else
-    # Se non ci sono righe scartate, elimina il file rejected
-    rm -f "$REJECTED_FILE"
-    echo "Nessuna riga scartata - database già pulito!"
+    # Nessuna riga corrotta, elimino il file vuoto
+    rm -f "$OUTPUT_CORROTTE"
+    echo ""
+    echo "✓ Nessun dato corrotto - CSV perfetto!"
 fi
 
-# Calcola la percentuale di dati validi
-if [ "$TOTAL_LINES" -gt 0 ]; then
-    # awk viene usato per fare calcoli in virgola mobile
-    CLEAN_PERCENTAGE=$(awk "BEGIN {printf \"%.1f\", ($VALID_COUNT * 100) / $TOTAL_LINES}")
-    echo "Qualità dati: ${CLEAN_PERCENTAGE}% validi"
-fi
- 
-# Codice di uscita 0 = successo
-exit 0
+echo ""
