@@ -1,32 +1,25 @@
 #!/bin/bash
+#ho definito il mio pc come server ssh(il db), installando la funzionalità, e poi ho ipotizzato tramite questo script il collegamento al server, che se funziona restituirà le ultime 3 righe del db
 
-# --- CONFIGURAZIONE ---
-USER="admin"
-SERVER_IP="5.96.17.218"  # queste 3 voci indicano variabili, servono così se in futuro cambia tipo l'ip del server, si modifica velocemente
-DB_PATH="/home/admin/gestione"
-TARGET_FILE="centro_sportivo.csv" #
+USER="admin_centro" 
+SERVER_IP="127.0.0.1" 
+REMOTE_PATH="C:\gestione\centro_sportivo.csv" #posizione del db nel server
 
-FULL_PATH="$REMOTE_DIR/$TARGET_FILE" #crea il percorso completo gestione -> csv
+echo "==============================================="
+echo "   CONNESSIONE AL DATABASE CENTRO SPORTIVO     "
+echo "==============================================="
+echo "Tentativo di accesso remoto a: $SERVER_IP"
+echo "-----------------------------------------------"
 
-echo "Tentativo di connessione sicura al server $SERVER_IP..."
+#ssh crea un tunnel criptato verso un altro pc
+#powershell -command: dice al server di eseguire con powershell ciò che segue
+#                                             controlla se il file esiste,    legge il contenuto e estarre le ultime 3 righe,   se il file non esite stampa l'errore
+ssh "$USER@$SERVER_IP" "powershell -Command \"if (Test-Path '$REMOTE_PATH') { Get-Content '$REMOTE_PATH' -Tail 3 } else { Write-Error 'File non trovato' }\""
 
-# Eseguiamo un comando remoto tramite SSH per verificare il file
-# -f controlla se il file esiste, -s se non è vuoto
-
-#ssh $USER@$SERVER_IP, serve ad aprire una connessione criptata verso il server
-#tutto quello dopo non viene eseguito il locale, ma spedito al server ed eseguito lìe
-#if [ -f $DB_PATH ]; then, controlla se esiste un file (il db)
-ssh $USER@$SERVER_IP "if [ -f $FULL_PATH ]; then 
-                        echo 'Connessione riuscita: Il Database esiste.';
-                        echo 'Ultime 3 righe del file:';
-                        tail -n 3 $FULL_PATH;
-                      else 
-                        echo 'Errore: Database non trovato sul server remoto.';
-                      fi"
-
-if [ $? -eq 0 ]; then #$? prende l'output dell'ultimo comando(ssh) e l'output è 0=tutto ok, altro numero=problema
+if [ $? -eq 0 ]; then #$? se l'ultimo comando ha avtuto esito positivo (0), stampa operax conclusa
+    echo "-----------------------------------------------"
     echo "Operazione conclusa con successo."
 else
-    echo "Errore di rete o di autenticazione SSH."
+    echo "-----------------------------------------------"
+    echo "Errore: Connessione fallita o file mancante su $SERVER_IP."
 fi
-

@@ -1,8 +1,9 @@
 #!/bin/bash
-# rilevamento accessi negli ultimi x giorni
+# rilevamento accessi negli ultimi x giorni mettere durrsts
 
 input="centro_sportivo.csv"
 output="accessi_recenti.csv"
+input2="accessi_orario.csv"
 
 read -p "Inserisci la data limite (YYYY-MM-DD): " limit
 
