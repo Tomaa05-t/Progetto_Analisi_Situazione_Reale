@@ -591,7 +591,7 @@ ripristino_completo() {
         DATA=$(date +"%Y%m%d")
     fi
     
-    OUTPUT_FILE="centro_sportivo_ripristino_${DATA}.csv"
+    OUTPUT_FILE="centro_sportivo_ripristino_domanda8/centro_sportivo_ripristino_${DATA}.csv"
     
     echo ""
     echo "Ripristino in corso..."
@@ -864,7 +864,7 @@ cerca_utente() {
             DATA=$(date +"%Y%m%d")
         fi
         
-        OUTPUT_FILE="utente_ripristinato_${DATA}.csv"
+        OUTPUT_FILE="gestione_utenti_domanda8/utente_ripristinato_${DATA}.csv"
         
         # Crea file con header + utente trovato
         echo "$HEADER" > "$OUTPUT_FILE"
@@ -910,7 +910,7 @@ cerca_utente() {
             DATA=$(date +"%Y%m%d")
         fi
         
-        OUTPUT_FILE="utenti_trovati_${DATA}.csv"
+        OUTPUT_FILE="gestione_utenti_domanda8/utenti_trovati_${DATA}.csv"
         
         echo "$HEADER" > "$OUTPUT_FILE"
         echo "$RISULTATI" >> "$OUTPUT_FILE"

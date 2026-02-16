@@ -12,7 +12,7 @@
 
 # File che uso
 AUTH_LOG="auth.log"
-OUTPUT_FILE="analisi_ssh_$(date +"%Y%m%d_%H%M%S").txt"
+OUTPUT_FILE="analisi_ssh/analisi_ssh_$(date +"%Y%m%d_%H%M%S").txt"
 BLOCKED_FILE="ip_bloccati.txt"
 
 # Ho deciso queste soglie guardando i log

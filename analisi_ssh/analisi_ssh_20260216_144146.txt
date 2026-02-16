@@ -1,42 +1,39 @@
-========================================================================
-           ANALISI TENTATIVI SSH - REPORT
-========================================================================
+REPORT ANALISI TENTATIVI SSH
 
-Data: 16/02/2026 12:39:00
-File: auth.log
+Data analisi: 16/02/2026 alle 14:41:47
+File analizzato: auth.log
 
-RIEPILOGO:
-  Righe totali:         51
-  Tentativi falliti:    39
-  Accessi riusciti:     6
+RIEPILOGO
+---------
+Righe totali nel log:    51
+Tentativi falliti:       39
+Accessi riusciti:        6
+IP bloccati adesso:      0
 
-IP PER LIVELLO DI PERICOLO:
-  ALTO (>10 tentativi):     0 IP
-  MEDIO (5-10 tentativi):    5 IP
-  BASSO (2-4 tentativi):    0 IP
+CLASSIFICAZIONE IP PER PERICOLO
+-------------------------------
+ALTO (>10 tentativi):      0 IP
+MEDIO (5-10 tentativi):     5 IP
+BASSO (2-4 tentativi):     0 IP
 
-========================================================================
-PERICOLO ALTO (>10 tentativi)
-========================================================================
-Nessun IP
+IP CON PERICOLO ALTO (più di 10 tentativi)
+----------------------------------------------------
+Nessuno (per fortuna!)
 
-========================================================================
-PERICOLO MEDIO (5-10 tentativi)
-========================================================================
+IP CON PERICOLO MEDIO (da 5 a 10 tentativi)
+---------------------------------------------------------
 9     tentativi - IP: 192.0.2.67
 8     tentativi - IP: 91.203.5.146
 7     tentativi - IP: 203.0.113.45
 6     tentativi - IP: 198.51.100.23
 5     tentativi - IP: 185.220.101.42
 
-========================================================================
-PERICOLO BASSO (2-4 tentativi)
-========================================================================
-Nessun IP
+IP CON PERICOLO BASSO (da 2 a 4 tentativi)
+--------------------------------------------------------
+Nessuno
 
-========================================================================
-TOP 10 UTENTI ATTACCATI
-========================================================================
+TOP 10 UTENTI PIÙ ATTACCATI
+---------------------------
      10 root
       4 admin
       3 test
@@ -48,9 +45,8 @@ TOP 10 UTENTI ATTACCATI
       2 mysql
       2 guest
 
-========================================================================
-TUTTI I TENTATIVI FALLITI (formato OpenSSH)
-========================================================================
+LISTA COMPLETA TENTATIVI FALLITI (formato OpenSSH originale)
+------------------------------------------------------------
 Feb 10 03:15:42 hostname sshd[12847]: Failed password for invalid user admin from 203.0.113.45 port 45231 ssh2
 Feb 10 03:15:45 hostname sshd[12849]: Failed password for root from 203.0.113.45 port 45232 ssh2
 Feb 10 03:15:48 hostname sshd[12851]: Invalid user test from 203.0.113.45 port 45233
