@@ -6,7 +6,7 @@
 # Uso: ./Domanda9.sh [file_log] [soglia_tentativi]
 
 
-# Esempio: ./Domanda9.sh /var/log/auth.log 5
+# Esempio: ./Domanda9.sh auth.log 5
 
 # CONFIGURAZIONE PARAMETRI
 
