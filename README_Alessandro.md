@@ -1,61 +1,85 @@
-# I Miei 3 Script - Centro Sportivo
 
-Progetto per Sistemi Operativi GNU/Linux. 
+Tre script bash per gestire il database del centro sportivo. Li ho scritti per automatizzare il backup, analizzare i log SSH e pulire i dati corrotti.
 
-**Contesto:** Centro sportivo con piscina, palestra e tennis. Circa 1000 iscritti, dati salvati in file CSV.
 
-## Problema 8: Backup Automatico
+# Gli script
 
-**Il problema:**  
-Il database CSV contiene dati critici (nomi, email, certificati medici, abbonamenti). Se il file si corrompe o viene cancellato per errore, perdiamo tutto.
+# Domanda8.sh - Backup database
+Gestisce i backup del file `centro_sportivo.csv`. Ha un menu interattivo con 4 opzioni e una modalità automatica per cron.
 
-**Soluzione:**  
-Script che ogni sera crea un backup compresso del database e lo salva in una cartella dedicata. Usa timestamp nel nome file e mantiene solo gli ultimi 7 backup (rotazione automatica).
-
-**Uso:**
-```bash
-./Domanda8.sh
-# Oppure automatizza con cron: 0 22 * * * /percorso/Domanda8.sh
+bash
+./Domanda8.sh         # apre il menu
+./Domanda8.sh auto    # backup automatico (per cron)
 ```
 
-**Comandi chiave:** `tar -czf` (comprime ~75%), `date +"%Y%m%d_%H%M%S"` (timestamp), `mkdir -p` (crea cartella), `ls -t | tail` (trova vecchi backup)
+Dal menu puoi:
+- creare un backup manuale
+- vedere la lista dei backup disponibili
+- ripristinare il database da un backup
+- cercare un utente specifico nei backup
+
+I backup vengono salvati in `./backups/` come file `.tar.gz` e vengono tenuti solo gli ultimi 7 (i più vecchi vengono cancellati automaticamente).
+
+Per configurare il backup automatico ogni sera alle 22:00:
+bash
+sudo apt-get install -y cron && sudo service cron start
+crontab -e
+# aggiungi questa riga:
+0 22 * * * cd /workspaces/Progetto_Analisi_Situazione_Reale && ./Domanda8.sh auto
+
+
+
+
+# Domanda9.sh - Analisi attacchi SSH
+Analizza il file `auth.log` e trova i tentativi di login SSH falliti. Classifica gli IP per livello di pericolo e blocca automaticamente quelli più aggressivi.
+
+```bash
+sudo ./Domanda9.sh                    # analizza e blocca
+sudo ./Domanda9.sh sblocca 1.2.3.4   # sblocca un IP specifico
+sudo ./Domanda9.sh sblocca tutti      # sblocca tutti gli IP
+```
+
+Gli IP vengono divisi in tre categorie:
+- **ALTO** → più di 10 tentativi
+- **MEDIO** → tra 5 e 10 tentativi
+- **BASSO** → tra 2 e 5 tentativi
+
+Gli IP con più di 5 tentativi vengono bloccati automaticamente con `iptables`. Il report viene salvato nella cartella `analisi_ssh/`.
 
 ---
 
-## Problema 9: Rilevamento Attacchi SSH
+### Domanda10.sh - Pulizia dati corrotti
+Controlla il CSV e trova le righe con campi mancanti (ID, Nome, Cognome, Email, ecc.). Per ogni riga corrotta prova a recuperare i dati dal backup più recente.
 
-**Il problema:**  
-Il server SSH è esposto su Internet per permettere l'accesso remoto. Questo lo rende bersaglio di attacchi brute-force (migliaia di tentativi password).
-
-**Soluzione:**  
-Script che analizza il file di log dove Linux registra gli accessi SSH (`/var/log/auth.log`). Conta quanti tentativi falliti ha fatto ogni IP. Se un IP supera la soglia (default 5), lo segnala come sospetto e classifica la minaccia (MEDIO/ALTO/CRITICO). Salva tutto in `report_ssh/`.
-
-**Uso:**
 ```bash
-./Domanda9.sh auth.log 5
-# Il 5 è la soglia (modificabile)
+./Domanda10.sh
 ```
 
-**Comandi chiave:** `grep "Failed password"` (filtra tentativi falliti), `awk '{print $(NF-3)}'` (estrae IP), `sort | uniq -c` (conta occorrenze), `awk '$1 >= soglia'` (filtra per soglia)
+Genera due file:
+- `centro_sportivo_pulito.csv` → solo le righe valide (più quelle recuperate dai backup)
+- `righe_corrotte.csv` → le righe originali con i dati mancanti
 
 ---
 
-## Problema 10: Pulizia Dati Corrotti
+## Struttura cartelle
 
-**Il problema:**  
-Dati inseriti male: ID vuoto, email mancante, campi incompleti. Questi fanno crashare gli altri script (es: mandare email a campo vuoto).
-
-**Soluzione:**  
-Script che legge il CSV riga per riga e controlla se ID ed Email sono presenti. Righe valide vanno nel file pulito, righe corrotte in un file separato con il motivo (ID mancante / Email mancante / Entrambi mancanti). Mostra statistiche e percentuale qualità dati.
-
-**Uso:**
-```bash
-./Domanda10.sh centro_sportivo.csv pulito.csv
+```
+Progetto_Analisi_Situazione_Reale/
+├── centro_sportivo.csv       # database principale
+├── Domanda8.sh               # script backup
+├── Domanda9.sh               # script analisi SSH
+├── Domanda10.sh              # script pulizia CSV
+├── auth.log                  # log SSH da analizzare
+├── backups/                  # backup compressi .tar.gz
+├── logs_backup/              # log dei backup automatici
+└── analisi_ssh/              # report analisi SSH
 ```
 
-**Comandi chiave:** `cut -d',' -f1` (estrae ID - colonna 1), `cut -d',' -f5` (estrae Email - colonna 5), `[ -z "$VAR" ]` (controlla se vuoto), `wc -l` (conta righe)
 
----
 
-**Requisiti:** Linux/WSL, bash 4.0+, comandi base (grep, awk, cut, tar, gzip, sort, uniq, date)
+# Requisiti
 
+- Bash
+- `tar`, `grep`, `awk`, `cut` (già presenti su Linux)
+- `iptables` e `sudo` per bloccare gli IP (solo Domanda9)
+- `cron` per i backup automatici (solo Domanda8)
