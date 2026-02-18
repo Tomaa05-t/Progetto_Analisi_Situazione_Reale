@@ -1,13 +1,16 @@
+# Progetto Analisi Situazione Reale
+**Alessandro - 2026**
 
 Tre script bash per gestire il database del centro sportivo. Li ho scritti per automatizzare il backup, analizzare i log SSH e pulire i dati corrotti.
 
+---
 
-# Gli script
+## Gli script
 
-# Domanda8.sh - Backup database
+### Domanda8.sh - Backup database
 Gestisce i backup del file `centro_sportivo.csv`. Ha un menu interattivo con 4 opzioni e una modalità automatica per cron.
 
-bash
+```bash
 ./Domanda8.sh         # apre il menu
 ./Domanda8.sh auto    # backup automatico (per cron)
 ```
@@ -21,16 +24,16 @@ Dal menu puoi:
 I backup vengono salvati in `./backups/` come file `.tar.gz` e vengono tenuti solo gli ultimi 7 (i più vecchi vengono cancellati automaticamente).
 
 Per configurare il backup automatico ogni sera alle 22:00:
-bash
+```bash
 sudo apt-get install -y cron && sudo service cron start
 crontab -e
 # aggiungi questa riga:
 0 22 * * * cd /workspaces/Progetto_Analisi_Situazione_Reale && ./Domanda8.sh auto
+```
 
+---
 
-
-
-# Domanda9.sh - Analisi attacchi SSH
+### Domanda9.sh - Analisi attacchi SSH
 Analizza il file `auth.log` e trova i tentativi di login SSH falliti. Classifica gli IP per livello di pericolo e blocca automaticamente quelli più aggressivi.
 
 ```bash
@@ -75,9 +78,9 @@ Progetto_Analisi_Situazione_Reale/
 └── analisi_ssh/              # report analisi SSH
 ```
 
+---
 
-
-# Requisiti
+## Requisiti
 
 - Bash
 - `tar`, `grep`, `awk`, `cut` (già presenti su Linux)
