@@ -1,7 +1,6 @@
 #!/bin/bash
 # Domanda10.sh - Pulizia e recupero dati corrotti
 
-#
 # Controlla il CSV del centro sportivo e trova le righe con campi mancanti
 # Per ogni riga corrotta prova a recuperare i dati dal backup più recente
 #
@@ -113,19 +112,19 @@ tail -n +2 "$INPUT_CSV" | while IFS= read -r line; do
                     if [ "$CAMPI_TROVATA" -eq "$NUM_CAMPI" ] && ! echo "$TROVATO" | grep -q ';;'; then
                         # perfetto! la riga è completa e valida
                         echo "$TROVATO" >> "$OUTPUT_PULITO"
-                        echo "  ✓ Recuperata dai backup!"
+                        echo "   Recuperata dai backup!"
                     else
-                        echo "  ✗ Trovata nel backup ma anche lì è corrotta"
+                        echo "   Trovata nel backup ma anche lì è corrotta"
                     fi
                 else
-                    echo "  ✗ Non trovata nei backup"
+                    echo "   Non trovata nei backup"
                 fi
             else
                 echo "  Nessun backup disponibile"
             fi
         else
             # non ho né nome né cognome, impossibile cercare
-            echo "  ✗ Impossibile cercare (Nome e Cognome entrambi mancanti)"
+            echo "   Impossibile cercare (Nome e Cognome entrambi mancanti)"
         fi
         echo ""
     else
@@ -161,6 +160,6 @@ else
     # se non ci sono righe corrotte cancello il file vuoto
     rm -f "$OUTPUT_CORROTTE"
     echo ""
-    echo "✓ Nessun dato corrotto - CSV perfetto!"
+    echo "Nessun dato corrotto - CSV perfetto!"
 fi
 echo ""

@@ -2,11 +2,11 @@
 # Domanda9.sh - Analisi attacchi SSH
 
 # Analizza auth.log e blocca automaticamente gli IP con troppi tentativi
-#
+
 # Uso:
-#   sudo ./Domanda9.sh                 -> analizza e blocca
-#   sudo ./Domanda9.sh sblocca 1.2.3.4 -> sblocca un IP
-#   sudo ./Domanda9.sh sblocca tutti   -> sblocca tutti
+#   sudo ./Domanda9.sh                  analizza e blocca
+#   sudo ./Domanda9.sh sblocca 1.2.3.4  sblocca un IP
+#   sudo ./Domanda9.sh sblocca tutti    sblocca tutti
 
 AUTH_LOG="auth.log"
 OUTPUT_FILE="analisi_ssh/analisi_ssh_$(date +"%Y%m%d_%H%M%S").txt"

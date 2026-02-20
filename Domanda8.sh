@@ -1,12 +1,11 @@
 #!/bin/bash
 # Domanda8.sh - Backup database centro sportivo
 
-#
 # Gestisce i backup del file CSV con menu interattivo e modalità automatica
-#
-# Uso: ./Domanda8.sh        -> apre il menu
-#      ./Domanda8.sh auto   -> backup automatico (per cron)
-#
+
+# Uso: ./Domanda8.sh         apre il menu
+#      ./Domanda8.sh auto    backup automatico (per cron)
+
 # Per configurare cron su Codespaces:
 #   sudo apt-get install -y cron && sudo service cron start
 #   crontab -e
