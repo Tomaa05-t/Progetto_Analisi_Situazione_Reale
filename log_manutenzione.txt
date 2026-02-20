@@ -2,3 +2,10 @@ Fri, Feb  6, 2026 12:32:56 PM: Down totale 192.168.1.200 - Verificare cablaggio.
 Fri, Feb  6, 2026 12:34:53 PM: Down totale 192.168.1.200 - Verificare cablaggio.
 Fri, Feb  6, 2026 12:40:56 PM: Down totale 192.168.1.200 - Verificare cablaggio.
 Fri, Feb  6, 2026 12:42:46 PM: Errore Software su 162.120.188.34 - Richiesto riavvio forzato.
+Fri, Feb 20, 2026  9:44:05 AM: Diagnosi su 127.0.0.1 - Tutto funzionante.
+Fri, Feb 20, 2026  9:48:22 AM: Errore Software su 127.0.0.1 (Porta 22 chiusa).
+Fri, Feb 20, 2026 10:15:55 AM: Errore Software su 127.0.0.1 (Porta 22 chiusa).
+Fri, Feb 20, 2026 10:27:58 AM: Errore Software su 127.0.0.1 (Porta 22 chiusa).
+Fri, Feb 20, 2026 10:28:01 AM: Errore Software su 127.0.0.1 (Porta 22 chiusa).
+Fri, Feb 20, 2026 10:31:17 AM: Errore Software su 127.0.0.1 (Porta 22 chiusa).
+Fri, Feb 20, 2026 10:32:38 AM: Diagnosi su 127.0.0.1 - Tutto funzionante.

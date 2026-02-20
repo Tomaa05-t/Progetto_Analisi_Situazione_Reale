@@ -1,41 +1,52 @@
-#legge la temperatura da un file (che simula il sensore) e invia un avviso se scende sotto la soglia critica.
-
 #!/bin/bash
 
+# --- CONFIGURAZIONE ---
 SOGLIA_MINIMA=26
+FILE_SENSORE="temperatura_sensore/temperatura_sensore.txt" # Il nostro "sensore" virtuale
 LOG_ALLARMI="allarmi_sensore_piscina.txt"
 EMAIL_MANUTENZIONE="centroSportivo@manutenzione.it"
-MITTENTE="repartoControlliCS@outlook.it"
+SCRIPT_TERMOSTATO="./Domanda5.sh"
 
-echo "--- MONITORAGGIO TEMPERATURA IN CORSO ---"
-
-# generiamo un numero tra 20 e 30, che è la temperatura
-TEMP=$((RANDOM % 11 + 20))
-
-echo "Temperatura attuale rilevata: $TEMP°C"
-
-if [ "$TEMP" -lt "$SOGLIA_MINIMA" ]; then #-lt significa minore di
-    echo "ALLARME: Temperatura vasca troppo bassa: ($TEMP°C)!"
-    echo "Attivazione caldaie di recupero..."
-    
-    # registra l'allarme nel log degli allarmi
-    echo "$(date): ALLARME TEMPERATURA VASCA! Rilevati $TEMP°C." >> "$LOG_ALLARMI"
+echo "SISTEMA INTEGRATO DI CONTROLLO PISCINA"
 
 
-  #  (
-   #   echo "Subject: ALLARME CRITICO: Temperatura Piscina"
-    #  echo "To: $EMAIL_MANUTENZIONE"
-     # echo "From: $MITTENTE"
-    #  echo ""
-    #  echo "Attenzione, in data $(date) il sensore piscina IP 192.168.1.200 ha rilevato una temperatura anomala di $TEMP°C."
-    #  echo "Richiesto intervento immediato sulle caldaie."
-   # ) #| sendmail -t
+# 1. FASE DI DIAGNOSTICA: Richiamiamo lo script del termostato
+echo ""
+echo "Avvio diagnostica del termostato..."
+echo ""
 
-     echo "Messaggio di allarme inviato al reparto manutenzione -> $EMAIL_MANUTENZIONE."
 
-    
-else
-    echo "Temperatura ottimale. Nessuna azione richiesta."
+# Richiama la diagnostica e controlla l'esito
+if ! bash "$SCRIPT_TERMOSTATO"; then
+    echo "-----------------------------------------------"
+    echo "!!ERRORE!!: Impossibile rilevare il termostato."
+    echo "La diagnostica ha rilevato un guasto al sensore."
+    echo "Il monitoraggio temperatura è bloccato."
+    exit 1
 fi
 
-echo "Prossimo controllo tra 30 minuti."
+
+echo "-----------------------------------------------"
+echo "Risposta sensore: OK. Lettura dei dati..."
+
+# 2. Lettura del dato dal sensore
+# Usiamo 'cat' per leggere il valore scritto nel file
+TEMP=$(cat "$FILE_SENSORE")
+
+echo "Lettura sensore: $TEMP°C"
+echo "Soglia di sicurezza: $SOGLIA_MINIMA°C"
+echo "-----------------------------------------------"
+
+# 3. Logica di Allarme
+if [ "$TEMP" -lt "$SOGLIA_MINIMA" ]; then
+    echo "[!] ALLARME CRITICO: Temperatura vasca a $TEMP°C!"
+    echo "Attivazione caldaie di emergenza e invio segnalazione..."
+    
+    # Registrazione nel Log
+    echo "$(date): ALLARME! Rilevato valore critico: $TEMP°C" >> "temperatura_sensore/$LOG_ALLARMI"
+    
+    # Simulazione invio notifica
+    echo "Notifica inviata a: $EMAIL_MANUTENZIONE"
+else
+    echo "[OK] Temperatura ottimale ($TEMP°C). Sistema stabile."
+fi

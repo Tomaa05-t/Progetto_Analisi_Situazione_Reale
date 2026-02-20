@@ -12,3 +12,17 @@ Logging: Ogni anomalia viene registrata con data e ora nel file log_manutenzione
 
 Monitoraggio Ambientale (monitoraggio_vasca.sh)
 Scopo: Controllo automatico della temperatura dell'acqua per garantire gli standard di sicurezza.Funzionamento:Simula la lettura di un sensore tramite la generazione di numeri casuali.Automazione: Se la temperatura scende sotto la soglia critica ($26^\circ C$), lo script attiva una procedura di emergenza che registra l'evento nel log e genera un avviso per il reparto manutenzione.Notifica: Simula l'invio di una mail di allarme critica utilizzando variabili per mittente e destinatario.4. Accesso Remoto SSH (accesso_remoto.sh)Scopo: Permettere all'amministratore di consultare il database in modo sicuro senza essere fisicamente nel centro.Tecnologia: Utilizza OpenSSH per creare un tunnel criptato verso il server del centro (localhost per il test).Interoperabilità: * Lo script Bash invia un comando PowerShell al server remoto.Utilizza Test-Path per la verifica del file e Get-Content -Tail 3 per estrarre solo le ultime 3 righe del database in tempo reale.Questa tecnica garantisce la massima velocità di consultazione senza dover scaricare l'intero file CSV.📂 Struttura File di LogIl sistema genera automaticamente tre file per la tracciabilità delle operazioni:centro_sportivo.csv: Il database principale a 11 colonne.log_manutenzione.txt: Storico dei guasti hardware/software dei dispositivi.allarmi_sensore_piscina.txt: Registro delle temperature critiche rilevate.🚀 Requisiti di SistemaAmbiente Bash (Git Bash o Linux).OpenSSH Server attivo su Windows.Utente di servizio admin_centro configurato sul sistema.Suggerimento per l'esame:Se il professore ti chiede perché hai diviso i log, rispondi così:"Ho scelto di separare i log (manutenzione per i dispositivi, allarmi per le temperature e report_errori per l'importazione) per rispettare il principio della Separazione delle Responsabilità (SoC), facilitando così il lavoro ai diversi reparti del centro (tecnici hardware vs manutentori vasca)."
+
+
+
+"Il sistema è configurato per avere il demone sshd (OpenSSH) sempre attivo. Se l'accesso dovesse fallire, verificherei lo stato del servizio tramite PowerShell con Get-Service sshd e controllerei che la porta 22 sia in ascolto. Lo script dell'accesso remoto è così robusto che, se il servizio è attivo, gestisce l'autenticazione e il recupero dei dati, altrimenti restituisce un errore di connessione pulito."
+
+
+#COMANDI DOMANDA 5-7 DA FARE IN POWERSHELL AMMINISTRATORE
+# Ferma il servizio immediatamente in ammin
+taskkill /F /IM sshd.exe
+
+# Questo comando "accende" effettivamente il server e apre la porta 22
+Start-Service sshd
+
+Get-Service sshd # come è il servizio ssh?
