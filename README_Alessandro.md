@@ -68,7 +68,7 @@ Il CSV aveva spesso righe con dati mancanti: ID vuoti, nomi mancanti, email sbag
 Dati corrotti = non puoi contattare gli utenti, le statistiche sono sbagliate, l'app crasha.
 
 **Soluzione: Domanda10.sh**
-Script che controlla ogni riga del CSV (6 controlli diversi), trova quelle corrotte, e prova a recuperarle automaticamente dai backup usando nome e cognome.
+Script che controlla ogni riga del CSV (6 controlli diversi), trova quelle corrotte, e prova a recuperarle automaticamente dai backup usando nome,cognome,ID,email e data di nascita.
 
 ```bash
 ./Domanda10.sh
