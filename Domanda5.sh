@@ -1,26 +1,38 @@
 #!/bin/bash
 
-TARGET_IP="162.120.188.34" #var che contiene l'ip del termostato
-LOG_FILE="log_manutenzione.txt" #nome del file in cui stampa i risultati
+# Usiamo localhost per il test reale, simulando l'IP del termostato
+TARGET_IP="127.0.0.1" 
+PORTA_SERVIZIO=22  # Usiamo la porta SSH che abbiamo attivato prima
+LOG_FILE="log_manutenzione.txt"
 
-echo "--- DIAGNOSTICA TERMOSTATO PISCINA ---"
-echo "Verifica connettività verso $TARGET_IP..."
+echo "--- DIAGNOSTICA HARDWARE & SOFTWARE REALE ---"
+echo "Analisi del dispositivo all'indirizzo: $TARGET_IP"
+echo "------------------------------------------------"
 
-# 1. Tentativo di PING (3 pacchetti, attesa massima 2 secondi)
-if ping.exe -n 2 $TARGET_IP; then #controllo rete, manda 3 pacchetti al termostato e aspetta 2s tra un tentativo e l'altro
-    echo "[OK] Il dispositivo è acceso e collegato alla rete." #ok il disp è connesso alla rete, hardware ok
+# 1. TEST HARDWARE (PING)
+echo "Fase 1: Verifica connettività di rete (ICMP)..."
+if ping.exe -n 1 $TARGET_IP > /dev/null; then
+    echo "[OK] Hardware raggiungibile."
     
-    #ora inizia l'ipotesi
-    echo "Verifica servizio web in corso..." #la rete è ok, vediamo se l'app lo rileva
-    sleep 2 #pausa script di 2 sec per simulare la verifica
+    # 2. TEST SOFTWARE (PORT SCAN)
+    # Verifichiamo se la porta del servizio è aperta
+    echo "Fase 2: Verifica servizio web (Porta $PORTA_SERVIZIO)..."
     
+    # Questo comando prova ad aprire una connessione sulla porta 22
+    if (echo > /dev/tcp/$TARGET_IP/$PORTA_SERVIZIO) >/dev/null 2>&1; then
+        echo "[OK] Il servizio risponde correttamente."
+        echo "$(date): Diagnosi su $TARGET_IP - Tutto funzionante." >> $LOG_FILE
+    else
+        echo "[ERRORE] Hardware acceso, ma il SERVIZIO non risponde."
+        echo "[DIAGNOSI] Guasto software o processo bloccato."
+        echo "$(date): Errore Software su $TARGET_IP (Porta $PORTA_SERVIZIO chiusa)." >> $LOG_FILE
+    fi
 
-    echo "[ERRORE] L'interfaccia web del termostato non risponde (Porta 80 chiusa)." #rilevato guasto software, il ping è ok ma il disp non viene rilevato
-    echo "$(date): Errore Software su $TARGET_IP - Richiesto riavvio forzato." >> $LOG_FILE #scrivo nel file log_manutenzione.txt l'errore
-else #se inizialmente il ping ha fallito
-    echo "[CRITICO] Il dispositivo non risponde al ping." #allora c'è un problema di hardware (disp spento, cavo rete rotto...)
-    echo "[DIAGNOSI] Possibile guasto hardware, cavo scollegato o blackout."
-    echo "$(date): Down totale $TARGET_IP - Verificare cablaggio." >> $LOG_FILE  #scrivo nel file log_manutenzione.txt l'errore
+else
+    echo "[CRITICO] Il dispositivo non risponde al ping."
+    echo "[DIAGNOSI] Dispositivo spento, cavo scollegato o blackout."
+    echo "$(date): DOWN TOTALE $TARGET_IP - Verificare hardware." >> $LOG_FILE
 fi
 
-echo "Report salvato in $LOG_FILE"  
+echo "------------------------------------------------"
+echo "Analisi completata. Risultato salvato in $LOG_FILE"
