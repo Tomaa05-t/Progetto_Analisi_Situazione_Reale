@@ -1,9 +1,9 @@
 #!/bin/bash
 # Domanda10.sh - Pulizia e recupero dati corrotti
-
-# Controlla il CSV del centro sportivo e trova le righe con campi mancanti
-# Per ogni riga corrotta prova a recuperare i dati dal backup più recente
-#
+# Alessandro - 2026
+# Controlla il CSV e trova le righe con campi mancanti
+# Per ogni riga corrotta cerca in TUTTI i backup disponibili
+# Può cercare con: ID, nome+cognome, nome, cognome, email, o data di nascita
 # Uso: ./Domanda10.sh
 
 INPUT_CSV="centro_sportivo.csv"
@@ -17,131 +17,123 @@ BACKUP_DIR="./backups"
 echo "Controllo dati corrotti..."
 echo ""
 
-# prendo la prima riga (header) per sapere quanti campi deve avere ogni riga
-# esempio di header: ID;Nome;Cognome;Data_Nascita;Email;Sport;...
+# prendo l'header e conto quanti campi deve avere ogni riga
 HEADER=$(head -n 1 "$INPUT_CSV")
-
-# conto quanti campi ci sono nell'header usando ; come separatore
-# awk -F';' usa il punto e virgola come delimitatore
-# {print NF} stampa il Number of Fields (numero di campi)
 NUM_CAMPI=$(echo "$HEADER" | awk -F';' '{print NF}')
 echo "Il CSV deve avere $NUM_CAMPI campi per riga"
 echo ""
 
-# creo i due file di output con l'header dentro
+# creo i file di output con l'header
 echo "$HEADER" > "$OUTPUT_CORROTTE"
 echo "$HEADER" > "$OUTPUT_PULITO"
 
 # leggo il CSV riga per riga saltando l'header
-# tail -n +2 prende tutto dalla riga 2 in poi (salta la prima)
-# IFS= read -r line legge la riga completa senza dividere i campi
 tail -n +2 "$INPUT_CSV" | while IFS= read -r line; do
 
-    # estraggo i campi principali da controllare
-    # cut -d';' usa ; come delimitatore, -f1 prende il campo 1, -f2 il campo 2, ecc.
+    # estraggo i campi principali
     ID=$(echo "$line" | cut -d';' -f1)
     NOME=$(echo "$line" | cut -d';' -f2)
     COGNOME=$(echo "$line" | cut -d';' -f3)
+    DATA_NASCITA=$(echo "$line" | cut -d';' -f4)
     EMAIL=$(echo "$line" | cut -d';' -f5)
-    
-    # conto quanti campi ha questa riga specifica
     CAMPI_RIGA=$(echo "$line" | awk -F';' '{print NF}')
 
     CORROTTA=false
     MOTIVO=""
 
-    # faccio 6 controlli diversi per vedere se la riga è corrotta
-    
-    # controllo 1: numero di campi sbagliato
+    # 6 controlli per trovare righe corrotte
     [ "$CAMPI_RIGA" -ne "$NUM_CAMPI" ] && CORROTTA=true && MOTIVO="Campi: $CAMPI_RIGA invece di $NUM_CAMPI"
-    
-    # controllo 2, 3, 4, 5: campi vuoti
-    # [ -z "$VAR" ] è vero se la variabile è vuota
     [ -z "$ID" ]      && CORROTTA=true && MOTIVO="${MOTIVO:+$MOTIVO, }ID mancante"
     [ -z "$NOME" ]    && CORROTTA=true && MOTIVO="${MOTIVO:+$MOTIVO, }Nome mancante"
     [ -z "$COGNOME" ] && CORROTTA=true && MOTIVO="${MOTIVO:+$MOTIVO, }Cognome mancante"
     [ -z "$EMAIL" ]   && CORROTTA=true && MOTIVO="${MOTIVO:+$MOTIVO, }Email mancante"
-    
-    # controllo 6: campi vuoti in mezzo (tipo 1;Mario;;...)
-    # grep -q ';;' cerca due ; consecutivi = campo vuoto nel mezzo
     echo "$line" | grep -q ';;' && CORROTTA=true && MOTIVO="${MOTIVO:+$MOTIVO, }Campo vuoto"
 
     if [ "$CORROTTA" = true ]; then
-        # ho trovato una riga corrotta, la salvo nel file delle corrotte
         echo "$line" >> "$OUTPUT_CORROTTE"
-        
-        # mostro a schermo cosa ho trovato
         echo "Riga corrotta:"
         echo "  Motivo: $MOTIVO"
-        # ${VAR:-[VUOTO]} stampa [VUOTO] se la variabile è vuota
-        echo "  ID: ${ID:-[VUOTO]} | Nome: ${NOME:-[VUOTO]} ${COGNOME:-[VUOTO]} | Email: ${EMAIL:-[VUOTO]}"
+        echo "  ID: ${ID:-[VUOTO]} | Nome: ${NOME:-[VUOTO]} ${COGNOME:-[VUOTO]}"
+        echo "  Data: ${DATA_NASCITA:-[VUOTO]} | Email: ${EMAIL:-[VUOTO]}"
 
-        # provo a recuperare la riga dai backup
-        # posso cercare solo se ho almeno il nome O il cognome
-        # se mancano entrambi non so cosa cercare
-        if ([ -n "$NOME" ] || [ -n "$COGNOME" ]) && [ -d "$BACKUP_DIR" ]; then
+        # costruisco il pattern di ricerca in base a cosa ho disponibile
+        # provo in ordine: ID, nome+cognome, solo nome, solo cognome, email, data nascita
+        PATTERN=""
+        TIPO_RICERCA=""
+        
+        if [ -n "$ID" ]; then
+            PATTERN=";$ID;"
+            TIPO_RICERCA="ID"
+        elif [ -n "$NOME" ] && [ -n "$COGNOME" ]; then
+            PATTERN=";$NOME;$COGNOME;"
+            TIPO_RICERCA="nome e cognome"
+        elif [ -n "$NOME" ]; then
+            PATTERN=";$NOME;"
+            TIPO_RICERCA="nome"
+        elif [ -n "$COGNOME" ]; then
+            PATTERN=";$COGNOME;"
+            TIPO_RICERCA="cognome"
+        elif [ -n "$EMAIL" ]; then
+            PATTERN=";$EMAIL;"
+            TIPO_RICERCA="email"
+        elif [ -n "$DATA_NASCITA" ]; then
+            PATTERN=";$DATA_NASCITA;"
+            TIPO_RICERCA="data di nascita"
+        fi
+
+        # se ho un pattern valido, cerco in TUTTI i backup
+        if [ -n "$PATTERN" ] && [ -d "$BACKUP_DIR" ]; then
+            echo "  Cerco con $TIPO_RICERCA in tutti i backup..."
             
-            # costruisco il pattern di ricerca in base a cosa ho
-            # se ho entrambi cerco ";Nome;Cognome;"
-            # se ho solo uno dei due cerco ";Nome;" o ";Cognome;"
-            if [ -n "$NOME" ] && [ -n "$COGNOME" ]; then
-                PATTERN=";$NOME;$COGNOME;"
-            elif [ -n "$NOME" ]; then
-                PATTERN=";$NOME;"
-            else
-                PATTERN=";$COGNOME;"
-            fi
-
-            # prendo il backup più recente
-            # ls -t ordina per data (più recenti prima)
-            # head -n 1 prende solo il primo
-            ULTIMO_BACKUP=$(ls -t "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz 2>/dev/null | head -n 1)
-
-            if [ -n "$ULTIMO_BACKUP" ]; then
-                # estraggo il backup in memoria e cerco la riga
-                # tar -xzf estrae, -O manda su stdout invece che su disco
-                # grep -F cerca il pattern esatto (non regex)
-                # head -n 1 prende solo la prima riga trovata
-                TROVATO=$(tar -xzf "$ULTIMO_BACKUP" -O 2>/dev/null | grep -F "$PATTERN" | head -n 1)
-
-                if [ -n "$TROVATO" ]; then
-                    # ho trovato qualcosa, verifico che sia completa
-                    CAMPI_TROVATA=$(echo "$TROVATO" | awk -F';' '{print NF}')
-                    
-                    # la riga deve avere il numero giusto di campi E non deve avere ;;
-                    if [ "$CAMPI_TROVATA" -eq "$NUM_CAMPI" ] && ! echo "$TROVATO" | grep -q ';;'; then
-                        # perfetto! la riga è completa e valida
-                        echo "$TROVATO" >> "$OUTPUT_PULITO"
-                        echo "   Recuperata dai backup!"
-                    else
-                        echo "   Trovata nel backup ma anche lì è corrotta"
-                    fi
-                else
-                    echo "   Non trovata nei backup"
-                fi
-            else
+            # prendo TUTTI i backup ordinati dal più recente
+            BACKUPS=($(ls -t "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz 2>/dev/null))
+            
+            if [ ${#BACKUPS[@]} -eq 0 ]; then
                 echo "  Nessun backup disponibile"
+            else
+                TROVATO=""
+                BACKUP_TROVATO=""
+                
+                # cerco in ogni backup finché non trovo una riga valida
+                for BACKUP in "${BACKUPS[@]}"; do
+                    # estraggo il backup e cerco il pattern
+                    RIGA=$(tar -xzf "$BACKUP" -O 2>/dev/null | grep -F "$PATTERN" | head -n 1)
+                    
+                    if [ -n "$RIGA" ]; then
+                        # verifico che la riga sia completa e valida
+                        CAMPI_TROVATA=$(echo "$RIGA" | awk -F';' '{print NF}')
+                        
+                        if [ "$CAMPI_TROVATA" -eq "$NUM_CAMPI" ] && ! echo "$RIGA" | grep -q ';;'; then
+                            # trovata una riga valida!
+                            TROVATO="$RIGA"
+                            BACKUP_TROVATO=$(basename "$BACKUP")
+                            break
+                        fi
+                    fi
+                done
+                
+                # mostro il risultato
+                if [ -n "$TROVATO" ]; then
+                    echo "$TROVATO" >> "$OUTPUT_PULITO"
+                    echo "  ✓ Recuperata da: $BACKUP_TROVATO"
+                else
+                    echo "  ✗ Non trovata in nessun backup"
+                fi
             fi
         else
-            # non ho né nome né cognome, impossibile cercare
-            echo "   Impossibile cercare (Nome e Cognome entrambi mancanti)"
+            echo "  ✗ Impossibile cercare (tutti i campi chiave mancanti)"
         fi
         echo ""
     else
-        # la riga è valida, la salvo direttamente nel file pulito
+        # riga valida, la salvo nel file pulito
         echo "$line" >> "$OUTPUT_PULITO"
     fi
 done
 
-# conto le righe nei file generati (escluso l'header)
-# tail -n +2 salta la prima riga (l'header)
-# wc -l conta le righe
+# statistiche finali
 NUM_CORROTTE=$(tail -n +2 "$OUTPUT_CORROTTE" 2>/dev/null | wc -l)
 NUM_PULITE=$(tail -n +2 "$OUTPUT_PULITO" 2>/dev/null | wc -l)
 NUM_TOTALI=$(tail -n +2 "$INPUT_CSV" | wc -l)
-
-# calcolo la percentuale di righe valide
-# awk fa i calcoli con i decimali, printf formatta con 1 decimale
 PERCENTUALE=$(awk "BEGIN {printf \"%.1f\", ($NUM_PULITE * 100) / $NUM_TOTALI}")
 
 echo "Analisi completata!"
@@ -157,9 +149,8 @@ if [ "$NUM_CORROTTE" -gt 0 ]; then
     echo "  $OUTPUT_PULITO       (righe valide + recuperate)"
     echo "  $OUTPUT_CORROTTE     (righe originali corrotte)"
 else
-    # se non ci sono righe corrotte cancello il file vuoto
     rm -f "$OUTPUT_CORROTTE"
     echo ""
-    echo "Nessun dato corrotto - CSV perfetto!"
+    echo "✓ Nessun dato corrotto - CSV perfetto!"
 fi
 echo ""
