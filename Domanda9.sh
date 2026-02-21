@@ -13,6 +13,10 @@
 # -s IP    = specifica l'IP sorgente (source)
 # -j DROP  = azione: DROP scarta i pacchetti senza rispondere
 # -n       = mostra IP numerici invece di risolvere i nomi
+#Demo live
+#sudo ./Domanda9.sh
+#cat analisi_ssh/analisi_ssh_*.txt
+
 AUTH_LOG="auth.log"
 OUTPUT_FILE="analisi_ssh/analisi_ssh_$(date +"%Y%m%d_%H%M%S").txt"
 BLOCKED_FILE="ip_bloccati.txt"

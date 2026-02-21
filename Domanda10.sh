@@ -5,6 +5,10 @@
 # Per ogni riga corrotta cerca in TUTTI i backup disponibili
 # Può cercare con: ID, nome+cognome, nome, cognome, email, o data di nascita
 # Uso: ./Domanda10.sh
+#./Domanda10.sh
+#Demo live
+#cat righe_corrotte.csv
+#head -5 centro_sportivo_pulito.csv
 
 INPUT_CSV="centro_sportivo.csv"
 OUTPUT_CORROTTE="righe_corrotte.csv"

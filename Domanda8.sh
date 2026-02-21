@@ -10,6 +10,10 @@
 #   sudo apt-get install -y cron && sudo service cron start
 #   crontab -e
 #   Aggiungi: 0 22 * * * cd /workspaces/Progetto_Analisi_Situazione_Reale && ./Domanda8.sh auto
+# Demo live
+#./Domanda8.sh
+# Scegli opzione 1 - crea backup
+#ls -lh backups/
 
 # file e cartelle che uso in tutto lo script
 CSV_FILE="centro_sportivo.csv"
