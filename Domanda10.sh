@@ -1,6 +1,5 @@
 #!/bin/bash
 # Domanda10.sh - Pulizia e recupero dati corrotti
-# Alessandro - 2026
 # Controlla il CSV e trova le righe con campi mancanti
 # Per ogni riga corrotta cerca in TUTTI i backup disponibili
 # Può cercare con: ID, nome+cognome, nome, cognome, email, o data di nascita
