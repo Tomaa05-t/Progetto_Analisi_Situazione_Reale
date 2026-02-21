@@ -13,7 +13,7 @@ echo "-----------------------------------------------"
 
 #ssh crea un tunnel criptato verso un altro pc
 #powershell -command: dice al server di eseguire con powershell ciò che segue
-#                                             controlla se il file esiste,    legge il contenuto e estarre le ultime 3 righe,   se il file non esite stampa l'errore
+    #                                         controlla se il file esiste,    legge il contenuto e estarre le ultime 3 righe,   se il file non esite stampa l'errore
 ssh "$USER@$SERVER_IP" "powershell -Command \"if (Test-Path '$REMOTE_PATH') { Get-Content '$REMOTE_PATH' -Tail 3 } else { Write-Error 'File non trovato' }\""
 
 if [ $? -eq 0 ]; then #$? se l'ultimo comando ha avtuto esito positivo (0), stampa operax conclusa

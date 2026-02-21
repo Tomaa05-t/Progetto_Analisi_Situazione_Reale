@@ -59,10 +59,10 @@ Gestione errori: Il sistema è configurato per avere OpenSSH sempre attivo. Se l
 
 #COMANDI DOMANDA 5-7 DA FARE IN POWERSHELL AMMINISTRATORE
 
-# Ferma il servizio immediatamente in ammin
+# Ferma il servizio immediatamente
 taskkill /F /IM sshd.exe
 
-# Questo comando "accende" effettivamente il server e apre la porta 22
+# accende effettivamente il server e apre la porta 22
 Start-Service sshd
 
 # come è il servizio ssh?
