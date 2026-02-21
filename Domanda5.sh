@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Usiamo localhost per il test reale, simulando l'IP del termostato
+# Usiamo localhost per il test, simulando l'IP del termostato
 TARGET_IP="127.0.0.1" 
-PORTA_SERVIZIO=22  # Usiamo la porta SSH che abbiamo attivato prima
+PORTA_SERVIZIO=22  # Usiamo la porta SSH che abbiamo attivato per l'altro problema
 LOG_FILE="log_manutenzione.txt"
 
 echo "--- DIAGNOSTICA TERMOSTATO PISCINA ---"
@@ -10,17 +10,16 @@ echo ""
 echo "Analisi del dispositivo all'indirizzo: $TARGET_IP"
 echo "------------------------------------------------"
 
-# 1. TEST HARDWARE (PING)
+# 1. TEST HARDWARE 
 echo "Fase 1: Verifica connettività di rete (ICMP)..."
-if ping.exe -n 1 $TARGET_IP > /dev/null; then
+if ping.exe -n 1 $TARGET_IP; then  #ping manda un pacchetto di dati e vede se arriva la risposta
     echo "[OK] Hardware raggiungibile."
     
-    # 2. TEST SOFTWARE (PORT SCAN)
-    # Verifichiamo se la porta del servizio è aperta
+    # 2. TEST SOFTWARE
     echo "Fase 2: Verifica servizio web (Porta $PORTA_SERVIZIO)..."
     
     # Questo comando prova ad aprire una connessione sulla porta 22
-    if (echo > /dev/tcp/$TARGET_IP/$PORTA_SERVIZIO) >/dev/null 2>&1; then
+    if (echo > /dev/tcp/$TARGET_IP/$PORTA_SERVIZIO); then #serve a dire a bash di provare ad aprire la porta 22 all'indirizzo 127.0.0.1
         echo "[OK] Il servizio risponde correttamente."
         echo "$(date): Diagnosi su $TARGET_IP - Tutto funzionante." >> $LOG_FILE
         exit 0

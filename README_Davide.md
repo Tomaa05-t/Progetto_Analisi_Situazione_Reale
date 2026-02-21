@@ -1,28 +1,69 @@
-🛠 Analisi degli Script1.
+Analisi degli Script, Tomasini Davide
 
-Gestore Database (import_data.sh)
-Scopo: Centralizzare i dati degli iscritti provenienti da diversi settori (es. Piscina, Palestra) in un unico database normalizzato.
-Funzionamento: * Inizializza un file CSV strutturato su 11 colonne (Anagrafica, Scadenze, Email, Sport e stato di Ban).Effettua il parsing dei file sorgente pulendo i caratteri speciali di Windows (\r).
-Logica ETL: Smonta le righe originali e le rimonta inserendo dinamicamente il nome dello sport e impostando il flag "Ban" su NO di default.Dati gestiti: ID, Nome, Cognome, Data Nascita, Email, Sport, Abbonamento, Scadenza Certificato, Ultimo Accesso, Scadenza Abbonamento, Ban.2. 
+*****************************************************
+Requisiti di Sistema:
+Ambiente Bash (Git Bash o Linux).
+OpenSSH Server attivo su Windows.
+Utente admin_centro configurato sul sistema.
+*****************************************************
 
-Diagnostica Hardware (diagnostica_termostato.sh)
-Scopo: Verificare lo stato di salute dei dispositivi IoT (termostati) della struttura.
-Funzionamento:Utilizza il protocollo ICMP (Ping) per verificare la connettività hardware.Implementa una logica di controllo a due livelli: se il dispositivo risponde al ping ma non al servizio web (simulato), identifica un guasto software. Se il ping fallisce, identifica un guasto hardware/blackout.
-Logging: Ogni anomalia viene registrata con data e ora nel file log_manutenzione.txt.3. 
+Gestore Database (Domanda4.sh)
+Scopo: Centralizzare i dati degli iscritti provenienti dai db di diverse società (es. Piscina, Palestra, tennis) in un unico database normalizzato.
 
-Monitoraggio Ambientale (monitoraggio_vasca.sh)
-Scopo: Controllo automatico della temperatura dell'acqua per garantire gli standard di sicurezza.Funzionamento:Simula la lettura di un sensore tramite la generazione di numeri casuali.Automazione: Se la temperatura scende sotto la soglia critica ($26^\circ C$), lo script attiva una procedura di emergenza che registra l'evento nel log e genera un avviso per il reparto manutenzione.Notifica: Simula l'invio di una mail di allarme critica utilizzando variabili per mittente e destinatario.4. Accesso Remoto SSH (accesso_remoto.sh)Scopo: Permettere all'amministratore di consultare il database in modo sicuro senza essere fisicamente nel centro.Tecnologia: Utilizza OpenSSH per creare un tunnel criptato verso il server del centro (localhost per il test).Interoperabilità: * Lo script Bash invia un comando PowerShell al server remoto.Utilizza Test-Path per la verifica del file e Get-Content -Tail 3 per estrarre solo le ultime 3 righe del database in tempo reale.Questa tecnica garantisce la massima velocità di consultazione senza dover scaricare l'intero file CSV.📂 Struttura File di LogIl sistema genera automaticamente tre file per la tracciabilità delle operazioni:centro_sportivo.csv: Il database principale a 11 colonne.log_manutenzione.txt: Storico dei guasti hardware/software dei dispositivi.allarmi_sensore_piscina.txt: Registro delle temperature critiche rilevate.🚀 Requisiti di SistemaAmbiente Bash (Git Bash o Linux).OpenSSH Server attivo su Windows.Utente di servizio admin_centro configurato sul sistema.Suggerimento per l'esame:Se il professore ti chiede perché hai diviso i log, rispondi così:"Ho scelto di separare i log (manutenzione per i dispositivi, allarmi per le temperature e report_errori per l'importazione) per rispettare il principio della Separazione delle Responsabilità (SoC), facilitando così il lavoro ai diversi reparti del centro (tecnici hardware vs manutentori vasca)."
+Funzionamento: Inizializza un file CSV chiamato "centro_sportivo.csv", strutturato su 11 colonne (nom, cognome, servizio...).Effettua la lettura dei file sorgente pulendo i caratteri speciali di Windows (\r).
+
+Logica : Smonta le righe originali e le rimonta inserendo in modo dinamico il nome dello sport dato in input dall'utente e impostando il flag "Ban" su NO di default.
+
+-----------------------------------------------------------------------------------------
+
+Diagnostica termostato (Domanda5.sh)
+Scopo: Verificare il funzionamento dei dispositivi IoT della struttura.
+
+Funzionamento:Utilizza il protocollo ICMP (Ping) per verificare la connettività hardware. Il codice implementa una logica di controllo a due livelli: se il dispositivo risponde al ping ma non al servizio web (che ho simulato tramite porta 22), identifica un guasto software. Se il ping fallisce all'inizio, identifica un guasto hardware.
+La porta 22 rappresenta lo standard SSH (la uso perchè è già sempre aperta)
+L'indirizzo 127.0.0.1 indentifica localhost, la utilizzo come se fosse l'ip del termostato.
+
+Registro errori: Ogni anomalia viene registrata con data e ora nel file log_manutenzione.txt. 
+
+-----------------------------------------------------------------------------------------
+
+Monitoraggio Ambientale (Domanda6.sh)
+Scopo: controllare la temperatura della vasca piscina, seguendo un percorso sequenziale
+
+Funzionamento: Il software opera secondo una logica: se i prerequisiti di connettività non sono soddisfatti, il sistema si arresta immediatamente per evitare letture errate:
+1. Fase di controllo Hardware 
+Lo script non esegue la diagnostica hardware internamente, ma richiama esternamente il codice Domanda5.sh
+Controllo Exit Status: Attraverso l'istruzione if ! bash "$SCRIPT_TERMOSTATO", il codice Domanda6.sh cattura il codice di ritorno dello script Domanda5.sh, se la diagnostica fallisce (errore sw o hw), lo script interrompe l'esecuzione segnalando il blocco di sicurezza.
+2. Fase di Analisi Dati
+Solo dopo aver ricevuto il "via libera" dalla diagnostica, il sistema procede a leggere dal file temperatura_sensore.txt, la temperatura attuale (il file simula il termostato).
+In caso di temperatura sotto soglia minima, viene attivata una procedura di emergenza ed inviata una mail alla manutenzione.
+
+Registro errori:gli eventi che non vanno a buon fine vengono salvati nel file allarmi_sensore_piscina.txt.
+
+-----------------------------------------------------------------------------------------
+
+Accesso Remoto SSH (Domanda7.sh)
+
+Scopo: Questo script permette la consultazione remota del db, estraendo le ultime voci inserite in esso, simulando un ambiente Client-Server reale.
+
+Funzionamento: lo script si connette al server centrale (che ospita il database CSV) e recupera in tempo reale le informazioni più recenti senza dover scaricare l'intero file. 
+Utilizza il protocollo SSH (Secure Shell), utilizzato per creare un tunnel criptato tra il terminale dell'amministratore e il server.
+Per creare la simulazione ho attivato su windows OpenSSH Server, per accettare connessioni remote.
+Il comando inviato tramite SSH sfrutta l'interprete PowerShell sul server per gestire i percorsi dei file Windows. (il db l'ho inserito nel percordo C:\gestione\centro_sportivo.csv).
+Il codice si connette all'indirizzo 127.0.0.1, se la porta 22 standard SSH è aperta, che indica il server del db (il mio pc), chiede l'autenticazione all'utente Admin_centro, che ha i permessi sul server, poi posso leggere il db.
+
+Gestione errori: Il sistema è configurato per avere OpenSSH sempre attivo. Se l'accesso dovesse fallire, si piò verificare lo stato del servizio tramite PowerShell con Get-Service sshd e contorllare che la porta 22 sia in ascolto. Se il servizio è attivo, gestisce l'autenticazione e il recupero dei dati, altrimenti restituisce un errore di connessione.
 
 
-
-"Il sistema è configurato per avere il demone sshd (OpenSSH) sempre attivo. Se l'accesso dovesse fallire, verificherei lo stato del servizio tramite PowerShell con Get-Service sshd e controllerei che la porta 22 sia in ascolto. Lo script dell'accesso remoto è così robusto che, se il servizio è attivo, gestisce l'autenticazione e il recupero dei dati, altrimenti restituisce un errore di connessione pulito."
 
 
 #COMANDI DOMANDA 5-7 DA FARE IN POWERSHELL AMMINISTRATORE
-# Ferma il servizio immediatamente in ammin
+
+# Ferma il servizio immediatamente
 taskkill /F /IM sshd.exe
 
-# Questo comando "accende" effettivamente il server e apre la porta 22
+# accende effettivamente il server e apre la porta 22
 Start-Service sshd
 
-Get-Service sshd # come è il servizio ssh?
+# come è il servizio ssh?
+Get-Service sshd 
