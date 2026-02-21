@@ -1,13 +1,18 @@
 #!/bin/bash
 # Domanda9.sh - Analisi attacchi SSH
-
 # Analizza auth.log e blocca automaticamente gli IP con troppi tentativi
-
 # Uso:
-#   sudo ./Domanda9.sh                  analizza e blocca
-#   sudo ./Domanda9.sh sblocca 1.2.3.4  sblocca un IP
-#   sudo ./Domanda9.sh sblocca tutti    sblocca tutti
-
+#   sudo ./Domanda9.sh                 -> analizza e blocca
+#   sudo ./Domanda9.sh sblocca 1.2.3.4 -> sblocca un IP
+#   sudo ./Domanda9.sh sblocca tutti   -> sblocca tutti
+# NOTA SU IPTABLES:
+# iptables è il firewall di Linux che controlla il traffico di rete
+# -A INPUT = Aggiungi regola alla catena INPUT (traffico in entrata)
+# -D INPUT = Cancella regola dalla catena INPUT  
+# -L INPUT = Lista le regole della catena INPUT
+# -s IP    = specifica l'IP sorgente (source)
+# -j DROP  = azione: DROP scarta i pacchetti senza rispondere
+# -n       = mostra IP numerici invece di risolvere i nomi
 AUTH_LOG="auth.log"
 OUTPUT_FILE="analisi_ssh/analisi_ssh_$(date +"%Y%m%d_%H%M%S").txt"
 BLOCKED_FILE="ip_bloccati.txt"
@@ -35,8 +40,11 @@ if [ "$1" = "sblocca" ]; then
         echo "Tutti gli IP sbloccati"
     elif [ -n "$2" ]; then
         # sblocco solo l'IP specifico passato come parametro
+        # grep -q cerca in silenzio (quiet), ritorna 0 se trova, 1 se non trova
         if grep -q "$2" "$BLOCKED_FILE"; then
+            # iptables -D cancella la regola (D = Delete)
             iptables -D INPUT -s "$2" -j DROP 2>/dev/null
+            # grep -v esclude le righe che contengono l'IP (v = inVert match)
             grep -v "$2" "$BLOCKED_FILE" > "$BLOCKED_FILE.tmp" && mv "$BLOCKED_FILE.tmp" "$BLOCKED_FILE"
             echo "Sbloccato: $2"
         else
@@ -45,6 +53,7 @@ if [ "$1" = "sblocca" ]; then
     else
         # se non specifico cosa sbloccare, mostro la lista
         echo "Uso: sudo ./Domanda9.sh sblocca [IP|tutti]"
+        # cat stampa il contenuto del file a schermo
         cat "$BLOCKED_FILE"
     fi
     exit 0
@@ -63,6 +72,7 @@ fi
 
 echo "Inizio l'analisi..."
 TMP="/tmp/ssh_analisi_$$"
+# mkdir -p crea le cartelle, -p non da errore se esistono già
 mkdir -p "$TMP" "analisi_ssh"
 
 # cerco tutti i tentativi falliti nel log
@@ -73,13 +83,15 @@ mkdir -p "$TMP" "analisi_ssh"
 # - Disconnected [preauth] = disconnesso prima di autenticarsi
 grep -E "Failed password|Invalid user|Connection closed.*\[preauth\]|Disconnected.*\[preauth\]" \
     "$AUTH_LOG" > "$TMP/falliti.log"
+# wc -l conta le righe del file (l = Lines)
 NUM_FALLITI=$(wc -l < "$TMP/falliti.log")
 
 # estraggo gli IP dalle righe e conto quanti tentativi ha fatto ognuno
 # grep -oE estrae solo il pattern "from XXX.XXX.XXX.XXX"
 # awk stampa solo il secondo campo (l'IP)
-# sort | uniq -c conta quante volte appare ogni IP
-# sort -rn ordina dal più pericoloso al meno pericoloso
+# sort ordina gli IP alfabeticamente
+# uniq -c conta quante volte appare ogni IP (c = Count)
+# sort -rn ordina per numero (n = Numeric) al contrario (r = Reverse, dal più alto)
 grep -oE "from [0-9]+\.[0-9]+\.[0-9]+\.[0-9]+" "$TMP/falliti.log" | \
     awk '{print $2}' | sort | uniq -c | sort -rn > "$TMP/ip_count.txt"
 
@@ -102,7 +114,11 @@ NUM_BASSO=$(wc -l < "$TMP/basso.txt")
 
 # vedo quali nomi utente vengono provati più spesso dagli attaccanti
 # grep cerca "user nome" o "for nome from"
-# poi conto quante volte appare ogni nome
+# awk stampa il secondo campo (il nome utente)
+# grep -v esclude la parola "from" (v = inVert)
+# sort | uniq -c conta le occorrenze
+# sort -rn ordina dal più alto
+# head -10 prende solo i primi 10 (head = testa del file)
 grep -oE "user [a-zA-Z0-9_-]+|for [a-zA-Z0-9_-]+ from" "$TMP/falliti.log" | \
     awk '{print $2}' | grep -v "^from$" | sort | uniq -c | sort -rn | head -10 > "$TMP/utenti.txt"
 
@@ -113,6 +129,7 @@ BLOCCATI_ORA=0
 if [ "$POSSO_BLOCCARE" = true ] && [ -s "$TMP/da_bloccare.txt" ]; then
     touch "$BLOCKED_FILE"
     while read IP; do
+        # iptables -L lista le regole, grep -q cerca in silenzio
         # controllo se l'ho già bloccato prima (così non lo blocco due volte)
         if ! iptables -L INPUT -n | grep -q "$IP"; then
             TENTATIVI=$(grep " $IP$" "$TMP/ip_count.txt" | awk '{print $1}')

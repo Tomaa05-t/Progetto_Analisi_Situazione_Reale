@@ -1,6 +1,0 @@
-ID,Nome,Cognome,Data_Nascita,Email,Servizio,Abbonamento,Scadenza_Certificato,Ultimo_Accesso,Scadenza_Abbonamento
-1001,Mario,Rossi,1980-05-15,,Palestra,Mensile,2027-03-20,2025-06-10,2026-08-14,SCARTATA: Email mancante
-1002,Laura,Verdi,1995-08-22,,Tennis,Annuale,2028-01-15,2025-12-01,2027-09-30,SCARTATA: Email mancante
-,Giovanni,Bianchi,1975-12-10,giovanni.bianchi@test.com,Piscina,Semestrale,2027-06-18,2025-11-25,2026-12-20,SCARTATA: ID mancante
-,Francesca,Neri,1988-03-03,francesca.neri@test.com,Palestra,Trimestrale,2026-09-12,2025-10-15,2025-12-31,SCARTATA: ID mancante
-,,Luca,1992-07-20,,Tennis,Mensile,2027-11-05,2025-08-18,2026-05-22,SCARTATA: ID e Email mancanti

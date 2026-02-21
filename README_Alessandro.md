@@ -47,6 +47,12 @@ Se riescono ad entrare possono rubare i dati personali degli utenti (GDPR!), mod
 **Soluzione: Domanda9.sh**
 Script che analizza i log SSH, conta i tentativi per ogni IP, classifica il pericolo in ALTO/MEDIO/BASSO, e blocca automaticamente con iptables gli IP sopra 5 tentativi.
 
+**Come funziona iptables:**
+- `iptables` è il firewall di Linux che filtra il traffico di rete
+- `-A INPUT` aggiunge una regola per il traffico in entrata
+- `-s IP` specifica l'indirizzo IP da bloccare
+- `-j DROP` scarta tutti i pacchetti da quell'IP senza rispondere
+
 ```bash
 sudo ./Domanda9.sh                    # analizza e blocca
 sudo ./Domanda9.sh sblocca 1.2.3.4   # sblocca un IP
@@ -68,7 +74,7 @@ Il CSV aveva spesso righe con dati mancanti: ID vuoti, nomi mancanti, email sbag
 Dati corrotti = non puoi contattare gli utenti, le statistiche sono sbagliate, l'app crasha.
 
 **Soluzione: Domanda10.sh**
-Script che controlla ogni riga del CSV (6 controlli diversi), trova quelle corrotte, e prova a recuperarle automaticamente dai backup usando nome,cognome,ID,email e data di nascita.
+Script che controlla ogni riga del CSV (6 controlli diversi), trova quelle corrotte, e prova a recuperarle automaticamente dai backup usando nome e cognome.
 
 ```bash
 ./Domanda10.sh
