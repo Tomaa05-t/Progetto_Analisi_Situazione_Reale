@@ -56,7 +56,7 @@ Script che analizza i log SSH, conta i tentativi per ogni IP, classifica il peri
 ```bash
 sudo ./Domanda9.sh                    # analizza e blocca
 sudo ./Domanda9.sh sblocca 1.2.3.4   # sblocca un IP
-sudo ./Domanda9.sh sblocca tutti
+sudo ./Domanda9.sh sblocca tutti    #sblocca tutti
 
 **Classificazione:**
 - **ALTO** (>10 tentativi) = attacco serio
