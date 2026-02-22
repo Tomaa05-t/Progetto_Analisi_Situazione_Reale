@@ -1,10 +1,9 @@
 #!/bin/bash
 # Domanda9.sh - Analisi attacchi SSH
+# Alessandro - 2026
+#
 # Analizza auth.log e blocca automaticamente gli IP con troppi tentativi
-# Uso:
-#   sudo ./Domanda9.sh                 -> analizza e blocca
-#   sudo ./Domanda9.sh sblocca 1.2.3.4 -> sblocca un IP
-#   sudo ./Domanda9.sh sblocca tutti   -> sblocca tutti
+#
 # NOTA SU IPTABLES:
 # iptables è il firewall di Linux che controlla il traffico di rete
 # -A INPUT = Aggiungi regola alla catena INPUT (traffico in entrata)
@@ -13,9 +12,11 @@
 # -s IP    = specifica l'IP sorgente (source)
 # -j DROP  = azione: DROP scarta i pacchetti senza rispondere
 # -n       = mostra IP numerici invece di risolvere i nomi
-#Demo live
-#sudo ./Domanda9.sh
-#cat analisi_ssh/analisi_ssh_*.txt
+#
+# Uso:
+#   sudo ./Domanda9.sh                 -> analizza e blocca
+#   sudo ./Domanda9.sh sblocca 1.2.3.4 -> sblocca un IP
+#   sudo ./Domanda9.sh sblocca tutti   -> sblocca tutti
 
 AUTH_LOG="auth.log"
 OUTPUT_FILE="analisi_ssh/analisi_ssh_$(date +"%Y%m%d_%H%M%S").txt"
@@ -35,13 +36,26 @@ if [ "$1" = "sblocca" ]; then
 
     if [ "$2" = "tutti" ]; then
         # sblocco tutti gli IP nel file
-        # awk estrae la colonna 3 (l'IP), poi per ognuno rimuovo la regola iptables
-        awk '{print $3}' "$BLOCKED_FILE" | while read IP; do
-            iptables -D INPUT -s "$IP" -j DROP 2>/dev/null
-            echo "Sbloccato: $IP"
-        done
+        echo "IP bloccati da sbloccare:"
+        cat "$BLOCKED_FILE"
+        echo ""
+        echo "Sblocco in corso..."
+        
+        # leggo il file riga per riga ed estraggo l'IP
+        SBLOCCATI=0
+        while IFS= read -r line; do
+            # estraggo l'IP dalla riga (è dopo il primo -)
+            IP=$(echo "$line" | awk '{print $4}')
+            if [ -n "$IP" ] && [[ "$IP" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                iptables -D INPUT -s "$IP" -j DROP 2>/dev/null
+                echo "✓ Sbloccato: $IP"
+                SBLOCCATI=$((SBLOCCATI + 1))
+            fi
+        done < "$BLOCKED_FILE"
+        
         > "$BLOCKED_FILE"  # svuoto il file
-        echo "Tutti gli IP sbloccati"
+        echo ""
+        echo "Totale IP sbloccati: $SBLOCCATI"
     elif [ -n "$2" ]; then
         # sblocco solo l'IP specifico passato come parametro
         # grep -q cerca in silenzio (quiet), ritorna 0 se trova, 1 se non trova
@@ -127,7 +141,7 @@ grep -oE "user [a-zA-Z0-9_-]+|for [a-zA-Z0-9_-]+ from" "$TMP/falliti.log" | \
     awk '{print $2}' | grep -v "^from$" | sort | uniq -c | sort -rn | head -10 > "$TMP/utenti.txt"
 
 # blocco automaticamente gli IP che superano la soglia
-awk -v s="$SOGLIA_BLOCCO" '$1 > s {print $2}' "$TMP/ip_count.txt" > "$TMP/da_bloccare.txt"
+awk -v s="$SOGLIA_BLOCCO" '$1 >= s {print $2}' "$TMP/ip_count.txt" > "$TMP/da_bloccare.txt"
 BLOCCATI_ORA=0
 
 if [ "$POSSO_BLOCCARE" = true ] && [ -s "$TMP/da_bloccare.txt" ]; then

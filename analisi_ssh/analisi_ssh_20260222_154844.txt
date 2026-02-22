@@ -1,3 +1,48 @@
+REPORT ANALISI TENTATIVI SSH
+Data: 22/02/2026 alle 15:48:44 - File: auth.log
+
+RIEPILOGO
+Righe totali:      49
+Tentativi falliti: 50
+Accessi riusciti:  0
+IP bloccati ora:   6
+
+CLASSIFICAZIONE IP
+ALTO  (>10 tentativi):  0 IP
+MEDIO (5-10 tentativi): 6 IP
+BASSO (2-4 tentativi): 5 IP
+
+IP PERICOLO ALTO
+Nessuno
+
+IP PERICOLO MEDIO
+7     tentativi - IP: 123.60.115.87
+7     tentativi - IP: 103.99.0.122
+6     tentativi - IP: 61.177.172.28
+6     tentativi - IP: 159.65.77.142
+5     tentativi - IP: 45.142.212.61
+5     tentativi - IP: 178.128.83.165
+
+IP PERICOLO BASSO
+3     tentativi - IP: 203.0.113.45
+2     tentativi - IP: 91.203.5.146
+2     tentativi - IP: 198.51.100.23
+2     tentativi - IP: 192.0.2.67
+2     tentativi - IP: 185.220.101.42
+
+TOP 10 UTENTI ATTACCATI
+     11 root
+      6 admin
+      5 test
+      4 ubuntu
+      3 user
+      3 postgres
+      3 pi
+      3 oracle
+      3 mysql
+      3 guest
+
+TUTTI I TENTATIVI FALLITI
 Feb 14 15:22:10 hostname sshd[41234]: Failed password for invalid user admin from 45.142.212.61 port 52341 ssh2
 Feb 14 15:22:13 hostname sshd[41236]: Failed password for root from 45.142.212.61 port 52342 ssh2
 Feb 14 15:22:16 hostname sshd[41238]: Invalid user test from 45.142.212.61 port 52343
