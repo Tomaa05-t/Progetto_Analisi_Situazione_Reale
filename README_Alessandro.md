@@ -29,6 +29,17 @@ Perdere il database = non poter più contattare gli utenti, perdere gli abboname
 **Soluzione: Domanda8.sh**
 Script che fa backup automatici ogni sera alle 22:00, comprime i file (risparmia 75% spazio), tiene solo gli ultimi 7 backup, e permette di cercare utenti specifici nei backup senza ripristinare tutto.
 
+**File utilizzati:**
+- `centro_sportivo.csv` - database da backuppare
+
+**File creati:**
+- `backups/centro_sportivo_backup_YYYYMMDD_HHMMSS.tar.gz` - backup compressi
+- `logs_backup/backup_auto.log` - log operazioni automatiche
+- `logs_backup/backup_YYYY-MM-DD.log` - log giornalieri
+- `centro_sportivo_ripristino_YYYYMMDD.csv` - quando ripristini un backup
+- `utente_ripristinato_YYYYMMDD.csv` - quando cerchi un singolo utente
+- `utenti_trovati_YYYYMMDD.csv` - quando cerchi più utenti
+
 ```bash
 ./Domanda8.sh         # menu interattivo
 ./Domanda8.sh auto    # backup automatico (per cron)
@@ -47,6 +58,13 @@ Se riescono ad entrare possono rubare i dati personali degli utenti (GDPR!), mod
 **Soluzione: Domanda9.sh**
 Script che analizza i log SSH, conta i tentativi per ogni IP, classifica il pericolo in ALTO/MEDIO/BASSO, e blocca automaticamente con iptables gli IP sopra 5 tentativi.
 
+**File utilizzati:**
+- `auth.log` - log SSH da analizzare
+
+**File creati:**
+- `analisi_ssh/analisi_ssh_YYYYMMDD_HHMMSS.txt` - report completo dell'analisi
+- `ip_bloccati.txt` - lista degli IP bloccati con timestamp
+
 **Come funziona iptables:**
 - `iptables` è il firewall di Linux che filtra il traffico di rete
 - `-A INPUT` aggiunge una regola per il traffico in entrata
@@ -56,7 +74,7 @@ Script che analizza i log SSH, conta i tentativi per ogni IP, classifica il peri
 ```bash
 sudo ./Domanda9.sh                    # analizza e blocca
 sudo ./Domanda9.sh sblocca 1.2.3.4   # sblocca un IP
-sudo ./Domanda9.sh sblocca tutti    #sblocca tutti
+```
 
 **Classificazione:**
 - **ALTO** (>10 tentativi) = attacco serio
@@ -74,15 +92,19 @@ Il CSV aveva spesso righe con dati mancanti: ID vuoti, nomi mancanti, email sbag
 Dati corrotti = non puoi contattare gli utenti, le statistiche sono sbagliate, l'app crasha.
 
 **Soluzione: Domanda10.sh**
-Script che controlla ogni riga del CSV (6 controlli diversi), trova quelle corrotte, e prova a recuperarle automaticamente dai backup usando nome e cognome.
+Script che controlla ogni riga del CSV (6 controlli diversi), trova quelle corrotte, e prova a recuperarle automaticamente cercando in tutti i backup con ID, nome, cognome, email o data di nascita.
+
+**File utilizzati:**
+- `centro_sportivo.csv` - database da controllare
+- `backups/*.tar.gz` - backup dove cercare righe corrotte
+
+**File creati:**
+- `centro_sportivo_pulito.csv` - solo righe valide + quelle recuperate
+- `righe_corrotte.csv` - righe originali con problemi
 
 ```bash
 ./Domanda10.sh
 ```
-
-**Genera:**
-- `centro_sportivo_pulito.csv` = solo righe valide + quelle recuperate
-- `righe_corrotte.csv` = righe originali con problemi
 
 ---
 
@@ -155,8 +177,10 @@ Cambia `INPUT_CSV="tuofile.csv"` e funziona con qualsiasi CSV. Puoi aggiungere a
 ## Note Tecniche
 
 I dati sono fittizi, creati appositamente per testare gli script:
-- `centro_sportivo.csv` = 1000 utenti generati con Python
+- `centro_sportivo.csv` = 400 utenti generati con Python
 - `auth.log` = 50 righe di tentativi SSH (70% attacchi, 30% legittimi)
 
 Testato su Ubuntu 22.04 e Debian 11.
+
+---
 

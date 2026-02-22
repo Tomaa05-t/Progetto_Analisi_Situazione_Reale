@@ -47,7 +47,7 @@ if [ "$1" == "auto" ]; then
         log "Errore: $CSV_FILE non trovato"; exit 1
     fi
 
-    # creo il backup compresso
+    ## creo il backup compresso
     # tar -c crea l'archivio, -z lo comprime con gzip, -f specifica il nome
     # 2>/dev/null nasconde eventuali messaggi di errore
     tar -czf "$BACKUP_DIR/centro_sportivo_backup_${TIMESTAMP}.tar.gz" "$CSV_FILE" 2>/dev/null
@@ -58,7 +58,7 @@ if [ "$1" == "auto" ]; then
         log "Backup creato OK"
         
         # rotazione backup: tengo solo gli ultimi 7
-        # ls -t ordina per data (più recenti prima)
+        ## ls -t ordina per data (più recenti prima)
         # tail -n +8 prende dall'ottavo in poi (i vecchi)
         # xargs rm -f li cancella tutti
         ls -t "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz 2>/dev/null | tail -n +8 | xargs rm -f
