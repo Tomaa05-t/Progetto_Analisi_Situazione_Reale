@@ -1,5 +1,4 @@
 ID;Nome;Cognome;Data_Nascita;Email;Sport;Abbonamento;Scadenza_Certificato;Ultimo_Accesso;Scadenza_Abbonamento;Ban
-1;Riccardo;Moretti;1988-09-25;riccardo.moretti93@outlook.it;piscina;Mensile;2028-09-30;2025-10-13;2028-11-03;NO
 2;Giulia;Conti;1948-01-11;giulia.conti68@yahoo.com;piscina;Mensile;2027-04-03;2025-12-19;2027-08-09;NO
 3;Chiara;Russo;1951-08-26;chiara.russo80@gmail.com;piscina;Trimestrale;2027-02-17;2025-07-22;2025-10-02;NO
 4;Valentina;Colombo;1949-06-23;valentina.colombo39@gmail.com;piscina;Semestrale;2028-08-18;2026-01-23;2026-01-08;NO
@@ -799,3 +798,4 @@ ID;Nome;Cognome;Data_Nascita;Email;Sport;Abbonamento;Scadenza_Certificato;Ultimo
 398;Chiara;Bianchi;2006-06-17;chiara.bianchi11@outlook.it;Palestra;Trimestrale;2028-08-12;2025-08-26;2027-10-24;NO
 399;Chiara;Piccoli;1976-04-14;chiara.piccoli35@icloud.com;Palestra;Annuale;2028-12-13;2025-04-27;2028-11-13;NO
 400;Riccardo;Colombo;1989-01-08;riccardo.colombo91@yahoo.com;Palestra;Mensile;2026-07-22;2025-07-02;2026-11-02;NO
+1;Riccardo;Moretti;1988-09-25;riccardo.moretti93@outlook.it;piscina;Mensile;2028-09-30;2025-10-13;2028-11-03;NO
