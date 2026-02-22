@@ -51,7 +51,6 @@ echo "Importazione in corso..."
                 echo "${ID};${NOME};${COGNOME};${NASCITA};${EMAIL};${SPORT_NOME};${ABBONAMENTO};${CERTIFICATO};${ACCESSO};${SCAD_ABBO};NO" >> "$DATABASE_FINALE"
             fi
 
-            
         fi
     done
 

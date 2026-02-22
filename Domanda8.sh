@@ -163,7 +163,7 @@ ripristino_completo() {
     
     # estraggo la data dal nome per usarla nel file di output
     [[ "$FILENAME" =~ centro_sportivo_backup_([0-9]{8}) ]] && DATA="${BASH_REMATCH[1]}" || DATA=$(date +"%Y%m%d")
-    OUTPUT_FILE="centro_sportivo_ripristino_${DATA}.csv"
+    OUTPUT_FILE='centro_sportivo_ripristino_${DATA}.csv'
 
     # estraggo il backup
     # tar -xzf estrae, -O manda su stdout invece che su disco

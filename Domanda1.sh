@@ -10,7 +10,7 @@ giorni_preavviso=9
 limite_certificato=$(date -d "+$giorni_preavviso days" +%Y-%m-%d)
 
 input="centro_sportivo.csv"
-output="accessi_negati.csv"
+output="accessi_negati/accessi_negati.csv"
 
 echo "Nome,Cognome,Tipo_Abbonamento,Scadenza_Certificato,Scadenza_Abbonamento,Motivo" > "$output"
 
