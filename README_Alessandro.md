@@ -155,7 +155,7 @@ Cambia `INPUT_CSV="tuofile.csv"` e funziona con qualsiasi CSV. Puoi aggiungere a
 ## Note Tecniche
 
 I dati sono fittizi, creati appositamente per testare gli script:
-- `centro_sportivo.csv` = 400 utenti generati con Python
+- `centro_sportivo.csv` = 1000 utenti generati con Python
 - `auth.log` = 50 righe di tentativi SSH (70% attacchi, 30% legittimi)
 
 Testato su Ubuntu 22.04 e Debian 11.
