@@ -18,7 +18,7 @@ if [ ! -f "$INPUT_CSV" ]; then
     exit 1
 fi
 
-echo "🔍 PULIZIA E RECUPERO DATI (Domanda 10)"
+echo " PULIZIA E RECUPERO DATI (Domanda 10)"
 echo "════════════════════════════════════════"
 echo ""
 
@@ -26,7 +26,7 @@ echo ""
 HEADER=$(head -n 1 "$INPUT_CSV")
 NUM_CAMPI=$(echo "$HEADER" | awk -F';' '{print NF}')
 
-echo "📋 Analizzando CSV..."
+echo " Analizzando CSV..."
 echo "   Campi per riga: $NUM_CAMPI"
 echo ""
 
