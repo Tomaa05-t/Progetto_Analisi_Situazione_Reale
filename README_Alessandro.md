@@ -7,7 +7,7 @@ Tre script bash per gestire il database di un centro sportivo. Risolvono problem
 
 ## Il Contesto
 
-Un centro sportivo con ~1000 iscritti che usa:
+Un centro sportivo con ~400 iscritti che usa:
 - Un database CSV per gestire gli utenti
 - Un server Linux per il sistema informatico
 - Accesso SSH per l'amministrazione
