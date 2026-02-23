@@ -24,9 +24,9 @@ opzioni = [
     "Opzione 5: controllo termostrato",
     "Opzione 6: allarme acqua",
     "Opzione 7: backup dati giornalieri",
-    "Opzione 8: tenta login falliti",
-    "Opzione 9: Accesso remoto",
-    "Opzione 10: pulizia database utenti"
+    "Opzione 8: backup automatico",
+    "Opzione 9: attacchi ssh",
+    "Opzione 10: dati corrotti"
 ]
 
 def execute_domanda8(azione, backup_idx=None, tipo_ricerca=None, valore_ricerca=None):
