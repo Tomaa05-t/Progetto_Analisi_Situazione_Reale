@@ -1,5 +1,5 @@
 #!/bin/bash
-# Avviso di scadenza certificato medico via email
+# Avviso di scadenza certificato medico via email - VERSIONE CORRETTA
 
 CSV_FILE="centro_sportivo.csv"
 DELIMITER=";"
@@ -29,12 +29,13 @@ awk -F"$DELIMITER" -v oggi="$OGGI" -v limite="$LIMITE" \
     -v n="$COL_NOME" -v c="$COL_COGNOME" \
     -v e="$COL_EMAIL" -v s="$COL_SCADENZA" '
 NR>1 && $s >= oggi && $s <= limite {
-    cmd = "date -d \"" $s " +" tol " days\" +%Y-%m-%d"
+    # Calcola nuova scadenza (data scadenza + giorni tolleranza)
+    cmd = "date -d '\''" $s " +" tol " days'\'' +%Y-%m-%d"
     cmd | getline nuova_scadenza
     close(cmd)
 
     print $e "|" $n "|" $c "|" $s "|" nuova_scadenza
-}' "$CSV_FILE" | while IFS="|" read email nome cognome scadenza nuova_scadenza
+}' "$CSV_FILE" | while IFS="|" read -r email nome cognome scadenza nuova_scadenza
 do
 sendmail -t <<EOF
 To: $email
