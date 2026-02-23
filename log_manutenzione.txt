@@ -14,3 +14,5 @@ Sat, Feb 21, 2026  4:52:56 PM: Diagnosi su 127.0.0.1 - Tutto funzionante.
 Sun Feb 22 15:14:58 UTC 2026: DOWN TOTALE 127.0.0.1 - Verificare hardware.
 Sun Feb 22 15:15:29 UTC 2026: DOWN TOTALE 127.0.0.1 - Verificare hardware.
 Sun Feb 22 16:06:07 UTC 2026: DOWN TOTALE 127.0.0.1 - Verificare hardware.
+Mon Feb 23 11:57:03 UTC 2026: DOWN TOTALE 127.0.0.1 - Verificare hardware.
+Mon Feb 23 11:57:05 UTC 2026: DOWN TOTALE 127.0.0.1 - Verificare hardware.

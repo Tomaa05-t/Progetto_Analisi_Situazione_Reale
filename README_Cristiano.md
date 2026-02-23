@@ -1,4 +1,5 @@
 # Progetto_Analisi_Situazione_Reale
+per iniziare digitare nel terminale bash streamlite run interfaccia_grafica.py
 Domanda 1
     Per garantire un utilizzo corretto e sicuro delle proprie strutture, un centro sportivo deve verificare che ogni utente soddisfi tutti i requisiti necessari per l’accesso alle attività. In particolare, due elementi fondamentali sono la validità del certificato medico, che attesta l’idoneità fisica alla pratica sportiva, e la validità dell’abbonamento, che determina il diritto dell’utente a usufruire dei servizi offerti dal centro.
 
