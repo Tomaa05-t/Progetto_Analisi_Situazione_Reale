@@ -5,6 +5,7 @@
 #   sudo ./Domanda9.sh                 -> analizza e blocca
 #   sudo ./Domanda9.sh sblocca 1.2.3.4 -> sblocca un IP
 #   sudo ./Domanda9.sh sblocca tutti   -> sblocca tutti
+
 # NOTA SU IPTABLES:
 # iptables è il firewall di Linux che controlla il traffico di rete
 # -A INPUT = Aggiungi regola alla catena INPUT (traffico in entrata)
@@ -13,9 +14,6 @@
 # -s IP    = specifica l'IP sorgente (source)
 # -j DROP  = azione: DROP scarta i pacchetti senza rispondere
 # -n       = mostra IP numerici invece di risolvere i nomi
-#Demo live
-#sudo ./Domanda9.sh
-#cat analisi_ssh/analisi_ssh_*.txt
 
 AUTH_LOG="auth.log"
 OUTPUT_DIR="analisi_ssh"
@@ -27,6 +25,12 @@ SOGLIA_ALTA=10     # sopra 10 = pericolo alto
 SOGLIA_MEDIA=5     # tra 5 e 10 = pericolo medio
 SOGLIA_BASSA=2     # tra 2 e 5 = pericolo basso
 
+# Colori
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
 # se chiamo lo script con "sblocca" entro in questa modalità
 if [ "$1" = "sblocca" ]; then
     # serve sudo per usare iptables
@@ -34,14 +38,23 @@ if [ "$1" = "sblocca" ]; then
     [ ! -f "$BLOCKED_FILE" ] && echo "Nessun IP bloccato" && exit 0
 
     if [ "$2" = "tutti" ]; then
+        # Conta quanti IP devo sbloccare
+        TOTALE=$(wc -l < "$BLOCKED_FILE")
+        
+        echo "🔓 Sblocco IP in corso..."
+        echo ""
+        
         # sblocco tutti gli IP nel file
-        # awk estrae la colonna 3 (l'IP), poi per ognuno rimuovo la regola iptables
-        awk '{print $3}' "$BLOCKED_FILE" | while read IP; do
-            iptables -D INPUT -s "$IP" -j DROP 2>/dev/null
-            echo "Sbloccato: $IP"
+        # awk estrae la colonna 2 (l'IP nel nuovo formato)
+        awk '{print $2}' "$BLOCKED_FILE" | while read IP; do
+            if [ -n "$IP" ]; then
+                iptables -D INPUT -s "$IP" -j DROP 2>/dev/null
+                echo "✓ Sbloccato: $IP"
+            fi
         done
         > "$BLOCKED_FILE"  # svuoto il file
-        echo "Tutti gli IP sbloccati"
+        echo ""
+        echo "✅ Tutti gli IP sbloccati ($TOTALE totali)"
     elif [ -n "$2" ]; then
         # sblocco solo l'IP specifico passato come parametro
         # grep -q cerca in silenzio (quiet), ritorna 0 se trova, 1 se non trova
@@ -50,15 +63,21 @@ if [ "$1" = "sblocca" ]; then
             iptables -D INPUT -s "$2" -j DROP 2>/dev/null
             # grep -v esclude le righe che contengono l'IP (v = inVert match)
             grep -v "$2" "$BLOCKED_FILE" > "$BLOCKED_FILE.tmp" && mv "$BLOCKED_FILE.tmp" "$BLOCKED_FILE"
-            echo "Sbloccato: $2"
+            echo "✓ Sbloccato: $2"
         else
-            echo "IP non trovato nella lista"
+            echo "❌ IP $2 non trovato nella lista"
         fi
     else
         # se non specifico cosa sbloccare, mostro la lista
         echo "Uso: sudo ./Domanda9.sh sblocca [IP|tutti]"
+        echo ""
+        echo "IP attualmente bloccati:"
         # cat stampa il contenuto del file a schermo
-        cat "$BLOCKED_FILE"
+        if [ -s "$BLOCKED_FILE" ]; then
+            cat "$BLOCKED_FILE" | nl
+        else
+            echo "  Nessun IP bloccato"
+        fi
     fi
     exit 0
 fi
@@ -110,24 +129,45 @@ NUM_BASSO=$(wc -l < "$TMP/basso.txt")
 grep -oE "user [a-zA-Z0-9_-]+|for [a-zA-Z0-9_-]+ from" "$TMP/falliti.log" | \
     awk '{print $2}' | grep -v "^from$" | sort | uniq -c | sort -rn | head -10 > "$TMP/utenti.txt"
 
+# Verifica se posso usare iptables
+POSSO_BLOCCARE=false
+if [ "$EUID" -eq 0 ] && command -v iptables >/dev/null 2>&1; then
+    POSSO_BLOCCARE=true
+fi
+
+echo "🔧 Debug: POSSO_BLOCCARE=$POSSO_BLOCCARE"
+echo "🔧 Debug: Sono root? EUID=$EUID"
+echo "🔧 Debug: iptables disponibile? $(command -v iptables)"
+echo ""
+
 # blocco automaticamente gli IP che superano la soglia
-awk -v s="$SOGLIA_BLOCCO" '$1 > s {print $2}' "$TMP/ip_count.txt" > "$TMP/da_bloccare.txt"
+# >= invece di > perché voglio bloccare DA 5 in su, non da 6
+awk -v s="$SOGLIA_BLOCCO" '$1 >= s {print $2}' "$TMP/ip_count.txt" > "$TMP/da_bloccare.txt"
+echo "🔧 Debug: IP da bloccare (soglia >=$SOGLIA_BLOCCO):"
+cat "$TMP/da_bloccare.txt"
+echo ""
 BLOCCATI_ORA=0
 
-if [ "$POSSO_BLOCCARE" = true ] && [ -s "$TMP/da_bloccare.txt" ]; then
+# Scrivo sempre nel file ip_bloccati.txt, anche se non posso usare iptables
+if [ -s "$TMP/da_bloccare.txt" ]; then
     touch "$BLOCKED_FILE"
     while read IP; do
-        # iptables -L lista le regole, grep -q cerca in silenzio
-        # controllo se l'ho già bloccato prima (così non lo blocco due volte)
-        if ! iptables -L INPUT -n | grep -q "$IP"; then
-            TENTATIVI=$(grep " $IP$" "$TMP/ip_count.txt" | awk '{print $1}')
-            # iptables -A INPUT -s IP -j DROP = blocca tutto il traffico da quell'IP
-            iptables -A INPUT -s "$IP" -j DROP
-            # salvo nel file per ricordarmi chi ho bloccato
-            echo "$(date '+%Y-%m-%d %H:%M:%S') - $IP - $TENTATIVI tentativi" >> "$BLOCKED_FILE"
-            echo "Bloccato: $IP ($TENTATIVI tentativi)"
-            BLOCCATI_ORA=$((BLOCCATI_ORA + 1))
+        TENTATIVI=$(grep " $IP$" "$TMP/ip_count.txt" | awk '{print $1}')
+        
+        # Se posso usare iptables, blocco anche nel firewall
+        if [ "$POSSO_BLOCCARE" = true ]; then
+            # Controllo se l'ho già bloccato prima
+            if ! iptables -L INPUT -n | grep -q "$IP"; then
+                iptables -A INPUT -s "$IP" -j DROP 2>/dev/null
+                echo "🔒 Bloccato con iptables: $IP ($TENTATIVI tentativi)"
+            fi
+        else
+            echo "📝 Registrato (iptables non disponibile): $IP ($TENTATIVI tentativi)"
         fi
+        
+        # Salvo sempre nel file per tracciare
+        echo "$(date '+%Y-%m-%d %H:%M:%S') $IP $TENTATIVI tentativi" >> "$BLOCKED_FILE"
+        BLOCCATI_ORA=$((BLOCCATI_ORA + 1))
     done < "$TMP/da_bloccare.txt"
 fi
 
@@ -173,14 +213,15 @@ fi
     cat "$TMP/utenti.txt"
     echo ""
     
-    echo "IP CONSIGLIATI PER BLOCCO (≥$SOGLIA_BLOCCO tentativi)"
+    echo "IP BLOCCATI AUTOMATICAMENTE (≥$SOGLIA_BLOCCO tentativi)"
     echo "───────────────────────────────────────────────────────"
     if [ -s "$TMP/da_bloccare.txt" ]; then
         cat "$TMP/da_bloccare.txt"
         echo ""
-        echo "💡 In Codespaces iptables non è disponibile."
-        echo "   Per bloccare questi IP nel tuo firewall personale, usa:"
-        echo "   sudo iptables -A INPUT -s [IP] -j DROP"
+        if [ "$POSSO_BLOCCARE" = false ]; then
+            echo "💡 Per bloccare questi IP nel tuo firewall, usa:"
+            echo "   sudo iptables -A INPUT -s [IP] -j DROP"
+        fi
     else
         echo "Nessuno"
     fi
@@ -191,11 +232,6 @@ fi
     tail -20 "$TMP/falliti.log"
     
 } > "$OUTPUT_FILE"
-
-# Salva anche la lista di IP da bloccare
-if [ -s "$TMP/da_bloccare.txt" ]; then
-    cat "$TMP/da_bloccare.txt" > "$BLOCKED_FILE"
-fi
 
 # Mostra il riepilogo
 echo ""
@@ -208,10 +244,16 @@ echo "   Tentativi falliti: $NUM_FALLITI"
 echo "   🔴 Pericolo ALTO:  $NUM_ALTO IP"
 echo "   🟠 Pericolo MEDIO: $NUM_MEDIO IP"
 echo "   🟡 Pericolo BASSO: $NUM_BASSO IP"
+
+if [ "$BLOCCATI_ORA" -gt 0 ]; then
+    echo ""
+    echo -e "${RED}🔒 IP bloccati in questa esecuzione: $BLOCCATI_ORA${NC}"
+fi
+
 echo ""
 
 if [ -s "$TMP/da_bloccare.txt" ]; then
-    echo -e "${RED}⚠️  IP CONSIGLIATI PER BLOCCO:${NC}"
+    echo -e "${YELLOW}⚠️  IP che superano soglia di blocco ($SOGLIA_BLOCCO tentativi):${NC}"
     cat "$TMP/da_bloccare.txt" | sed 's/^/   - /'
     echo ""
 fi

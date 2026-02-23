@@ -1,0 +1,86 @@
+REPORT ANALISI TENTATIVI SSH
+═══════════════════════════════════════════════════════
+Data: 23/02/2026 alle 12:06:04
+File: auth.log
+
+RIEPILOGO
+───────────────────────────────────────────────────────
+Righe totali:      49
+Tentativi falliti: 50
+Accessi riusciti:  0
+0
+
+CLASSIFICAZIONE IP
+───────────────────────────────────────────────────────
+🔴 ALTO   (>10 tentativi):  0 IP
+🟠 MEDIO  (5-10 tentativi): 6 IP
+🟡 BASSO  (2-4 tentativi): 5 IP
+
+IP PERICOLO ALTO (⚠️  ATTENZIONE!)
+───────────────────────────────────────────────────────
+Nessuno
+
+IP PERICOLO MEDIO (⚠️  MONITORARE)
+───────────────────────────────────────────────────────
+7     tentativi - IP: 123.60.115.87
+7     tentativi - IP: 103.99.0.122
+6     tentativi - IP: 61.177.172.28
+6     tentativi - IP: 159.65.77.142
+5     tentativi - IP: 45.142.212.61
+5     tentativi - IP: 178.128.83.165
+
+IP PERICOLO BASSO (⚠️  OSSERVARE)
+───────────────────────────────────────────────────────
+3     tentativi - IP: 203.0.113.45
+2     tentativi - IP: 91.203.5.146
+2     tentativi - IP: 198.51.100.23
+2     tentativi - IP: 192.0.2.67
+2     tentativi - IP: 185.220.101.42
+
+TOP 10 UTENTI ATTACCATI
+───────────────────────────────────────────────────────
+     11 root
+      6 admin
+      5 test
+      4 ubuntu
+      3 user
+      3 postgres
+      3 pi
+      3 oracle
+      3 mysql
+      3 guest
+
+IP BLOCCATI AUTOMATICAMENTE (≥5 tentativi)
+───────────────────────────────────────────────────────
+123.60.115.87
+103.99.0.122
+61.177.172.28
+159.65.77.142
+45.142.212.61
+178.128.83.165
+
+💡 Per bloccare questi IP nel tuo firewall, usa:
+   sudo iptables -A INPUT -s [IP] -j DROP
+
+ULTIMI 20 TENTATIVI FALLITI
+───────────────────────────────────────────────────────
+Feb 14 22:34:56 hostname sshd[47123]: Failed password for invalid user guest from 192.0.2.67 port 46123 ssh2
+Feb 14 22:34:59 hostname sshd[47125]: Failed password for root from 192.0.2.67 port 46124 ssh2
+Feb 14 23:45:12 hostname sshd[48234]: Failed password for invalid user ubuntu from 185.220.101.42 port 48765 ssh2
+Feb 14 23:45:15 hostname sshd[48236]: Failed password for root from 185.220.101.42 port 48766 ssh2
+Feb 15 00:56:33 hostname sshd[49345]: Failed password for invalid user test from 91.203.5.146 port 49234 ssh2
+Feb 15 00:56:36 hostname sshd[49347]: Failed password for root from 91.203.5.146 port 49235 ssh2
+Feb 15 02:08:45 hostname sshd[50123]: Failed password for invalid user admin from 123.60.115.87 port 51876 ssh2
+Feb 15 02:08:48 hostname sshd[50125]: Failed password for root from 123.60.115.87 port 51877 ssh2
+Feb 15 02:08:51 hostname sshd[50127]: Invalid user oracle from 123.60.115.87 port 51878
+Feb 15 02:08:54 hostname sshd[50129]: Failed password for invalid user postgres from 123.60.115.87 port 51879 ssh2
+Feb 15 02:08:57 hostname sshd[50131]: Failed password for invalid user mysql from 123.60.115.87 port 51880 ssh2
+Feb 15 02:09:00 hostname sshd[50133]: Disconnected from 123.60.115.87 port 51881 [preauth]
+Feb 15 02:09:03 hostname sshd[50135]: Failed password for invalid user user from 123.60.115.87 port 51882 ssh2
+Feb 15 03:19:22 hostname sshd[51245]: Failed password for invalid user ubuntu from 159.65.77.142 port 50234 ssh2
+Feb 15 03:19:25 hostname sshd[51247]: Failed password for root from 159.65.77.142 port 50235 ssh2
+Feb 15 03:19:28 hostname sshd[51249]: Invalid user admin from 159.65.77.142 port 50236
+Feb 15 03:19:31 hostname sshd[51251]: Failed password for invalid user guest from 159.65.77.142 port 50237 ssh2
+Feb 15 03:19:34 hostname sshd[51253]: Failed password for invalid user pi from 159.65.77.142 port 50238 ssh2
+Feb 15 03:19:37 hostname sshd[51255]: Connection closed by 159.65.77.142 port 50239 [preauth]
+Feb 15 03:19:40 hostname sshd[51257]: Failed password for invalid user test from 159.65.77.142 port 50240 ssh2
