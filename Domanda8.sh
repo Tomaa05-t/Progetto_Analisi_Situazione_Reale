@@ -248,19 +248,31 @@ cerca_utente() {
         rm -f "$TMP_CSV"
         return 1
     fi
+    
+    # Rilevo automaticamente il separatore dal CSV
+    # Controllo se usa ; o ,
+    if grep -q ';' "$TMP_CSV"; then
+        SEP=';'
+    else
+        SEP=','
+    fi
+    
+    echo "📋 Debug: Separatore rilevato: '$SEP'"
+    echo "📋 Debug: Prime 3 righe del file:"
+    head -n 3 "$TMP_CSV"
 
     # uso awk per cercare nel backup
-    # -F';' usa il punto e virgola come separatore (il CSV usa ;)
+    # -F usa il separatore rilevato automaticamente
     # -v v="$VALORE" passa il valore cercato ad awk
     # NR>1 salta l'header (Number of Record > 1)
-    # $N==v confronta la colonna N con il valore cercato
+    # Uso index() per ricerca parziale invece di == per ricerca esatta
     RISULTATI=""
     case $TIPO in
-        1) RISULTATI=$(awk -F';' -v v="$VALORE" 'NR>1 && $1==v {print}' "$TMP_CSV") ;;  # ID
-        2) RISULTATI=$(awk -F';' -v v="$VALORE" 'NR>1 && $2==v {print}' "$TMP_CSV") ;;  # Nome
-        3) RISULTATI=$(awk -F';' -v v="$VALORE" 'NR>1 && $3==v {print}' "$TMP_CSV") ;;  # Cognome
-        4) RISULTATI=$(awk -F';' -v v="$VALORE" 'NR>1 && $5==v {print}' "$TMP_CSV") ;;  # Email
-        5) RISULTATI=$(awk -F';' -v v="$VALORE" 'NR>1 && $6==v {print}' "$TMP_CSV") ;;  # Sport
+        1) RISULTATI=$(awk -F"$SEP" -v v="$VALORE" 'NR>1 && index($1, v) {print}' "$TMP_CSV") ;;  # ID
+        2) RISULTATI=$(awk -F"$SEP" -v v="$VALORE" 'NR>1 && index(tolower($2), tolower(v)) {print}' "$TMP_CSV") ;;  # Nome
+        3) RISULTATI=$(awk -F"$SEP" -v v="$VALORE" 'NR>1 && index(tolower($3), tolower(v)) {print}' "$TMP_CSV") ;;  # Cognome
+        4) RISULTATI=$(awk -F"$SEP" -v v="$VALORE" 'NR>1 && index(tolower($5), tolower(v)) {print}' "$TMP_CSV") ;;  # Email
+        5) RISULTATI=$(awk -F"$SEP" -v v="$VALORE" 'NR>1 && index(tolower($6), tolower(v)) {print}' "$TMP_CSV") ;;  # Sport
         *) echo -e "${RED}Scelta non valida${NC}"; rm -f "$TMP_CSV"; return 1 ;;
     esac
 
@@ -285,8 +297,8 @@ cerca_utente() {
         
         echo -e "${GREEN}✓ Trovato!${NC}"
         echo ""
-        # awk formatta i dati in modo leggibile
-        echo "$RISULTATI" | awk -F';' '{
+        # awk formatta i dati in modo leggibile usando il separatore corretto
+        echo "$RISULTATI" | awk -F"$SEP" '{
             print "ID:    "$1
             print "Nome:  "$2" "$3
             print "Email: "$5
@@ -299,8 +311,8 @@ cerca_utente() {
         
         echo -e "${GREEN}✓ Trovati $NUM utenti${NC}"
         echo ""
-        # awk formatta e numera automaticamente con NR
-        echo "$RISULTATI" | awk -F';' '{printf "%2d. %s | %s %s | %s\n", NR, $1, $2, $3, $5}'
+        # awk formatta e numera automaticamente con NR usando il separatore corretto
+        echo "$RISULTATI" | awk -F"$SEP" '{printf "%2d. %s | %s %s | %s\n", NR, $1, $2, $3, $5}'
     fi
     
     echo ""
@@ -419,12 +431,129 @@ if [ $# -gt 0 ]; then
             vedi_backup
             exit $?
             ;;
+        "list-numbered")
+            # Lista backup con indici numerici (utile per Streamlit)
+            BACKUPS=($(ls -t "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz 2>/dev/null))
+            
+            if [ ${#BACKUPS[@]} -eq 0 ]; then
+                echo "0"  # Nessun backup
+                exit 0
+            fi
+            
+            for i in "${!BACKUPS[@]}"; do
+                FILENAME=$(basename "${BACKUPS[$i]}")
+                SIZE=$(du -h "${BACKUPS[$i]}" | cut -f1)
+                
+                if [[ "$FILENAME" =~ centro_sportivo_backup_([0-9]{8})_([0-9]{6})\.tar\.gz ]]; then
+                    DATA="${BASH_REMATCH[1]}"
+                    ORA="${BASH_REMATCH[2]}"
+                    echo "$((i+1))|${DATA:6:2}/${DATA:4:2}/${DATA:0:4}|${ORA:0:2}:${ORA:2:2}|$SIZE"
+                fi
+            done
+            exit 0
+            ;;
         "stats")
             statistiche
             exit $?
             ;;
+        "search")
+            # Uso: ./Domanda8.sh search <backup_index> <tipo_ricerca> <valore>
+            # Esempio: ./Domanda8.sh search 1 2 "Mario"
+            # tipo_ricerca: 1=ID, 2=Nome, 3=Cognome, 4=Email, 5=Sport
+            
+            if [ $# -lt 4 ]; then
+                echo -e "${RED}Uso: $0 search <backup_index> <tipo> <valore>${NC}"
+                echo "Tipo: 1=ID, 2=Nome, 3=Cognome, 4=Email, 5=Sport"
+                exit 1
+            fi
+            
+            BACKUP_INDEX=$2
+            TIPO=$3
+            VALORE=$4
+            
+            BACKUPS=($(ls -t "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz 2>/dev/null))
+            
+            if [ ${#BACKUPS[@]} -eq 0 ]; then
+                echo -e "${YELLOW}⚠️  Nessun backup disponibile${NC}"
+                exit 1
+            fi
+            
+            if [ "$BACKUP_INDEX" -lt 1 ] || [ "$BACKUP_INDEX" -gt ${#BACKUPS[@]} ]; then
+                echo -e "${RED}Indice backup non valido${NC}"
+                exit 1
+            fi
+            
+            BACKUP_SCELTO="${BACKUPS[$((BACKUP_INDEX-1))]}"
+            
+            echo "🔍 Cerco '$VALORE' nel backup $BACKUP_INDEX..."
+            
+            TMP_CSV="/tmp/backup_search_$$.csv"
+            tar -xzf "$BACKUP_SCELTO" -O > "$TMP_CSV" 2>/dev/null
+            
+            if [ ! -f "$TMP_CSV" ] || [ ! -s "$TMP_CSV" ]; then
+                echo -e "${RED}Errore nell'estrazione del backup${NC}"
+                rm -f "$TMP_CSV"
+                exit 1
+            fi
+            
+            HEADER=$(head -n 1 "$TMP_CSV")
+            
+            if grep -q ';' "$TMP_CSV"; then
+                SEP=';'
+            else
+                SEP=','
+            fi
+            
+            RISULTATI=""
+            case $TIPO in
+                1) RISULTATI=$(awk -F"$SEP" -v v="$VALORE" 'NR>1 && index($1, v) {print}' "$TMP_CSV") ;;
+                2) RISULTATI=$(awk -F"$SEP" -v v="$VALORE" 'NR>1 && index(tolower($2), tolower(v)) {print}' "$TMP_CSV") ;;
+                3) RISULTATI=$(awk -F"$SEP" -v v="$VALORE" 'NR>1 && index(tolower($3), tolower(v)) {print}' "$TMP_CSV") ;;
+                4) RISULTATI=$(awk -F"$SEP" -v v="$VALORE" 'NR>1 && index(tolower($5), tolower(v)) {print}' "$TMP_CSV") ;;
+                5) RISULTATI=$(awk -F"$SEP" -v v="$VALORE" 'NR>1 && index(tolower($6), tolower(v)) {print}' "$TMP_CSV") ;;
+                *) echo -e "${RED}Tipo ricerca non valido${NC}"; rm -f "$TMP_CSV"; exit 1 ;;
+            esac
+            
+            if [ -z "$RISULTATI" ]; then
+                echo -e "${YELLOW}❌ Nessun risultato trovato per '$VALORE'${NC}"
+                rm -f "$TMP_CSV"
+                exit 1
+            fi
+            
+            [[ "$BACKUP_SCELTO" =~ centro_sportivo_backup_([0-9]{8}) ]] && DATA="${BASH_REMATCH[1]}" || DATA=$(date +"%Y%m%d")
+            NUM=$(echo "$RISULTATI" | wc -l)
+            
+            if [ "$NUM" -eq 1 ]; then
+                OUTPUT_FILE="utente_ripristinato_${DATA}.csv"
+                echo "$HEADER" > "$OUTPUT_FILE"
+                echo "$RISULTATI" >> "$OUTPUT_FILE"
+                
+                echo -e "${GREEN}✓ Trovato 1 utente${NC}"
+                echo ""
+                echo "$RISULTATI" | awk -F"$SEP" '{
+                    print "ID:    "$1
+                    print "Nome:  "$2" "$3
+                    print "Email: "$5
+                    print "Sport: "$6
+                }'
+            else
+                OUTPUT_FILE="utenti_trovati_${DATA}.csv"
+                echo "$HEADER" > "$OUTPUT_FILE"
+                echo "$RISULTATI" >> "$OUTPUT_FILE"
+                
+                echo -e "${GREEN}✓ Trovati $NUM utenti${NC}"
+                echo ""
+                echo "$RISULTATI" | awk -F"$SEP" '{printf "%2d. %s | %s %s | %s\n", NR, $1, $2, $3, $5}'
+            fi
+            
+            echo ""
+            echo "📄 Salvati in: $OUTPUT_FILE"
+            
+            rm -f "$TMP_CSV"
+            exit 0
+            ;;
         *)
-            echo "Uso: $0 [backup|list|stats]"
+            echo "Uso: $0 [backup|list|stats|search]"
             exit 1
             ;;
     esac

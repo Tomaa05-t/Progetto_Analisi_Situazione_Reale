@@ -131,7 +131,7 @@ def execute_domanda8(azione, backup_idx=None, tipo_ricerca=None, valore_ricerca=
             
             backup_scelto = backups[backup_idx]
             
-            st.info(f"🔍 Cerco '{valore_ricerca}'...")
+            st.info(f"🔍 Cerco '{valore_ricerca}' nel campo '{tipo_ricerca}'...")
             
             try:
                 with tarfile.open(backup_scelto, "r:gz") as tar:
@@ -142,6 +142,13 @@ def execute_domanda8(azione, backup_idx=None, tipo_ricerca=None, valore_ricerca=
                     
                     lines = f.read().decode('utf-8').split('\n')
                     header = lines[0]
+                    
+                    # DEBUG: Mostra info sul file
+                    st.write(f"📋 **Debug Info:**")
+                    st.write(f"- Totale righe nel backup: {len(lines)}")
+                    st.write(f"- Header: `{header}`")
+                    st.write(f"- Prima riga dati: `{lines[1] if len(lines) > 1 else 'Nessuna'}`")
+                    
                     risultati = []
                     
                     tipo_map = {"ID": 0, "Nome": 1, "Cognome": 2, "Email": 4, "Sport": 5}
@@ -151,15 +158,34 @@ def execute_domanda8(azione, backup_idx=None, tipo_ricerca=None, valore_ricerca=
                         st.error("❌ Tipo ricerca non valido")
                         return False
                     
+                    st.write(f"- Cerco nella colonna index: {col_idx}")
+                    
+                    # Converti il valore cercato in minuscolo per ricerca case-insensitive
+                    valore_lower = valore_ricerca.lower()
+                    
+                    righe_valide = 0
                     for line in lines[1:]:
                         if not line.strip():
                             continue
+                        righe_valide += 1
                         parts = line.split(';')
-                        if len(parts) > col_idx and parts[col_idx] == valore_ricerca:
-                            risultati.append(line)
+                        
+                        # DEBUG: Mostra alcune righe
+                        if righe_valide <= 3:
+                            st.write(f"- Riga {righe_valide}: {len(parts)} colonne - Colonna {col_idx}: `{parts[col_idx] if len(parts) > col_idx else 'N/A'}`")
+                        
+                        if len(parts) > col_idx:
+                            # Ricerca parziale case-insensitive
+                            campo_valore = parts[col_idx].lower()
+                            if valore_lower in campo_valore:
+                                risultati.append(line)
+                    
+                    st.write(f"- Righe valide analizzate: {righe_valide}")
+                    st.write(f"- Risultati trovati: {len(risultati)}")
                     
                     if not risultati:
                         st.warning(f"❌ Nessun risultato trovato per '{valore_ricerca}'")
+                        st.info("💡 Suggerimento: Prova a cercare con meno lettere (es. 'mar' invece di 'Mario')")
                         return False
                     
                     date_str = backup_scelto.stem.split("_")[-2]
@@ -170,7 +196,7 @@ def execute_domanda8(azione, backup_idx=None, tipo_ricerca=None, valore_ricerca=
                             f.write(header + '\n')
                             f.write(risultati[0] + '\n')
                         
-                        st.success(f"✅ Trovato!")
+                        st.success(f"✅ Trovato 1 utente!")
                         parts = risultati[0].split(';')
                         st.write(f"**ID:** {parts[0] if len(parts) > 0 else 'N/A'}")
                         st.write(f"**Nome:** {parts[1] if len(parts) > 1 else 'N/A'} {parts[2] if len(parts) > 2 else 'N/A'}")
@@ -193,6 +219,8 @@ def execute_domanda8(azione, backup_idx=None, tipo_ricerca=None, valore_ricerca=
                     return True
             except Exception as e:
                 st.error(f"❌ Errore: {str(e)}")
+                import traceback
+                st.code(traceback.format_exc())
                 return False
         
         elif azione == "stats":
@@ -417,78 +445,73 @@ if st.session_state.selected_option is not None:
                 execute_domanda8("lista")
         
         elif azione == "ripristina":
-            if st.button("📋 Carica Lista Backup", use_container_width=True, key="btn_carica_lista"):
-                # Prima mostra la lista
-                from pathlib import Path
-                BACKUP_DIR = Path("./backups")
-                backups = sorted(BACKUP_DIR.glob("centro_sportivo_backup_*.tar.gz"), reverse=True)
+            from pathlib import Path
+            BACKUP_DIR = Path("./backups")
+            backups = sorted(BACKUP_DIR.glob("centro_sportivo_backup_*.tar.gz"), reverse=True)
+            
+            if not backups:
+                st.warning("⚠️ Nessun backup disponibile")
+            else:
+                backup_options = {}
+                for i, backup in enumerate(backups):
+                    name_parts = backup.stem.split("_")
+                    date_str = name_parts[-2]
+                    time_str = name_parts[-1]
+                    if len(date_str) == 8:
+                        formatted_date = f"{date_str[6:8]}/{date_str[4:6]}/{date_str[0:4]}"
+                        formatted_time = f"{time_str[0:2]}:{time_str[2:4]}:{time_str[4:6]}"
+                        backup_options[i] = f"{formatted_date} alle {formatted_time}"
                 
-                if backups:
-                    backup_options = {}
-                    for i, backup in enumerate(backups):
-                        name_parts = backup.stem.split("_")
-                        date_str = name_parts[-2]
-                        time_str = name_parts[-1]
-                        if len(date_str) == 8:
-                            formatted_date = f"{date_str[6:8]}/{date_str[4:6]}/{date_str[0:4]}"
-                            formatted_time = f"{time_str[0:2]}:{time_str[2:4]}:{time_str[4:6]}"
-                            backup_options[i] = f"{formatted_date} alle {formatted_time}"
-                    
-                    selected_backup = st.selectbox(
-                        "Seleziona backup da ripristinare:",
-                        options=list(backup_options.keys()),
-                        format_func=lambda x: backup_options[x],
-                        key="ripristina_backup_select"
-                    )
-                    
-                    if st.button("📥 Ripristina", use_container_width=True, key="btn_ripristina"):
-                        execute_domanda8("ripristina", backup_idx=selected_backup)
-                else:
-                    st.warning("⚠️ Nessun backup disponibile")
+                selected_backup = st.selectbox(
+                    "Seleziona backup da ripristinare:",
+                    options=list(backup_options.keys()),
+                    format_func=lambda x: backup_options[x],
+                    key="ripristina_backup_select"
+                )
+                
+                if st.button("📥 Ripristina", use_container_width=True, key="btn_ripristina"):
+                    execute_domanda8("ripristina", backup_idx=selected_backup)
         
         elif azione == "cerca":
-            if st.button("📋 Carica Lista Backup", use_container_width=True, key="btn_carica_lista_cerca"):
-                from pathlib import Path
-                BACKUP_DIR = Path("./backups")
-                backups = sorted(BACKUP_DIR.glob("centro_sportivo_backup_*.tar.gz"), reverse=True)
+            from pathlib import Path
+            BACKUP_DIR = Path("./backups")
+            backups = sorted(BACKUP_DIR.glob("centro_sportivo_backup_*.tar.gz"), reverse=True)
+            
+            if not backups:
+                st.warning("⚠️ Nessun backup disponibile")
+            else:
+                backup_options = {}
+                for i, backup in enumerate(backups):
+                    name_parts = backup.stem.split("_")
+                    date_str = name_parts[-2]
+                    time_str = name_parts[-1]
+                    if len(date_str) == 8:
+                        formatted_date = f"{date_str[6:8]}/{date_str[4:6]}/{date_str[0:4]}"
+                        formatted_time = f"{time_str[0:2]}:{time_str[2:4]}:{time_str[4:6]}"
+                        backup_options[i] = f"{formatted_date} alle {formatted_time}"
                 
-                if backups:
-                    backup_options = {}
-                    for i, backup in enumerate(backups):
-                        name_parts = backup.stem.split("_")
-                        date_str = name_parts[-2]
-                        time_str = name_parts[-1]
-                        if len(date_str) == 8:
-                            formatted_date = f"{date_str[6:8]}/{date_str[4:6]}/{date_str[0:4]}"
-                            formatted_time = f"{time_str[0:2]}:{time_str[2:4]}:{time_str[4:6]}"
-                            backup_options[i] = f"{formatted_date} alle {formatted_time}"
-                    
-                    with st.form("domanda8_cerca_form"):
-                        selected_backup = st.selectbox(
-                            "Seleziona backup:",
-                            options=list(backup_options.keys()),
-                            format_func=lambda x: backup_options[x],
-                            key="cerca_backup_select"
-                        )
-                        
-                        tipo = st.radio(
-                            "Cerca per:",
-                            ["ID", "Nome", "Cognome", "Email", "Sport"],
-                            key="tipo_ricerca"
-                        )
-                        
-                        valore = st.text_input("Cosa cerchi?", key="valore_ricerca")
-                        
-                        submitted = st.form_submit_button("🔍 Cerca", use_container_width=True)
-                        
-                        if submitted:
-                            if valore:
-                                execute_domanda8("cerca", backup_idx=selected_backup, 
-                                               tipo_ricerca=tipo, valore_ricerca=valore)
-                            else:
-                                st.error("❌ Inserisci un valore da cercare")
-                else:
-                    st.warning("⚠️ Nessun backup disponibile")
+                # NON usare form - causa reset dello stato
+                selected_backup = st.selectbox(
+                    "Seleziona backup:",
+                    options=list(backup_options.keys()),
+                    format_func=lambda x: backup_options[x],
+                    key="cerca_backup_select"
+                )
+                
+                tipo = st.radio(
+                    "Cerca per:",
+                    ["ID", "Nome", "Cognome", "Email", "Sport"],
+                    key="tipo_ricerca"
+                )
+                
+                valore = st.text_input("Cosa cerchi?", key="valore_ricerca")
+                
+                if st.button("🔍 Cerca", use_container_width=True, key="btn_cerca_utente"):
+                    if valore:
+                        execute_domanda8("cerca", backup_idx=selected_backup, 
+                                       tipo_ricerca=tipo, valore_ricerca=valore)
+                    else:
+                        st.error("❌ Inserisci un valore da cercare")
         
         elif azione == "stats":
             if st.button("📊 Mostra Statistiche", use_container_width=True, key="btn_stats"):
