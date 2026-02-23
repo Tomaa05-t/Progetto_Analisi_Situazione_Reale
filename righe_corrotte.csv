@@ -1,2 +1,4 @@
 ID;Nome;Cognome;Data_Nascita;Email;Sport;Abbonamento;Scadenza_Certificato;Ultimo_Accesso;Scadenza_Abbonamento;Ban
 1;;Moretti;1988-09-25;riccardo.moretti93@outlook.it;piscina;Mensile;2028-09-30;2025-10-13;2028-11-03;NO
+400;Chiara;Marino;2007-12-03;chiara.marino64@icloud.com;piscina;Semestrale;2028-06-30;2026-02-02;2026-11-05;NO401;Sara;Moretti;1955-12-04;sara.moretti32@outlook.it;laestra;Mensile;2026-09-09;2025-03-08;2025-09-17;NO
+;;;;;;;;
