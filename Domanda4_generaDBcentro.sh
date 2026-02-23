@@ -23,22 +23,31 @@ fi
 echo "Inserisci lo Sport per questo file (es. Piscina):"
 read SPORT_NOME
 
+
+# Prendiamo l'ultima riga, estraiamo il primo campo (ID) e verifichiamo che sia un numero
+ULTIMO_ID=$(tail -n 1 "$DATABASE_FINALE" | cut -d';' -f1)
+
+# Se il database ha solo l'header o l'ID non è un numero, partiamo da 0
+if [[ ! "$ULTIMO_ID" =~ ^[0-9]+$ ]]; then
+    CONTATORE_ID=0
+else
+    CONTATORE_ID=$ULTIMO_ID
+fi
+
 echo "Importazione in corso..."
 
-# tail -n +2 salta la prima riga (header), il while processa una riga alla volta
-    tail -n +2 "$FILE_SORGENTE" | while read -r riga; do
-        #Pulizia dai caratteri invisibili di Windows, x non avevre problemi di formattazione (\r)
-        riga_pulita=$(echo "$riga" | tr -d '\r')
+# tail -n +2 salta la prima riga (header)
+tail -n +2 "$FILE_SORGENTE" | while read -r riga; do
+#Pulizia dai caratteri invisibili di Windows, x non avevre problemi di formattazione (\r)
+    riga_pulita=$(echo "$riga" | tr -d '\r')
 
-        if [ ! -z "$riga_pulita" ]; then #controlla che la riga non sia vuota
+    if [ ! -z "$riga_pulita" ]; then #riga vuota?
+        # Incrementiamo l'ID per ogni riga valida
+        ((CONTATORE_ID++))
 
-            # controlla se l'ID esiste già
-            if grep -q "^${ID};" "$DATABASE_FINALE"; then
-                echo "Errore: ID $ID già presente, salto la riga."
-            else
-                # smontaggio della riga originale (usando il punto e virgola come separatore)         
-                ID=$(echo "$riga_pulita" | cut -d',' -f1) #-d: quale è il delimitatore
-                NOME=$(echo "$riga_pulita" | cut -d',' -f2)
+         # smontaggio della riga originale (usando il punto e virgola come separatore)         
+         
+                NOME=$(echo "$riga_pulita" | cut -d',' -f2) #-d: quale è il delimitatore
                 COGNOME=$(echo "$riga_pulita" | cut -d',' -f3)
                 NASCITA=$(echo "$riga_pulita" | cut -d',' -f4)
                 EMAIL=$(echo "$riga_pulita" | cut -d',' -f5)
@@ -48,8 +57,8 @@ echo "Importazione in corso..."
                 SCAD_ABBO=$(echo "$riga_pulita" | cut -d',' -f9)
 
                 # rimontaggio della riga nell'ordine richiesto
-                echo "${ID};${NOME};${COGNOME};${NASCITA};${EMAIL};${SPORT_NOME};${ABBONAMENTO};${CERTIFICATO};${ACCESSO};${SCAD_ABBO};NO" >> "$DATABASE_FINALE"
-            fi
+                echo "${CONTATORE_ID};${NOME};${COGNOME};${NASCITA};${EMAIL};${SPORT_NOME};${ABBONAMENTO};${CERTIFICATO};${ACCESSO};${SCAD_ABBO};NO" >> "$DATABASE_FINALE"
+            
 
         fi
     done
