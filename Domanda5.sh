@@ -2,7 +2,7 @@
 
 # Usiamo localhost per il test, simulando l'IP del termostato
 TARGET_IP="127.0.0.1" 
-PORTA_SERVIZIO=22  # Usiamo la porta SSH che abbiamo attivato per l'altro problema
+PORTA_SERVIZIO=22  # Usiamo la porta SSH per simulare il servizio web
 LOG_FILE="log_manutenzione.txt"
 
 echo "--- DIAGNOSTICA TERMOSTATO PISCINA ---"
