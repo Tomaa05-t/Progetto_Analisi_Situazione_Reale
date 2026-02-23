@@ -1,9 +1,10 @@
 #!/bin/bash
 # Domanda9.sh - Analisi attacchi SSH
-# Alessandro - 2026
-#
 # Analizza auth.log e blocca automaticamente gli IP con troppi tentativi
-#
+# Uso:
+#   sudo ./Domanda9.sh                 -> analizza e blocca
+#   sudo ./Domanda9.sh sblocca 1.2.3.4 -> sblocca un IP
+#   sudo ./Domanda9.sh sblocca tutti   -> sblocca tutti
 # NOTA SU IPTABLES:
 # iptables è il firewall di Linux che controlla il traffico di rete
 # -A INPUT = Aggiungi regola alla catena INPUT (traffico in entrata)
@@ -12,14 +13,12 @@
 # -s IP    = specifica l'IP sorgente (source)
 # -j DROP  = azione: DROP scarta i pacchetti senza rispondere
 # -n       = mostra IP numerici invece di risolvere i nomi
-#
-# Uso:
-#   sudo ./Domanda9.sh                 -> analizza e blocca
-#   sudo ./Domanda9.sh sblocca 1.2.3.4 -> sblocca un IP
-#   sudo ./Domanda9.sh sblocca tutti   -> sblocca tutti
+#Demo live
+#sudo ./Domanda9.sh
+#cat analisi_ssh/analisi_ssh_*.txt
 
 AUTH_LOG="auth.log"
-OUTPUT_FILE="analisi_ssh/analisi_ssh_$(date +"%Y%m%d_%H%M%S").txt"
+OUTPUT_DIR="analisi_ssh"
 BLOCKED_FILE="ip_bloccati.txt"
 
 # le soglie decidono quanto è pericoloso un IP
@@ -36,26 +35,13 @@ if [ "$1" = "sblocca" ]; then
 
     if [ "$2" = "tutti" ]; then
         # sblocco tutti gli IP nel file
-        echo "IP bloccati da sbloccare:"
-        cat "$BLOCKED_FILE"
-        echo ""
-        echo "Sblocco in corso..."
-        
-        # leggo il file riga per riga ed estraggo l'IP
-        SBLOCCATI=0
-        while IFS= read -r line; do
-            # estraggo l'IP dalla riga (è dopo il primo -)
-            IP=$(echo "$line" | awk '{print $4}')
-            if [ -n "$IP" ] && [[ "$IP" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-                iptables -D INPUT -s "$IP" -j DROP 2>/dev/null
-                echo "✓ Sbloccato: $IP"
-                SBLOCCATI=$((SBLOCCATI + 1))
-            fi
-        done < "$BLOCKED_FILE"
-        
+        # awk estrae la colonna 3 (l'IP), poi per ognuno rimuovo la regola iptables
+        awk '{print $3}' "$BLOCKED_FILE" | while read IP; do
+            iptables -D INPUT -s "$IP" -j DROP 2>/dev/null
+            echo "Sbloccato: $IP"
+        done
         > "$BLOCKED_FILE"  # svuoto il file
-        echo ""
-        echo "Totale IP sbloccati: $SBLOCCATI"
+        echo "Tutti gli IP sbloccati"
     elif [ -n "$2" ]; then
         # sblocco solo l'IP specifico passato come parametro
         # grep -q cerca in silenzio (quiet), ritorna 0 se trova, 1 se non trova
@@ -77,44 +63,34 @@ if [ "$1" = "sblocca" ]; then
     exit 0
 fi
 
-# controllo che il file auth.log esista
-[ ! -f "$AUTH_LOG" ] && echo "Errore: Non trovo $AUTH_LOG" && exit 1
-
-# controllo se ho i permessi per bloccare
-if [ "$EUID" -ne 0 ]; then
-    echo "ATTENZIONE: Senza sudo posso solo analizzare"
-    POSSO_BLOCCARE=false
-else
-    POSSO_BLOCCARE=true
+# Controlla se il file esiste
+if [ ! -f "$AUTH_LOG" ]; then
+    echo -e "${RED}Errore: $AUTH_LOG non trovato${NC}"
+    exit 1
 fi
 
-echo "Inizio l'analisi..."
-TMP="/tmp/ssh_analisi_$$"
-# mkdir -p crea le cartelle, -p non da errore se esistono già
-mkdir -p "$TMP" "analisi_ssh"
+echo "🔍 ANALISI ATTACCHI SSH"
+echo "======================================"
+echo ""
 
-# cerco tutti i tentativi falliti nel log
-# grep cerca questi pattern che indicano un tentativo di attacco:
-# - Failed password = password sbagliata
-# - Invalid user = utente che non esiste
-# - Connection closed [preauth] = chiuso prima di autenticarsi
-# - Disconnected [preauth] = disconnesso prima di autenticarsi
+mkdir -p "$OUTPUT_DIR"
+OUTPUT_FILE="$OUTPUT_DIR/analisi_ssh_$(date +"%Y%m%d_%H%M%S").txt"
+
+TMP="/tmp/ssh_analisi_$$"
+mkdir -p "$TMP"
+
+# Estrai i tentativi falliti
+echo "📊 Analizzando log..."
 grep -E "Failed password|Invalid user|Connection closed.*\[preauth\]|Disconnected.*\[preauth\]" \
     "$AUTH_LOG" > "$TMP/falliti.log"
-# wc -l conta le righe del file (l = Lines)
+
 NUM_FALLITI=$(wc -l < "$TMP/falliti.log")
 
-# estraggo gli IP dalle righe e conto quanti tentativi ha fatto ognuno
-# grep -oE estrae solo il pattern "from XXX.XXX.XXX.XXX"
-# awk stampa solo il secondo campo (l'IP)
-# sort ordina gli IP alfabeticamente
-# uniq -c conta quante volte appare ogni IP (c = Count)
-# sort -rn ordina per numero (n = Numeric) al contrario (r = Reverse, dal più alto)
+# Conta i tentativi per IP
 grep -oE "from [0-9]+\.[0-9]+\.[0-9]+\.[0-9]+" "$TMP/falliti.log" | \
     awk '{print $2}' | sort | uniq -c | sort -rn > "$TMP/ip_count.txt"
 
-# divido gli IP in tre categorie di pericolo
-# awk confronta il numero di tentativi con le soglie e stampa solo quelli che rientrano
+# Classifica per pericolo
 awk -v s="$SOGLIA_ALTA" '$1 > s {printf "%-5d tentativi - IP: %s\n", $1, $2}' \
     "$TMP/ip_count.txt" > "$TMP/alto.txt"
 
@@ -130,18 +106,12 @@ NUM_ALTO=$(wc -l < "$TMP/alto.txt")
 NUM_MEDIO=$(wc -l < "$TMP/medio.txt")
 NUM_BASSO=$(wc -l < "$TMP/basso.txt")
 
-# vedo quali nomi utente vengono provati più spesso dagli attaccanti
-# grep cerca "user nome" o "for nome from"
-# awk stampa il secondo campo (il nome utente)
-# grep -v esclude la parola "from" (v = inVert)
-# sort | uniq -c conta le occorrenze
-# sort -rn ordina dal più alto
-# head -10 prende solo i primi 10 (head = testa del file)
+# Top utenti attaccati
 grep -oE "user [a-zA-Z0-9_-]+|for [a-zA-Z0-9_-]+ from" "$TMP/falliti.log" | \
     awk '{print $2}' | grep -v "^from$" | sort | uniq -c | sort -rn | head -10 > "$TMP/utenti.txt"
 
 # blocco automaticamente gli IP che superano la soglia
-awk -v s="$SOGLIA_BLOCCO" '$1 >= s {print $2}' "$TMP/ip_count.txt" > "$TMP/da_bloccare.txt"
+awk -v s="$SOGLIA_BLOCCO" '$1 > s {print $2}' "$TMP/ip_count.txt" > "$TMP/da_bloccare.txt"
 BLOCCATI_ORA=0
 
 if [ "$POSSO_BLOCCARE" = true ] && [ -s "$TMP/da_bloccare.txt" ]; then
@@ -164,41 +134,92 @@ fi
 # creo il report con tutte le informazioni raccolte
 {
     echo "REPORT ANALISI TENTATIVI SSH"
-    echo "Data: $(date '+%d/%m/%Y alle %H:%M:%S') - File: $AUTH_LOG"
+    echo "═══════════════════════════════════════════════════════"
+    echo "Data: $(date '+%d/%m/%Y alle %H:%M:%S')"
+    echo "File: $AUTH_LOG"
     echo ""
+    
     echo "RIEPILOGO"
+    echo "───────────────────────────────────────────────────────"
     echo "Righe totali:      $(wc -l < "$AUTH_LOG")"
     echo "Tentativi falliti: $NUM_FALLITI"
-    echo "Accessi riusciti:  $(grep -c "Accepted password" "$AUTH_LOG")"
-    echo "IP bloccati ora:   $BLOCCATI_ORA"
+    echo "Accessi riusciti:  $(grep -c "Accepted password" "$AUTH_LOG" 2>/dev/null || echo 0)"
     echo ""
+    
     echo "CLASSIFICAZIONE IP"
-    echo "ALTO  (>$SOGLIA_ALTA tentativi):  $NUM_ALTO IP"
-    echo "MEDIO ($SOGLIA_MEDIA-$SOGLIA_ALTA tentativi): $NUM_MEDIO IP"
-    echo "BASSO ($SOGLIA_BASSA-$((SOGLIA_MEDIA-1)) tentativi): $NUM_BASSO IP"
+    echo "───────────────────────────────────────────────────────"
+    echo "🔴 ALTO   (>$SOGLIA_ALTA tentativi):  $NUM_ALTO IP"
+    echo "🟠 MEDIO  ($SOGLIA_MEDIA-$SOGLIA_ALTA tentativi): $NUM_MEDIO IP"
+    echo "🟡 BASSO  ($SOGLIA_BASSA-$((SOGLIA_MEDIA-1)) tentativi): $NUM_BASSO IP"
     echo ""
-    echo "IP PERICOLO ALTO"
-    [ "$NUM_ALTO" -gt 0 ] && cat "$TMP/alto.txt" || echo "Nessuno"
+    
+    echo "IP PERICOLO ALTO (⚠️  ATTENZIONE!)"
+    echo "───────────────────────────────────────────────────────"
+    [ -s "$TMP/alto.txt" ] && cat "$TMP/alto.txt" || echo "Nessuno"
     echo ""
-    echo "IP PERICOLO MEDIO"
-    [ "$NUM_MEDIO" -gt 0 ] && cat "$TMP/medio.txt" || echo "Nessuno"
+    
+    echo "IP PERICOLO MEDIO (⚠️  MONITORARE)"
+    echo "───────────────────────────────────────────────────────"
+    [ -s "$TMP/medio.txt" ] && cat "$TMP/medio.txt" || echo "Nessuno"
     echo ""
-    echo "IP PERICOLO BASSO"
-    [ "$NUM_BASSO" -gt 0 ] && cat "$TMP/basso.txt" || echo "Nessuno"
+    
+    echo "IP PERICOLO BASSO (⚠️  OSSERVARE)"
+    echo "───────────────────────────────────────────────────────"
+    [ -s "$TMP/basso.txt" ] && cat "$TMP/basso.txt" || echo "Nessuno"
     echo ""
+    
     echo "TOP 10 UTENTI ATTACCATI"
+    echo "───────────────────────────────────────────────────────"
     cat "$TMP/utenti.txt"
     echo ""
-    echo "TUTTI I TENTATIVI FALLITI"
-    cat "$TMP/falliti.log"
+    
+    echo "IP CONSIGLIATI PER BLOCCO (≥$SOGLIA_BLOCCO tentativi)"
+    echo "───────────────────────────────────────────────────────"
+    if [ -s "$TMP/da_bloccare.txt" ]; then
+        cat "$TMP/da_bloccare.txt"
+        echo ""
+        echo "💡 In Codespaces iptables non è disponibile."
+        echo "   Per bloccare questi IP nel tuo firewall personale, usa:"
+        echo "   sudo iptables -A INPUT -s [IP] -j DROP"
+    else
+        echo "Nessuno"
+    fi
+    echo ""
+    
+    echo "ULTIMI 20 TENTATIVI FALLITI"
+    echo "───────────────────────────────────────────────────────"
+    tail -20 "$TMP/falliti.log"
+    
 } > "$OUTPUT_FILE"
 
-# cancello i file temporanei
+# Salva anche la lista di IP da bloccare
+if [ -s "$TMP/da_bloccare.txt" ]; then
+    cat "$TMP/da_bloccare.txt" > "$BLOCKED_FILE"
+fi
+
+# Mostra il riepilogo
+echo ""
+echo -e "${GREEN}═══════════════════════════════════════════════════════${NC}"
+echo -e "${GREEN}ANALISI COMPLETATA${NC}"
+echo -e "${GREEN}═══════════════════════════════════════════════════════${NC}"
+echo ""
+echo "📊 Statistiche:"
+echo "   Tentativi falliti: $NUM_FALLITI"
+echo "   🔴 Pericolo ALTO:  $NUM_ALTO IP"
+echo "   🟠 Pericolo MEDIO: $NUM_MEDIO IP"
+echo "   🟡 Pericolo BASSO: $NUM_BASSO IP"
+echo ""
+
+if [ -s "$TMP/da_bloccare.txt" ]; then
+    echo -e "${RED}⚠️  IP CONSIGLIATI PER BLOCCO:${NC}"
+    cat "$TMP/da_bloccare.txt" | sed 's/^/   - /'
+    echo ""
+fi
+
+echo -e "${GREEN}📄 Report completo:${NC} $OUTPUT_FILE"
+echo ""
+
+# Cleanup
 rm -rf "$TMP"
 
-echo ""
-echo "Analisi completata! Report: $OUTPUT_FILE"
-echo "ALTO: $NUM_ALTO IP  MEDIO: $NUM_MEDIO IP  BASSO: $NUM_BASSO IP"
-[ "$BLOCCATI_ORA" -gt 0 ] && echo "Bloccati $BLOCCATI_ORA IP - lista in: $BLOCKED_FILE"
-[ -s "$BLOCKED_FILE" ] && echo "Per sbloccare: sudo ./Domanda9.sh sblocca [IP|tutti]"
-echo ""
+echo -e "${GREEN}✓ Script terminato con successo!${NC}"

@@ -6,41 +6,50 @@ input2="accessi_orario.csv"
 output1="accessi_ultimi.csv"
 output2="accessi_dettagliati.csv"
 
-echo "=== RICERCA ACCESSI CENTRO SPORTIVO ==="
-echo ""
-
-# Richiesta data inizio
-read -p "Inserisci la data di inizio (YYYY-MM-DD): " data_inizio
-
-if ! date -d "$data_inizio" >/dev/null 2>&1; then
-    echo "Data di inizio NON valida"
-    exit 1
-fi
-
-# Richiesta data fine
-read -p "Inserisci la data di fine (YYYY-MM-DD): " data_fine
-
-if ! date -d "$data_fine" >/dev/null 2>&1; then
-    echo "Data di fine NON valida"
-    exit 1
-fi
-
-# Validazione: data_fine >= data_inizio
-if [[ "$data_fine" < "$data_inizio" ]]; then
-    echo "La data di fine deve essere successiva o uguale alla data di inizio"
-    exit 1
+# Controlla se ci sono argomenti passati (da Streamlit o script)
+if [[ $# -eq 3 ]]; then
+    # Modo non-interattivo: argomenti passati come parametri
+    data_inizio=$1
+    data_fine=$2
+    opzione=$3
+else
+    # Modo interattivo
+    echo "=== RICERCA ACCESSI CENTRO SPORTIVO ==="
+    echo ""
+    
+    # Richiesta data inizio
+    read -p "Inserisci la data di inizio (YYYY-MM-DD): " data_inizio < /dev/tty
+    
+    if ! date -d "$data_inizio" >/dev/null 2>&1; then
+        echo "Data di inizio NON valida"
+        exit 1
+    fi
+    
+    # Richiesta data fine
+    read -p "Inserisci la data di fine (YYYY-MM-DD): " data_fine < /dev/tty
+    
+    if ! date -d "$data_fine" >/dev/null 2>&1; then
+        echo "Data di fine NON valida"
+        exit 1
+    fi
+    
+    # Validazione: data_fine >= data_inizio
+    if [[ "$data_fine" < "$data_inizio" ]]; then
+        echo "La data di fine deve essere successiva o uguale alla data di inizio"
+        exit 1
+    fi
+    
+    echo ""
+    echo "Scegli cosa visualizzare:"
+    echo "1) Ultimi accessi registrati nel centro sportivo"
+    echo "2) Accessi dettagliati ora per ora nel lasso di giorni scelto"
+    echo ""
+    read -p "Inserisci il numero dell'opzione (1 o 2): " opzione < /dev/tty
 fi
 
 # Normalizza le date
 data_inizio=$(date -d "$data_inizio" +%Y-%m-%d)
 data_fine=$(date -d "$data_fine" +%Y-%m-%d)
-
-echo ""
-echo "Scegli cosa visualizzare:"
-echo "1) Ultimi accessi registrati nel centro sportivo"
-echo "2) Accessi dettagliati ora per ora nel lasso di giorni scelto"
-echo ""
-read -p "Inserisci il numero dell'opzione (1 o 2): " opzione
 
 case $opzione in
     1)

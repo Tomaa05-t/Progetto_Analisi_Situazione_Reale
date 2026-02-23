@@ -15,21 +15,14 @@ GIORNI_TOLLERANZA=9
 OGGI=$(date +%Y-%m-%d)
 LIMITE=$(date -d "+$GIORNI_PREAVVISO days" +%Y-%m-%d)
 
-# Verifica file CSV
-if [[ ! -f "$CSV_FILE" ]]; then
-    echo "Errore: file $CSV_FILE non trovato"
-    exit 1
-fi
 
-# Installa mail se necessario
-if ! command -v mail &> /dev/null; then
-    echo "Installazione di mailutils..."
-    sudo apt update && sudo apt install -y mailutils || exit 1
-fi
+command -v sendmail >/dev/null || {
+  echo "sendmail non installato"
+  sudo apt update && sudo apt install -y sendmail
+  exit 1
+}
+conteggio=0
 
-conteggio_elaborate=0
-conteggio_inviate=0
-conteggio_errori=0
 
 awk -F"$DELIMITER" -v oggi="$OGGI" -v limite="$LIMITE" \
     -v tol="$GIORNI_TOLLERANZA" \
@@ -44,10 +37,10 @@ NR>1 && $s >= oggi && $s <= limite {
     print $e "|" $n "|" $c "|" $s "|" nuova_scadenza
 }' "$CSV_FILE" | while IFS="|" read -r email nome cognome scadenza nuova_scadenza
 do
-    ((conteggio_elaborate++))
-    
-    # Invia email
-    mail -s "Avviso di scadenza certificato medico" "$email" <<EOF
+sendmail -t <<EOF
+To: $email
+Subject: Avviso di scadenza certificato medico
+
 Caro/a $nome $cognome,
 
 il tuo certificato medico è scaduto il $scadenza.
@@ -56,21 +49,6 @@ l'accesso ai servizi del centro sportivo.
 
 Grazie per la collaborazione.
 EOF
-    
-    if [[ $? -eq 0 ]]; then
-        echo "✓ Email inviata a: $email ($nome $cognome)"
-        ((conteggio_inviate++))
-    else
-        echo "✗ Errore nell'invio a: $email"
-        ((conteggio_errori++))
-    fi
+((conteggio++))
 done
-
-echo ""
-echo "════════════════════════════════════════"
-echo "RIEPILOGO INVIO EMAIL"
-echo "════════════════════════════════════════"
-echo "Utenti elaborati:     $conteggio_elaborate"
-echo "Email inviate:        $conteggio_inviate"
-echo "Email fallite:        $conteggio_errori"
-echo "════════════════════════════════════════"
+echo "Totale e-mail inviate: $conteggio"

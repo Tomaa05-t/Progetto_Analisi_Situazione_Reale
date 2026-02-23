@@ -1,0 +1,81 @@
+═══════════════════════════════════════════════════════
+REPORT ANALISI TENTATIVI SSH
+═══════════════════════════════════════════════════════
+Data: 23/02/2026 alle 10:07:56
+File: auth.log
+
+RIEPILOGO
+───────────────────────────────────────────────────────
+Righe totali:      51
+Tentativi falliti: 39
+Accessi riusciti:  6
+
+CLASSIFICAZIONE IP
+───────────────────────────────────────────────────────
+🔴 ALTO   (>10 tentativi):  0 IP
+🟠 MEDIO  (5-10 tentativi): 5 IP
+🟡 BASSO  (2-4 tentativi): 0 IP
+
+IP PERICOLO ALTO (⚠️  ATTENZIONE!)
+───────────────────────────────────────────────────────
+Nessuno
+
+IP PERICOLO MEDIO (⚠️  MONITORARE)
+───────────────────────────────────────────────────────
+9     tentativi - IP: 192.0.2.67
+8     tentativi - IP: 91.203.5.146
+7     tentativi - IP: 203.0.113.45
+6     tentativi - IP: 198.51.100.23
+5     tentativi - IP: 185.220.101.42
+
+IP PERICOLO BASSO (⚠️  OSSERVARE)
+───────────────────────────────────────────────────────
+Nessuno
+
+TOP 10 UTENTI ATTACCATI
+───────────────────────────────────────────────────────
+     10 root
+      4 admin
+      3 test
+      3 oracle
+      2 user
+      2 ubuntu
+      2 postgres
+      2 pi
+      2 mysql
+      2 guest
+
+IP CONSIGLIATI PER BLOCCO (≥5 tentativi)
+───────────────────────────────────────────────────────
+192.0.2.67
+91.203.5.146
+203.0.113.45
+198.51.100.23
+185.220.101.42
+
+💡 In Codespaces iptables non è disponibile.
+   Per bloccare questi IP nel tuo firewall personale, usa:
+   sudo iptables -A INPUT -s [IP] -j DROP
+
+ULTIMI 20 TENTATIVI FALLITI
+───────────────────────────────────────────────────────
+Feb 12 01:24:24 hostname sshd[25345]: Invalid user test from 91.203.5.146 port 51269
+Feb 12 01:24:27 hostname sshd[25347]: Failed password for invalid user oracle from 91.203.5.146 port 51270 ssh2
+Feb 12 01:24:30 hostname sshd[25349]: Disconnected from 91.203.5.146 port 51271 [preauth]
+Feb 12 18:32:55 hostname sshd[29456]: Failed password for invalid user postgres from 203.0.113.45 port 47891 ssh2
+Feb 12 18:32:58 hostname sshd[29458]: Failed password for root from 203.0.113.45 port 47892 ssh2
+Feb 12 18:33:01 hostname sshd[29460]: Failed password for invalid user mysql from 203.0.113.45 port 47893 ssh2
+Feb 13 03:45:12 hostname sshd[31256]: Failed password for invalid user user from 198.51.100.23 port 43562 ssh2
+Feb 13 03:45:15 hostname sshd[31258]: Connection closed by 198.51.100.23 port 43563 [preauth]
+Feb 13 03:45:18 hostname sshd[31260]: Failed password for root from 198.51.100.23 port 43564 ssh2
+Feb 13 03:45:21 hostname sshd[31262]: Invalid user admin from 198.51.100.23 port 43565
+Feb 13 14:56:33 hostname sshd[34892]: Failed password for invalid user pi from 192.0.2.67 port 46234 ssh2
+Feb 13 14:56:36 hostname sshd[34894]: Failed password for root from 192.0.2.67 port 46235 ssh2
+Feb 13 14:56:39 hostname sshd[34896]: Failed password for invalid user guest from 192.0.2.67 port 46236 ssh2
+Feb 13 14:56:42 hostname sshd[34898]: Disconnected from 192.0.2.67 port 46237 [preauth]
+Feb 13 20:18:25 hostname sshd[36741]: Failed password for invalid user ubuntu from 185.220.101.42 port 48912 ssh2
+Feb 13 20:18:28 hostname sshd[36743]: Failed password for root from 185.220.101.42 port 48913 ssh2
+Feb 13 20:18:31 hostname sshd[36745]: Connection closed by 185.220.101.42 port 48914 [preauth]
+Feb 14 02:34:56 hostname sshd[38623]: Failed password for invalid user test from 91.203.5.146 port 50145 ssh2
+Feb 14 02:34:59 hostname sshd[38625]: Failed password for root from 91.203.5.146 port 50146 ssh2
+Feb 14 02:35:02 hostname sshd[38627]: Invalid user oracle from 91.203.5.146 port 50147
