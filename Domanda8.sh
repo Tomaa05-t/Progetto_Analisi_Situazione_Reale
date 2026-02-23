@@ -48,7 +48,7 @@ crea_backup() {
     TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
     mkdir -p "$BACKUP_DIR" "$LOG_DIR"
     
-    echo "📦 Creazione backup in corso..."
+    echo " Creazione backup in corso..."
     
     # creo il backup compresso
     # tar -c crea l'archivio, -z lo comprime con gzip, -f specifica il nome
@@ -84,12 +84,12 @@ vedi_backup() {
     # controllo se ci sono backup
     # ${#BACKUPS[@]} = numero di elementi nell'array
     if [ ${#BACKUPS[@]} -eq 0 ]; then
-        echo -e "${YELLOW}⚠️  Nessun backup trovato${NC}"
+        echo -e "${YELLOW}  Nessun backup trovato${NC}"
         return 1
     fi
 
     echo ""
-    echo "📋 BACKUP DISPONIBILI:"
+    echo " BACKUP DISPONIBILI:"
     echo "════════════════════════════════════════"
     
     # ciclo su tutti i backup
@@ -123,12 +123,12 @@ ripristina_backup() {
     BACKUPS=($(ls -t "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz 2>/dev/null))
 
     if [ ${#BACKUPS[@]} -eq 0 ]; then
-        echo -e "${YELLOW}⚠️  Nessun backup disponibile${NC}"
+        echo -e "${YELLOW}  Nessun backup disponibile${NC}"
         return 1
     fi
 
     echo ""
-    echo "📋 BACKUP DISPONIBILI:"
+    echo " BACKUP DISPONIBILI:"
     
     # mostro tutti i backup disponibili
     for i in "${!BACKUPS[@]}"; do
@@ -162,7 +162,7 @@ ripristina_backup() {
     
     OUTPUT_FILE="centro_sportivo_ripristino_${DATA}.csv"
 
-    echo "📥 Estrazione backup..."
+    echo " Estrazione backup..."
     
     # estraggo il backup
     # tar -xzf estrae, -O manda su stdout invece che su disco
@@ -173,8 +173,8 @@ ripristina_backup() {
     if [ $? -eq 0 ]; then
         NUM_RIGHE=$(wc -l < "$OUTPUT_FILE")
         echo -e "${GREEN}✓ Ripristino riuscito!${NC}"
-        echo "📄 File creato: $OUTPUT_FILE ($NUM_RIGHE righe)"
-        echo "💡 Per sostituire l'originale: cp $OUTPUT_FILE $CSV_FILE"
+        echo " File creato: $OUTPUT_FILE ($NUM_RIGHE righe)"
+        echo " Per sostituire l'originale: cp $OUTPUT_FILE $CSV_FILE"
         log "Backup ripristinato: $OUTPUT_FILE"
         return 0
     else
@@ -190,7 +190,7 @@ cerca_utente() {
     BACKUPS=($(ls -t "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz 2>/dev/null))
     
     if [ ${#BACKUPS[@]} -eq 0 ]; then
-        echo -e "${YELLOW}⚠️  Nessun backup disponibile${NC}"
+        echo -e "${YELLOW}  Nessun backup disponibile${NC}"
         return 1
     fi
 
@@ -226,7 +226,7 @@ cerca_utente() {
         return 1
     fi
 
-    echo "🔍 Cerco '$VALORE'..."
+    echo " Cerco '$VALORE'..."
 
     # Estrai il file tar in un file temporaneo
     # Uso un file temporaneo perché è più sicuro e gestibile di una variabile
@@ -257,8 +257,8 @@ cerca_utente() {
         SEP=','
     fi
     
-    echo "📋 Debug: Separatore rilevato: '$SEP'"
-    echo "📋 Debug: Prime 3 righe del file:"
+    echo " Debug: Separatore rilevato: '$SEP'"
+    echo " Debug: Prime 3 righe del file:"
     head -n 3 "$TMP_CSV"
 
     # uso awk per cercare nel backup
@@ -278,7 +278,7 @@ cerca_utente() {
 
     # controllo se ho trovato qualcosa
     if [ -z "$RISULTATI" ]; then
-        echo -e "${YELLOW}❌ Nessun risultato trovato per '$VALORE'${NC}"
+        echo -e "${YELLOW} Nessun risultato trovato per '$VALORE'${NC}"
         rm -f "$TMP_CSV"
         return 1
     fi
@@ -316,7 +316,7 @@ cerca_utente() {
     fi
     
     echo ""
-    echo "📄 Salvati in: $OUTPUT_FILE"
+    echo " Salvati in: $OUTPUT_FILE"
     
     # Cleanup: rimuovo il file temporaneo
     rm -f "$TMP_CSV"
@@ -329,7 +329,7 @@ statistiche() {
     BACKUPS=($(ls -t "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz 2>/dev/null))
     
     echo ""
-    echo "📊 STATISTICHE BACKUP:"
+    echo " STATISTICHE BACKUP:"
     echo "════════════════════════════════════════"
     echo "Numero di backup: ${#BACKUPS[@]}"
     
@@ -348,7 +348,7 @@ statistiche() {
     fi
     
     echo ""
-    echo "📋 ULTIMI 5 BACKUP:"
+    echo " ULTIMI 5 BACKUP:"
     echo "════════════════════════════════════════"
     
     # mostro le ultime 5 righe del log
@@ -372,12 +372,12 @@ menu_principale() {
         echo "║  BACKUP DATABASE CENTRO SPORTIVO      ║"
         echo "╚════════════════════════════════════════╝"
         echo ""
-        echo "1. 📦 Crea backup"
-        echo "2. 📋 Vedi backup disponibili"
-        echo "3. 📥 Ripristina backup completo"
-        echo "4. 🔍 Cerca utente nel backup"
-        echo "5. 📊 Visualizza statistiche"
-        echo "6. 🚪 Esci"
+        echo "1.  Crea backup"
+        echo "2.  Vedi backup disponibili"
+        echo "3.  Ripristina backup completo"
+        echo "4.  Cerca utente nel backup"
+        echo "5.  Visualizza statistiche"
+        echo "6.  Esci"
         echo ""
         read -p "Scegli [1-6]: " SCELTA
 
@@ -401,12 +401,12 @@ menu_principale() {
                 ;;
             6)
                 echo ""
-                echo -e "${GREEN}👋 Arrivederci!${NC}"
+                echo -e "${GREEN} Arrivederci!${NC}"
                 echo ""
                 exit 0
                 ;;
             *)
-                echo -e "${RED}❌ Scelta non valida${NC}"
+                echo -e "${RED} Scelta non valida${NC}"
                 sleep 1
                 ;;
         esac
@@ -474,7 +474,7 @@ if [ $# -gt 0 ]; then
             BACKUPS=($(ls -t "$BACKUP_DIR"/centro_sportivo_backup_*.tar.gz 2>/dev/null))
             
             if [ ${#BACKUPS[@]} -eq 0 ]; then
-                echo -e "${YELLOW}⚠️  Nessun backup disponibile${NC}"
+                echo -e "${YELLOW}  Nessun backup disponibile${NC}"
                 exit 1
             fi
             
@@ -485,7 +485,7 @@ if [ $# -gt 0 ]; then
             
             BACKUP_SCELTO="${BACKUPS[$((BACKUP_INDEX-1))]}"
             
-            echo "🔍 Cerco '$VALORE' nel backup $BACKUP_INDEX..."
+            echo " Cerco '$VALORE' nel backup $BACKUP_INDEX..."
             
             TMP_CSV="/tmp/backup_search_$$.csv"
             tar -xzf "$BACKUP_SCELTO" -O > "$TMP_CSV" 2>/dev/null
@@ -515,7 +515,7 @@ if [ $# -gt 0 ]; then
             esac
             
             if [ -z "$RISULTATI" ]; then
-                echo -e "${YELLOW}❌ Nessun risultato trovato per '$VALORE'${NC}"
+                echo -e "${YELLOW} Nessun risultato trovato per '$VALORE'${NC}"
                 rm -f "$TMP_CSV"
                 exit 1
             fi

@@ -41,7 +41,7 @@ if [ "$1" = "sblocca" ]; then
         # Conta quanti IP devo sbloccare
         TOTALE=$(wc -l < "$BLOCKED_FILE")
         
-        echo "🔓 Sblocco IP in corso..."
+        echo " Sblocco IP in corso..."
         echo ""
         
         # sblocco tutti gli IP nel file
@@ -54,7 +54,7 @@ if [ "$1" = "sblocca" ]; then
         done
         > "$BLOCKED_FILE"  # svuoto il file
         echo ""
-        echo "✅ Tutti gli IP sbloccati ($TOTALE totali)"
+        echo " Tutti gli IP sbloccati ($TOTALE totali)"
     elif [ -n "$2" ]; then
         # sblocco solo l'IP specifico passato come parametro
         # grep -q cerca in silenzio (quiet), ritorna 0 se trova, 1 se non trova
@@ -65,7 +65,7 @@ if [ "$1" = "sblocca" ]; then
             grep -v "$2" "$BLOCKED_FILE" > "$BLOCKED_FILE.tmp" && mv "$BLOCKED_FILE.tmp" "$BLOCKED_FILE"
             echo "✓ Sbloccato: $2"
         else
-            echo "❌ IP $2 non trovato nella lista"
+            echo " IP $2 non trovato nella lista"
         fi
     else
         # se non specifico cosa sbloccare, mostro la lista
@@ -88,7 +88,7 @@ if [ ! -f "$AUTH_LOG" ]; then
     exit 1
 fi
 
-echo "🔍 ANALISI ATTACCHI SSH"
+echo " ANALISI ATTACCHI SSH"
 echo "======================================"
 echo ""
 
@@ -99,7 +99,7 @@ TMP="/tmp/ssh_analisi_$$"
 mkdir -p "$TMP"
 
 # Estrai i tentativi falliti
-echo "📊 Analizzando log..."
+echo " Analizzando log..."
 grep -E "Failed password|Invalid user|Connection closed.*\[preauth\]|Disconnected.*\[preauth\]" \
     "$AUTH_LOG" > "$TMP/falliti.log"
 
@@ -135,9 +135,9 @@ if [ "$EUID" -eq 0 ] && command -v iptables >/dev/null 2>&1; then
     POSSO_BLOCCARE=true
 fi
 
-echo "🔧 Debug: POSSO_BLOCCARE=$POSSO_BLOCCARE"
-echo "🔧 Debug: Sono root? EUID=$EUID"
-echo "🔧 Debug: iptables disponibile? $(command -v iptables)"
+echo " Debug: POSSO_BLOCCARE=$POSSO_BLOCCARE"
+echo " Debug: Sono root? EUID=$EUID"
+echo " Debug: iptables disponibile? $(command -v iptables)"
 echo ""
 
 # blocco automaticamente gli IP che superano la soglia
@@ -159,10 +159,10 @@ if [ -s "$TMP/da_bloccare.txt" ]; then
             # Controllo se l'ho già bloccato prima
             if ! iptables -L INPUT -n | grep -q "$IP"; then
                 iptables -A INPUT -s "$IP" -j DROP 2>/dev/null
-                echo "🔒 Bloccato con iptables: $IP ($TENTATIVI tentativi)"
+                echo " Bloccato con iptables: $IP ($TENTATIVI tentativi)"
             fi
         else
-            echo "📝 Registrato (iptables non disponibile): $IP ($TENTATIVI tentativi)"
+            echo " Registrato (iptables non disponibile): $IP ($TENTATIVI tentativi)"
         fi
         
         # Salvo sempre nel file per tracciare
@@ -188,22 +188,22 @@ fi
     
     echo "CLASSIFICAZIONE IP"
     echo "───────────────────────────────────────────────────────"
-    echo "🔴 ALTO   (>$SOGLIA_ALTA tentativi):  $NUM_ALTO IP"
-    echo "🟠 MEDIO  ($SOGLIA_MEDIA-$SOGLIA_ALTA tentativi): $NUM_MEDIO IP"
-    echo "🟡 BASSO  ($SOGLIA_BASSA-$((SOGLIA_MEDIA-1)) tentativi): $NUM_BASSO IP"
+    echo " ALTO   (>$SOGLIA_ALTA tentativi):  $NUM_ALTO IP"
+    echo " MEDIO  ($SOGLIA_MEDIA-$SOGLIA_ALTA tentativi): $NUM_MEDIO IP"
+    echo " BASSO  ($SOGLIA_BASSA-$((SOGLIA_MEDIA-1)) tentativi): $NUM_BASSO IP"
     echo ""
     
-    echo "IP PERICOLO ALTO (⚠️  ATTENZIONE!)"
+    echo "IP PERICOLO ALTO (  ATTENZIONE!)"
     echo "───────────────────────────────────────────────────────"
     [ -s "$TMP/alto.txt" ] && cat "$TMP/alto.txt" || echo "Nessuno"
     echo ""
     
-    echo "IP PERICOLO MEDIO (⚠️  MONITORARE)"
+    echo "IP PERICOLO MEDIO (  MONITORARE)"
     echo "───────────────────────────────────────────────────────"
     [ -s "$TMP/medio.txt" ] && cat "$TMP/medio.txt" || echo "Nessuno"
     echo ""
     
-    echo "IP PERICOLO BASSO (⚠️  OSSERVARE)"
+    echo "IP PERICOLO BASSO (  OSSERVARE)"
     echo "───────────────────────────────────────────────────────"
     [ -s "$TMP/basso.txt" ] && cat "$TMP/basso.txt" || echo "Nessuno"
     echo ""
@@ -219,7 +219,7 @@ fi
         cat "$TMP/da_bloccare.txt"
         echo ""
         if [ "$POSSO_BLOCCARE" = false ]; then
-            echo "💡 Per bloccare questi IP nel tuo firewall, usa:"
+            echo " Per bloccare questi IP nel tuo firewall, usa:"
             echo "   sudo iptables -A INPUT -s [IP] -j DROP"
         fi
     else
@@ -239,26 +239,26 @@ echo -e "${GREEN}═════════════════════
 echo -e "${GREEN}ANALISI COMPLETATA${NC}"
 echo -e "${GREEN}═══════════════════════════════════════════════════════${NC}"
 echo ""
-echo "📊 Statistiche:"
+echo " Statistiche:"
 echo "   Tentativi falliti: $NUM_FALLITI"
-echo "   🔴 Pericolo ALTO:  $NUM_ALTO IP"
-echo "   🟠 Pericolo MEDIO: $NUM_MEDIO IP"
-echo "   🟡 Pericolo BASSO: $NUM_BASSO IP"
+echo "    Pericolo ALTO:  $NUM_ALTO IP"
+echo "    Pericolo MEDIO: $NUM_MEDIO IP"
+echo "    Pericolo BASSO: $NUM_BASSO IP"
 
 if [ "$BLOCCATI_ORA" -gt 0 ]; then
     echo ""
-    echo -e "${RED}🔒 IP bloccati in questa esecuzione: $BLOCCATI_ORA${NC}"
+    echo -e "${RED} IP bloccati in questa esecuzione: $BLOCCATI_ORA${NC}"
 fi
 
 echo ""
 
 if [ -s "$TMP/da_bloccare.txt" ]; then
-    echo -e "${YELLOW}⚠️  IP che superano soglia di blocco ($SOGLIA_BLOCCO tentativi):${NC}"
+    echo -e "${YELLOW}  IP che superano soglia di blocco ($SOGLIA_BLOCCO tentativi):${NC}"
     cat "$TMP/da_bloccare.txt" | sed 's/^/   - /'
     echo ""
 fi
 
-echo -e "${GREEN}📄 Report completo:${NC} $OUTPUT_FILE"
+echo -e "${GREEN} Report completo:${NC} $OUTPUT_FILE"
 echo ""
 
 # Cleanup

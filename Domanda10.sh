@@ -59,7 +59,7 @@ tail -n +2 "$INPUT_CSV" | while IFS=';' read -r ID NOME COGNOME DATA EMAIL SPORT
         # Salva la riga corrotta
         echo "$RIGA_ORIGINALE" >> "$OUTPUT_CORROTTE"
         
-        echo "⚠️  Riga corrotta trovata:"
+        echo "  Riga corrotta trovata:"
         echo "   Motivo: $MOTIVO"
         echo "   ID: ${ID:-[VUOTO]} | Nome: ${NOME:-[VUOTO]} ${COGNOME:-[VUOTO]}"
         echo "   Email: ${EMAIL:-[VUOTO]}"
@@ -81,24 +81,24 @@ echo "════════════════════════�
 echo -e "${GREEN}✓ ANALISI COMPLETATA!${NC}"
 echo "════════════════════════════════════════"
 echo ""
-echo "📊 RISULTATI:"
+echo " RISULTATI:"
 echo "   Totali:    $NUM_TOTALI"
 echo "   Valide:    $NUM_PULITE ($PERCENTUALE%)"
 echo "   Corrotte:  $NUM_CORROTTE"
 echo ""
 
 if [ "$NUM_CORROTTE" -gt 0 ]; then
-    echo "📁 File generati:"
+    echo " File generati:"
     echo "   ✓ $OUTPUT_PULITO   ($NUM_PULITE righe valide)"
     echo "   ✓ $OUTPUT_CORROTTE  ($NUM_CORROTTE righe corrotte)"
     echo ""
     
     # Mostra anteprima delle corrotte
-    echo "📋 Anteprima righe corrotte:"
+    echo " Anteprima righe corrotte:"
     head -5 "$OUTPUT_CORROTTE" | tail -n +2 | sed 's/^/   /'
 else
     rm -f "$OUTPUT_CORROTTE"
-    echo -e "${GREEN}✨ Nessun dato corrotto - CSV perfetto!${NC}"
+    echo -e "${GREEN} Nessun dato corrotto - CSV perfetto!${NC}"
     echo "   ✓ $OUTPUT_PULITO ($NUM_PULITE righe)"
 fi
 
