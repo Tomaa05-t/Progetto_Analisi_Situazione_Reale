@@ -75,10 +75,10 @@ Il server riceveva centinaia di tentativi di login SSH da bot che provavano a in
 Se riescono ad entrare possono rubare i dati personali degli utenti (GDPR!), modificare il database, o installare malware.
 
 **Soluzione: Domanda9.sh**
-Script avanzato che analizza i log SSH, conta i tentativi per ogni IP, classifica il pericolo e blocca automaticamente gli attaccanti.
+Script avanzato che legge il file `auth.log` (log di autenticazione Linux), analizza i tentativi di login SSH, conta i tentativi falliti per ogni IP, classifica il pericolo e blocca automaticamente gli attaccanti.
 
 **Funzionalità principali:**
-1. **Analisi automatica** - Scansiona i log SSH e conta i tentativi falliti per ogni IP
+1. **Analisi automatica** - Legge e scansiona il file `auth.log` cercando tutti i tentativi di login SSH falliti, conta quante volte ogni IP ha provato ad accedere
 2. **Classificazione pericolo:**
    - **ALTO** (>10 tentativi) = attacco serio, viene bloccato immediatamente
    - **MEDIO** (6-10) = sospetto, viene bloccato
@@ -90,7 +90,7 @@ Script avanzato che analizza i log SSH, conta i tentativi per ogni IP, classific
 5. **Report dettagliato** - Genera report con timestamp, IP, numero tentativi e livello di pericolo
 
 **File utilizzati:**
-- `auth.log` - log SSH da analizzare
+- `auth.log` - log di autenticazione Linux contenente tutti i tentativi di accesso SSH (sia riusciti che falliti). Lo script cerca pattern come "Failed password" per identificare i tentativi di attacco
 
 **File creati:**
 - `analisi_ssh/analisi_ssh_YYYYMMDD_HHMMSS.txt` - report completo dell'analisi
@@ -104,10 +104,13 @@ Script avanzato che analizza i log SSH, conta i tentativi per ogni IP, classific
 
 **Modalità d'uso:**
 ```bash
-sudo ./Domanda9.sh                     # analizza e blocca automaticamente (>5 tentativi)
+sudo ./Domanda9.sh                     # analizza auth.log e blocca automaticamente (>5 tentativi)
 sudo ./Domanda9.sh sblocca 1.2.3.4    # sblocca un IP specifico
 sudo ./Domanda9.sh sblocca tutti       # sblocca tutti gli IP bloccati
 ```
+
+**Nota su auth.log:**
+Su un sistema Linux reale, il file `auth.log` si trova in `/var/log/auth.log` (Ubuntu/Debian) o `/var/log/secure` (CentOS/RedHat) e viene aggiornato automaticamente dal sistema ogni volta che qualcuno prova ad accedere via SSH. In questo progetto usiamo un `auth.log` locale per simulazione.
 
 **Soglia di blocco:**
 Lo script blocca automaticamente qualsiasi IP che supera **5 tentativi falliti**. Questa soglia protegge da attacchi brute-force evitando falsi positivi (utenti che sbagliano password).
@@ -300,12 +303,9 @@ ID;Nome;Cognome;Data_Nascita;Email;Sport;Abbonamento;Data_Iscrizione;Ultimo_Acce
 - Domanda10 conserva sempre le righe corrotte in un file separato
 
 **Performance:**
-- Backup di 1000 utenti (~200KB) → ~50KB compressi (75% risparmio)
+- Backup di 400 utenti (~200KB) → ~50KB compressi (75% risparmio)
 - Analisi log di 10.000 righe → ~2 secondi
 - Pulizia CSV 1000 righe con 50 corrotte → ~5 secondi
-
-
-
 
 
 ---
